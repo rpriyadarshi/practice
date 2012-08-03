@@ -1,0 +1,291 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F947BC9F13495946000776B9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F947BC9E13495946000776B9 /* Cocoa.framework */; };
+		F947BCA913495946000776B9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F947BCA713495946000776B9 /* InfoPlist.strings */; };
+		F947BCAC13495946000776B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F947BCAB13495946000776B9 /* main.m */; };
+		F947BCAF13495946000776B9 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = F947BCAD13495946000776B9 /* Credits.rtf */; };
+		F947BCB213495946000776B9 /* MacHelloAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F947BCB113495946000776B9 /* MacHelloAppDelegate.m */; };
+		F947BCB513495947000776B9 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = F947BCB313495947000776B9 /* MainMenu.xib */; };
+		F947BCBD13495ACB000776B9 /* HelloView.m in Sources */ = {isa = PBXBuildFile; fileRef = F947BCBC13495ACB000776B9 /* HelloView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F947BC9A13495946000776B9 /* MacHello.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacHello.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F947BC9E13495946000776B9 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		F947BCA113495946000776B9 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		F947BCA213495946000776B9 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		F947BCA313495946000776B9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		F947BCA613495946000776B9 /* MacHello-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MacHello-Info.plist"; sourceTree = "<group>"; };
+		F947BCA813495946000776B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F947BCAA13495946000776B9 /* MacHello-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MacHello-Prefix.pch"; sourceTree = "<group>"; };
+		F947BCAB13495946000776B9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		F947BCAE13495946000776B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		F947BCB013495946000776B9 /* MacHelloAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacHelloAppDelegate.h; sourceTree = "<group>"; };
+		F947BCB113495946000776B9 /* MacHelloAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MacHelloAppDelegate.m; sourceTree = "<group>"; };
+		F947BCB413495947000776B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		F947BCBB13495ACB000776B9 /* HelloView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloView.h; sourceTree = "<group>"; };
+		F947BCBC13495ACB000776B9 /* HelloView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelloView.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F947BC9713495946000776B9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F947BC9F13495946000776B9 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F947BC8F13495946000776B9 = {
+			isa = PBXGroup;
+			children = (
+				F947BCBB13495ACB000776B9 /* HelloView.h */,
+				F947BCBC13495ACB000776B9 /* HelloView.m */,
+				F947BCA413495946000776B9 /* MacHello */,
+				F947BC9D13495946000776B9 /* Frameworks */,
+				F947BC9B13495946000776B9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F947BC9B13495946000776B9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F947BC9A13495946000776B9 /* MacHello.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F947BC9D13495946000776B9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F947BC9E13495946000776B9 /* Cocoa.framework */,
+				F947BCA013495946000776B9 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F947BCA013495946000776B9 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F947BCA113495946000776B9 /* AppKit.framework */,
+				F947BCA213495946000776B9 /* CoreData.framework */,
+				F947BCA313495946000776B9 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		F947BCA413495946000776B9 /* MacHello */ = {
+			isa = PBXGroup;
+			children = (
+				F947BCB013495946000776B9 /* MacHelloAppDelegate.h */,
+				F947BCB113495946000776B9 /* MacHelloAppDelegate.m */,
+				F947BCB313495947000776B9 /* MainMenu.xib */,
+				F947BCA513495946000776B9 /* Supporting Files */,
+			);
+			path = MacHello;
+			sourceTree = "<group>";
+		};
+		F947BCA513495946000776B9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F947BCA613495946000776B9 /* MacHello-Info.plist */,
+				F947BCA713495946000776B9 /* InfoPlist.strings */,
+				F947BCAA13495946000776B9 /* MacHello-Prefix.pch */,
+				F947BCAB13495946000776B9 /* main.m */,
+				F947BCAD13495946000776B9 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F947BC9913495946000776B9 /* MacHello */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F947BCB813495947000776B9 /* Build configuration list for PBXNativeTarget "MacHello" */;
+			buildPhases = (
+				F947BC9613495946000776B9 /* Sources */,
+				F947BC9713495946000776B9 /* Frameworks */,
+				F947BC9813495946000776B9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MacHello;
+			productName = MacHello;
+			productReference = F947BC9A13495946000776B9 /* MacHello.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F947BC9113495946000776B9 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = F947BC9413495946000776B9 /* Build configuration list for PBXProject "MacHello" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = F947BC8F13495946000776B9;
+			productRefGroup = F947BC9B13495946000776B9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F947BC9913495946000776B9 /* MacHello */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F947BC9813495946000776B9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F947BCA913495946000776B9 /* InfoPlist.strings in Resources */,
+				F947BCAF13495946000776B9 /* Credits.rtf in Resources */,
+				F947BCB513495947000776B9 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F947BC9613495946000776B9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F947BCAC13495946000776B9 /* main.m in Sources */,
+				F947BCB213495946000776B9 /* MacHelloAppDelegate.m in Sources */,
+				F947BCBD13495ACB000776B9 /* HelloView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		F947BCA713495946000776B9 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F947BCA813495946000776B9 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		F947BCAD13495946000776B9 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F947BCAE13495946000776B9 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		F947BCB313495947000776B9 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F947BCB413495947000776B9 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F947BCB613495947000776B9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		F947BCB713495947000776B9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		F947BCB913495947000776B9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MacHello/MacHello-Prefix.pch";
+				INFOPLIST_FILE = "MacHello/MacHello-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		F947BCBA13495947000776B9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MacHello/MacHello-Prefix.pch";
+				INFOPLIST_FILE = "MacHello/MacHello-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F947BC9413495946000776B9 /* Build configuration list for PBXProject "MacHello" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F947BCB613495947000776B9 /* Debug */,
+				F947BCB713495947000776B9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F947BCB813495947000776B9 /* Build configuration list for PBXNativeTarget "MacHello" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F947BCB913495947000776B9 /* Debug */,
+				F947BCBA13495947000776B9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F947BC9113495946000776B9 /* Project object */;
+}

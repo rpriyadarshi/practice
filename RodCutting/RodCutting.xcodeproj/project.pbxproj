@@ -1,0 +1,201 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F9481429142EA8A5009863C3 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9481428142EA8A5009863C3 /* main.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F9481422142EA8A3009863C3 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		F9481424142EA8A4009863C3 /* RodCutting */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RodCutting; sourceTree = BUILT_PRODUCTS_DIR; };
+		F9481428142EA8A5009863C3 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		F948142A142EA8A5009863C3 /* RodCutting.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = RodCutting.1; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F9481421142EA8A3009863C3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F9481419142EA8A2009863C3 = {
+			isa = PBXGroup;
+			children = (
+				F9481427142EA8A4009863C3 /* RodCutting */,
+				F9481425142EA8A4009863C3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F9481425142EA8A4009863C3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F9481424142EA8A4009863C3 /* RodCutting */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F9481427142EA8A4009863C3 /* RodCutting */ = {
+			isa = PBXGroup;
+			children = (
+				F9481428142EA8A5009863C3 /* main.cpp */,
+				F948142A142EA8A5009863C3 /* RodCutting.1 */,
+			);
+			path = RodCutting;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F9481423142EA8A3009863C3 /* RodCutting */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F948142D142EA8A5009863C3 /* Build configuration list for PBXNativeTarget "RodCutting" */;
+			buildPhases = (
+				F9481420142EA8A3009863C3 /* Sources */,
+				F9481421142EA8A3009863C3 /* Frameworks */,
+				F9481422142EA8A3009863C3 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RodCutting;
+			productName = RodCutting;
+			productReference = F9481424142EA8A4009863C3 /* RodCutting */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F948141B142EA8A2009863C3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = VirtualSamaj;
+			};
+			buildConfigurationList = F948141E142EA8A2009863C3 /* Build configuration list for PBXProject "RodCutting" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = F9481419142EA8A2009863C3;
+			productRefGroup = F9481425142EA8A4009863C3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F9481423142EA8A3009863C3 /* RodCutting */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F9481420142EA8A3009863C3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F9481429142EA8A5009863C3 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		F948142B142EA8A5009863C3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		F948142C142EA8A5009863C3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		F948142E142EA8A5009863C3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		F948142F142EA8A5009863C3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F948141E142EA8A2009863C3 /* Build configuration list for PBXProject "RodCutting" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F948142B142EA8A5009863C3 /* Debug */,
+				F948142C142EA8A5009863C3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F948142D142EA8A5009863C3 /* Build configuration list for PBXNativeTarget "RodCutting" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F948142E142EA8A5009863C3 /* Debug */,
+				F948142F142EA8A5009863C3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F948141B142EA8A2009863C3 /* Project object */;
+}

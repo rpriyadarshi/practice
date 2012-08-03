@@ -1,0 +1,227 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F9140FCD13B7B80300157413 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9140FCC13B7B80300157413 /* main.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F9140FC613B7B80300157413 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		F9140FC813B7B80300157413 /* AVLTree */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AVLTree; sourceTree = BUILT_PRODUCTS_DIR; };
+		F9140FCC13B7B80300157413 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		F9140FCE13B7B80300157413 /* AVLTree.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = AVLTree.1; sourceTree = "<group>"; };
+		F92D9B1F13CA96D700E4BA11 /* node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = node.h; sourceTree = "<group>"; };
+		F92D9B2113CA978600E4BA11 /* binarytree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = binarytree.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F9140FC513B7B80300157413 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F9140FBD13B7B80200157413 = {
+			isa = PBXGroup;
+			children = (
+				F9140FCB13B7B80300157413 /* AVLTree */,
+				F9140FC913B7B80300157413 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F9140FC913B7B80300157413 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F9140FC813B7B80300157413 /* AVLTree */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F9140FCB13B7B80300157413 /* AVLTree */ = {
+			isa = PBXGroup;
+			children = (
+				F9140FCC13B7B80300157413 /* main.cpp */,
+				F9140FCE13B7B80300157413 /* AVLTree.1 */,
+				F92D9B1F13CA96D700E4BA11 /* node.h */,
+				F92D9B2113CA978600E4BA11 /* binarytree.h */,
+			);
+			path = AVLTree;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F9140FC713B7B80300157413 /* AVLTree */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F9140FD113B7B80300157413 /* Build configuration list for PBXNativeTarget "AVLTree" */;
+			buildPhases = (
+				F9140FC413B7B80300157413 /* Sources */,
+				F9140FC513B7B80300157413 /* Frameworks */,
+				F9140FC613B7B80300157413 /* CopyFiles */,
+				F9FB13BE13C8ECEC00B33BB9 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AVLTree;
+			productName = AVLTree;
+			productReference = F9140FC813B7B80300157413 /* AVLTree */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F9140FBF13B7B80200157413 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = VirtualSamaj;
+			};
+			buildConfigurationList = F9140FC213B7B80200157413 /* Build configuration list for PBXProject "AVLTree" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = F9140FBD13B7B80200157413;
+			productRefGroup = F9140FC913B7B80300157413 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F9140FC713B7B80300157413 /* AVLTree */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		F9FB13BE13C8ECEC00B33BB9 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${TARGET_BUILD_DIR}/${TARGET_NAME} ${TARGET_BUILD_DIR}/${TARGET_NAME}.dot\n/usr/local/bin/dot -Tpdf ${TARGET_BUILD_DIR}/${TARGET_NAME}.dot -o ${TARGET_BUILD_DIR}/${TARGET_NAME}.pdf\nopen -a /Applications/Adobe\\ Reader.app/ ${TARGET_BUILD_DIR}/${TARGET_NAME}.pdf";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F9140FC413B7B80300157413 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F9140FCD13B7B80300157413 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		F9140FCF13B7B80300157413 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		F9140FD013B7B80300157413 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		F9140FD213B7B80300157413 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				New_Setting = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_AFTER_BUILD = NO;
+			};
+			name = Debug;
+		};
+		F9140FD313B7B80300157413 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				New_Setting = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_AFTER_BUILD = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F9140FC213B7B80200157413 /* Build configuration list for PBXProject "AVLTree" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F9140FCF13B7B80300157413 /* Debug */,
+				F9140FD013B7B80300157413 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F9140FD113B7B80300157413 /* Build configuration list for PBXNativeTarget "AVLTree" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F9140FD213B7B80300157413 /* Debug */,
+				F9140FD313B7B80300157413 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F9140FBF13B7B80200157413 /* Project object */;
+}

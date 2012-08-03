@@ -1,0 +1,198 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F91BA81313A9B9090029CA2A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F91BA81213A9B9090029CA2A /* main.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F91BA80C13A9B9090029CA2A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		F91BA80E13A9B9090029CA2A /* Euclid */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Euclid; sourceTree = BUILT_PRODUCTS_DIR; };
+		F91BA81213A9B9090029CA2A /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		F91BA81413A9B9090029CA2A /* Euclid.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = Euclid.1; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F91BA80B13A9B9090029CA2A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F91BA80313A9B9090029CA2A = {
+			isa = PBXGroup;
+			children = (
+				F91BA81113A9B9090029CA2A /* Euclid */,
+				F91BA80F13A9B9090029CA2A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F91BA80F13A9B9090029CA2A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F91BA80E13A9B9090029CA2A /* Euclid */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F91BA81113A9B9090029CA2A /* Euclid */ = {
+			isa = PBXGroup;
+			children = (
+				F91BA81213A9B9090029CA2A /* main.cpp */,
+				F91BA81413A9B9090029CA2A /* Euclid.1 */,
+			);
+			path = Euclid;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F91BA80D13A9B9090029CA2A /* Euclid */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F91BA81713A9B90A0029CA2A /* Build configuration list for PBXNativeTarget "Euclid" */;
+			buildPhases = (
+				F91BA80A13A9B9090029CA2A /* Sources */,
+				F91BA80B13A9B9090029CA2A /* Frameworks */,
+				F91BA80C13A9B9090029CA2A /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Euclid;
+			productName = Euclid;
+			productReference = F91BA80E13A9B9090029CA2A /* Euclid */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F91BA80513A9B9090029CA2A /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = F91BA80813A9B9090029CA2A /* Build configuration list for PBXProject "Euclid" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = F91BA80313A9B9090029CA2A;
+			productRefGroup = F91BA80F13A9B9090029CA2A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F91BA80D13A9B9090029CA2A /* Euclid */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F91BA80A13A9B9090029CA2A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F91BA81313A9B9090029CA2A /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		F91BA81513A9B9090029CA2A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		F91BA81613A9B9090029CA2A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		F91BA81813A9B90A0029CA2A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		F91BA81913A9B90A0029CA2A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F91BA80813A9B9090029CA2A /* Build configuration list for PBXProject "Euclid" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F91BA81513A9B9090029CA2A /* Debug */,
+				F91BA81613A9B9090029CA2A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F91BA81713A9B90A0029CA2A /* Build configuration list for PBXNativeTarget "Euclid" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F91BA81813A9B90A0029CA2A /* Debug */,
+				F91BA81913A9B90A0029CA2A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F91BA80513A9B9090029CA2A /* Project object */;
+}
