@@ -90,6 +90,7 @@
 		F948141B142EA8A2009863C3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = VirtualSamaj;
 			};
 			buildConfigurationList = F948141E142EA8A2009863C3 /* Build configuration list for PBXProject "RodCutting" */;
@@ -194,6 +195,7 @@
 				F948142F142EA8A5009863C3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

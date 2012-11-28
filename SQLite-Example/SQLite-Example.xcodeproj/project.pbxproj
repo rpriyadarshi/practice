@@ -93,6 +93,9 @@
 /* Begin PBXProject section */
 		F9542E63134A682E00CBA2BC /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+			};
 			buildConfigurationList = F9542E66134A682E00CBA2BC /* Build configuration list for PBXProject "SQLite-Example" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;

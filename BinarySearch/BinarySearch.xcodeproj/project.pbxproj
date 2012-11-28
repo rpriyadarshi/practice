@@ -89,6 +89,9 @@
 /* Begin PBXProject section */
 		F9FF924E13A88CD5009BF839 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+			};
 			buildConfigurationList = F9FF925113A88CD5009BF839 /* Build configuration list for PBXProject "BinarySearch" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
@@ -191,6 +194,7 @@
 				F9FF926213A88CD6009BF839 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

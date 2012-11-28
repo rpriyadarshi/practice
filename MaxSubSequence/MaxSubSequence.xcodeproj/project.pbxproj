@@ -89,6 +89,9 @@
 /* Begin PBXProject section */
 		F904C3E113A5AEC0004C3C02 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+			};
 			buildConfigurationList = F904C3E413A5AEC0004C3C02 /* Build configuration list for PBXProject "MaxSubSequence" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
@@ -191,6 +194,7 @@
 				F904C3F513A5AEC1004C3C02 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

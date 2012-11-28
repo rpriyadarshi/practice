@@ -90,6 +90,7 @@
 		F943E9F213AB1CDC0042E38E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = VirtualSamaj;
 			};
 			buildConfigurationList = F943E9F513AB1CDC0042E38E /* Build configuration list for PBXProject "Pow" */;
@@ -194,6 +195,7 @@
 				F943EA0613AB1CDC0042E38E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

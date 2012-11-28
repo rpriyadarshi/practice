@@ -89,6 +89,9 @@
 /* Begin PBXProject section */
 		F91BA80513A9B9090029CA2A /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+			};
 			buildConfigurationList = F91BA80813A9B9090029CA2A /* Build configuration list for PBXProject "Euclid" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
@@ -191,6 +194,7 @@
 				F91BA81913A9B90A0029CA2A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -95,6 +95,7 @@
 		F9140FBF13B7B80200157413 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = VirtualSamaj;
 			};
 			buildConfigurationList = F9140FC213B7B80200157413 /* Build configuration list for PBXProject "AVLTree" */;
@@ -126,7 +127,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "${TARGET_BUILD_DIR}/${TARGET_NAME} ${TARGET_BUILD_DIR}/${TARGET_NAME}.dot\n/usr/local/bin/dot -Tpdf ${TARGET_BUILD_DIR}/${TARGET_NAME}.dot -o ${TARGET_BUILD_DIR}/${TARGET_NAME}.pdf\nopen -a /Applications/Adobe\\ Reader.app/ ${TARGET_BUILD_DIR}/${TARGET_NAME}.pdf";
+			shellScript = "${TARGET_BUILD_DIR}/${TARGET_NAME} ${TARGET_BUILD_DIR}/${TARGET_NAME}.dot\n/usr/local/bin/dot -Tpdf ${TARGET_BUILD_DIR}/${TARGET_NAME}.dot -o ${TARGET_BUILD_DIR}/${TARGET_NAME}.pdf\nopen -a /Applications/Preview.app/ ${TARGET_BUILD_DIR}/${TARGET_NAME}.pdf";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -154,7 +155,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -169,7 +170,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;
 			};
 			name = Release;

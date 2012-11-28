@@ -90,6 +90,7 @@
 		F9CC155013AD4E16008FF4C1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = VirtualSamaj;
 			};
 			buildConfigurationList = F9CC155313AD4E16008FF4C1 /* Build configuration list for PBXProject "RadixSort" */;
@@ -194,6 +195,7 @@
 				F9CC156413AD4E17008FF4C1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

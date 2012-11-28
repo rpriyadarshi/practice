@@ -90,6 +90,7 @@
 		F9CE5DFC14142EF90025855F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = VirtualSamaj;
 			};
 			buildConfigurationList = F9CE5DFF14142EF90025855F /* Build configuration list for PBXProject "Permutation" */;
@@ -194,6 +195,7 @@
 				F9CE5E1014142EFA0025855F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
