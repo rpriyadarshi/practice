@@ -8,11 +8,23 @@
 
 #include <iostream>
 
+void reverse(char* str)
+{
+    size_t len = strlen(str);
+    for (int i = 0; i < len/2; ++i) {
+        char c = str[i];
+        str[i] = str[len - i - 1];
+        str[len - i - 1] = c;
+    }
+}
+
 int main(int argc, const char * argv[])
 {
-
-    // insert code here...
-    std::cout << "Hello, World!\n";
+    char str[] = "Hello, World";
+    std::cout << str << std::endl;
+    reverse(str);
+    std::cout << str << std::endl;
+    
     return 0;
 }
 
