@@ -1,0 +1,57 @@
+Hi Rohit!
+
+Hello
+
+Write a function that, given an array of integers that represents a decimal number, increments that decimal number by one.
+
+Example:
+
+123 + 1 = 124
+[1, 2, 3] → [1, 2, 4]
+
+789 + 1 = 790
+[7, 8, 9] → [7, 9, 0]
+
+3896 + 1 = 3897
+[3, 8, 9, 6] → [3, 8, 9, 7]
+
+-------------
+#include <iostream>
+
+bool increment(int a[], int size) {
+	bool overflow = true;
+    if (a[size-1] == 9) {
+        a[size-1] = 0;
+        for (int i = size-2; i >= 0; --i)
+        {
+            if(a[i] == 9) {
+                a[i] = 0;
+            } else {
+                a[i] += 1;
+                overflow = false;
+                break;
+            }
+        }
+    } else {
+        a[size-1] += 1;
+    }
+    return overflow;
+}
+
+int main (int argc, const char** argv) {
+    int a[] = {1, 2, 3}
+    if (!increment(a, sizeof(a)/sizeof(int))) {
+        std::cout << “overflow” << std::endl;
+    }
+    int b[] = {7, 8, 9}
+    increment(b, sizeof(b)/sizeof(int)){
+        std::cout << “overflow” << std::endl;
+    }
+    
+    int c[] = {9, 9, 9}
+    increment(c, sizeof(c)/sizeof(int)){
+        std::cout << “overflow” << std::endl;
+    }
+    
+    return 0;
+}
