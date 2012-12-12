@@ -50,7 +50,7 @@ int main (int argc, const char * argv[])
     for (liter = l.begin(); liter != l.end(); ++liter)
     {
         elem& e = *liter;
-        std::cout << e << std::ends << " ";
+        std::cout << e << " ";
         std::map<int, elem>::iterator miter = m.find(e.data());
         if (miter != m.end())
         {
@@ -68,7 +68,7 @@ int main (int argc, const char * argv[])
     for (liter = l.begin(); liter != l.end(); ++liter)
     {
         elem& e = *liter;
-        std::cout << e << std::ends << " ";
+        std::cout << e << " ";
     }
     std::cout << std::endl;
     return 0;
