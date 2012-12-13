@@ -27,6 +27,10 @@ public:
     void next(Node* k) { _next = k; }
     void data(T d) { _data = d; }
     
+    std::ostream& dump(std::ostream& o) {
+        o << this << "->(" << data() << ")" << std::endl;
+        return o;
+    }
 private:
     Node* _next;
     T _data;
@@ -73,10 +77,52 @@ public:
             }
         }
     }
+    Node<T>* corrupt(int l) {
+        int i = 0;
+        Node<T>* k = head();
+        Node<T>* k1 = 0;
+        Node<T>* k2 = 0;
+        while (k) {
+            if (i == l) k1 = k;
+            k2 = k;
+            ++i;
+            k = k->next();
+        }
+        k2->next(k1);
+        return k1;
+    }
+    Node<T>* find_loop() {
+        Node<T>* k = head();
+        Node<T>* p = k;
+        Node<T>* n = k;
+        while (k) {
+            n = k->next();
+            if ((p < k && k > n) || (p > k && k < n)) {
+                break;
+            }
+            p = k;
+            k = n;
+        }
+        return n;
+    }
+    void fix_loop() {
+        Node<T>* k = head();
+        Node<T>* p = k;
+        Node<T>* n = k;
+        while (k) {
+            n = k->next();
+            if ((p < k && k > n) || (p > k && k < n)) {
+                break;
+            }
+            p = k;
+            k = n;
+        }
+        k->next(0);
+    }
     std::ostream& dump(std::ostream& o) {
         Node<T>* k = head();
         while (k) {
-            o << k << "->(" << k->data() << ")" << std::endl;
+            k->dump(o);
             k = k->next();
         }
         return o;
@@ -92,6 +138,10 @@ int main(int argc, const char * argv[])
     for (int i = 0; i < 10; ++i) {
         l.prepend(i);
     }
+    l.corrupt(3)->dump(std::cout);
+    l.find_loop()->dump(std::cout);
+    std::cout << std::endl;
+    l.fix_loop();
     l.dump(std::cout);
     return 0;
 }
