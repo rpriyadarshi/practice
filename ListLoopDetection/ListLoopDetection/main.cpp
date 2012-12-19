@@ -91,7 +91,7 @@ public:
         k2->next(k1);
         return k1;
     }
-    Node<T>* find_loop() {
+    Node<T>* find_loop_ordered() {
         Node<T>* k = head();
         Node<T>* p = k;
         Node<T>* n = k;
@@ -104,6 +104,20 @@ public:
             k = n;
         }
         return n;
+    }
+    Node<T>* find_loop_runner() {
+        Node<T>* k1 = head();
+        Node<T>* k2 = head()->next();
+        while (k2) {
+            k1 = k1->next();
+            if (k2->next()) {
+                k2 = k2->next()->next();
+            }
+            if (k1 == k2) {
+                break;
+            }
+        }
+        return k2;
     }
     void fix_loop() {
         Node<T>* k = head();
@@ -134,14 +148,18 @@ private:
 
 int main(int argc, const char * argv[])
 {
+    const int size = 10;
     List<int> l;
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < size; ++i) {
         l.prepend(i);
     }
-    l.corrupt(3)->dump(std::cout);
-    l.find_loop()->dump(std::cout);
-    std::cout << std::endl;
-    l.fix_loop();
+    for (int i = 0; i < size - 1; ++i) {
+        l.corrupt(i)->dump(std::cout);
+        //l.find_loop_ordered()->dump(std::cout);
+        l.find_loop_runner()->dump(std::cout);
+        std::cout << std::endl;
+        l.fix_loop();
+    }
     l.dump(std::cout);
     return 0;
 }
