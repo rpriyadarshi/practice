@@ -18,6 +18,20 @@ public:
     size_t size() {
         return (_begin < _end ? _end - _begin : _begin - _end) + 1;
     }
+    size_t empty(T* _min, T* _max) {
+        size_t empty = 0;
+        if (_begin < _end) { // Natural Array
+            empty = _current - _begin + 1;
+        } else { // Circular Array
+            if (_current >= _begin && _current <= _max) {
+                empty = _current - _begin + 1;
+            } else if (_current >= _min && _current <= _end) {
+                empty = _max - _begin + _current - _min + 1;
+            }
+        }
+        
+        return empty;
+    }
     bool push(T v, T* _min, T* _max) {
         *_current = v;
         bool overflow = _current == _begin;
@@ -74,20 +88,26 @@ public:
     Stack<T>& stack1() { return _stack1; }
     Stack<T>& stack2() { return _stack2; }
     Stack<T>& stack3() { return _stack3; }
+    T* min() { return _data; }
+    T* max() { return _data + _size - 1; }
     
     size_t size1() { return _stack1.size(); }
     size_t size2() { return _stack2.size(); }
     size_t size3() { return _stack3.size(); }
     
-    bool push1(T v) { return _stack1.push(v, _data, _data + _size - 1); }
-    bool push2(T v) { return _stack2.push(v, _data, _data + _size - 1); }
-    bool push3(T v) { return _stack3.push(v, _data, _data + _size - 1); }
+    bool push1(T v) { return _stack1.push(v, min(), max()); }
+    bool push2(T v) { return _stack2.push(v, min(), max()); }
+    bool push3(T v) { return _stack3.push(v, min(), max()); }
 
-    T pop1() { return _stack1.pop(_data, _data + _size - 1); }
-    T pop2() { return _stack2.pop(_data, _data + _size - 1); }
-    T pop3() { return _stack3.pop(_data, _data + _size - 1); }
+    T pop1() { return _stack1.pop(min(), max()); }
+    T pop2() { return _stack2.pop(min(), max()); }
+    T pop3() { return _stack3.pop(min(), max()); }
 
-    void calc_empty() {}
+    size_t empty() {
+        return stack1().empty(min(), max()) +
+            stack2().empty(min(), max()) +
+            stack3().empty(min(), max());
+    }
     void re_distribute() {}
     
 public:
@@ -115,13 +135,15 @@ int main(int argc, const char * argv[])
     }
     
     for (int i = 0; i < ns.size1(); ++i) {
-        std::cout << ns.pop1() << std::endl;
+        std::cout << ns.pop1() << " " << ns.empty() << std::endl;
     }
+    std::cout << std::endl;
     for (int i = 0; i < ns.size2(); ++i) {
-        std::cout << ns.pop2() << std::endl;
+        std::cout << ns.pop2() << " " << ns.empty() << std::endl;
     }
+    std::cout << std::endl;
     for (int i = 0; i < ns.size3(); ++i) {
-        std::cout << ns.pop3() << std::endl;
+        std::cout << ns.pop3() << " " << ns.empty() << std::endl;
     }
     return 0;
 }
