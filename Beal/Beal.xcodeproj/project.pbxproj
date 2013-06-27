@@ -1,0 +1,230 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F92F5E411763AE6E006A043C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F92F5E401763AE6E006A043C /* main.cpp */; };
+		F92F5E431763AE6E006A043C /* Beal.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = F92F5E421763AE6E006A043C /* Beal.1 */; };
+		F956FC5217683ECA00305FF7 /* beal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F956FC5117683ECA00305FF7 /* beal.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F92F5E3B1763AE6E006A043C /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				F92F5E431763AE6E006A043C /* Beal.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		F92F5E3D1763AE6E006A043C /* Beal */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Beal; sourceTree = BUILT_PRODUCTS_DIR; };
+		F92F5E401763AE6E006A043C /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		F92F5E421763AE6E006A043C /* Beal.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = Beal.1; sourceTree = "<group>"; };
+		F956FC5017683DE200305FF7 /* beal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = beal.h; sourceTree = "<group>"; };
+		F956FC5117683ECA00305FF7 /* beal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = beal.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F92F5E3A1763AE6E006A043C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F92F5E341763AE6E006A043C = {
+			isa = PBXGroup;
+			children = (
+				F92F5E3F1763AE6E006A043C /* Beal */,
+				F92F5E3E1763AE6E006A043C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F92F5E3E1763AE6E006A043C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F92F5E3D1763AE6E006A043C /* Beal */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F92F5E3F1763AE6E006A043C /* Beal */ = {
+			isa = PBXGroup;
+			children = (
+				F92F5E401763AE6E006A043C /* main.cpp */,
+				F956FC5017683DE200305FF7 /* beal.h */,
+				F956FC5117683ECA00305FF7 /* beal.cpp */,
+				F92F5E421763AE6E006A043C /* Beal.1 */,
+			);
+			path = Beal;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F92F5E3C1763AE6E006A043C /* Beal */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F92F5E461763AE6E006A043C /* Build configuration list for PBXNativeTarget "Beal" */;
+			buildPhases = (
+				F92F5E391763AE6E006A043C /* Sources */,
+				F92F5E3A1763AE6E006A043C /* Frameworks */,
+				F92F5E3B1763AE6E006A043C /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Beal;
+			productName = Beal;
+			productReference = F92F5E3D1763AE6E006A043C /* Beal */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F92F5E351763AE6E006A043C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Rohit Priyadarshi";
+			};
+			buildConfigurationList = F92F5E381763AE6E006A043C /* Build configuration list for PBXProject "Beal" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = F92F5E341763AE6E006A043C;
+			productRefGroup = F92F5E3E1763AE6E006A043C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F92F5E3C1763AE6E006A043C /* Beal */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F92F5E391763AE6E006A043C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F92F5E411763AE6E006A043C /* main.cpp in Sources */,
+				F956FC5217683ECA00305FF7 /* beal.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		F92F5E441763AE6E006A043C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		F92F5E451763AE6E006A043C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		F92F5E471763AE6E006A043C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		F92F5E481763AE6E006A043C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F92F5E381763AE6E006A043C /* Build configuration list for PBXProject "Beal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F92F5E441763AE6E006A043C /* Debug */,
+				F92F5E451763AE6E006A043C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F92F5E461763AE6E006A043C /* Build configuration list for PBXNativeTarget "Beal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F92F5E471763AE6E006A043C /* Debug */,
+				F92F5E481763AE6E006A043C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F92F5E351763AE6E006A043C /* Project object */;
+}
