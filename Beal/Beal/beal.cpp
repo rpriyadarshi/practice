@@ -8,6 +8,8 @@
 
 #include "beal.h"
 
+#define _DEBUG
+
 namespace Beal {
     Vector::Vector(size_t s)
     : _size(s), _data(new size_t[s])
@@ -150,7 +152,7 @@ namespace Beal {
         return power(table().index(x, y));
     }
     
-    bool Cache::check(size_t i, size_t j) const
+    bool Cache::checkSort(size_t i, size_t j) const
     {
         size_t p = power(i);
         for (size_t l = i + 1; l < j; ++l) {
@@ -164,10 +166,10 @@ namespace Beal {
         return true;
     }
     
-    bool Cache::check() const
+    bool Cache::checkSort() const
     {
         size_t l_max = table().xSize() * table().ySize();
-        return check(0, l_max);
+        return checkSort(0, l_max);
     }
     
     void Cache::sort()
@@ -175,7 +177,9 @@ namespace Beal {
         size_t l_max = table().xSize() * table().ySize();
         size_t l_step = table().xSize();
         while (l_step <= l_max) {
+#ifdef _DEBUG
             std::cout << "SIZE - " << l_step << std::endl;
+#endif
             size_t i = 0, j = 0, k = 0, l = 0;
             while (l < l_max) {
                 i = l;
@@ -199,10 +203,11 @@ namespace Beal {
 
     void Cache::merge(size_t i1, size_t i2, size_t j1, size_t j2)
     {
+#ifdef _DEBUG
         std::cout << "BINS - " << i1 << " " << i2 << " " << j1 << " " << j2 << std::endl;
-        check(i1, i2);
-        check(j1, j2);
-        
+        checkSort(i1, i2);
+        checkSort(j1, j2);
+#endif
         size_t idx_size = i2 - i1 + j2 - j1;
         Vector idx(idx_size);
         size_t i = i1;
@@ -243,9 +248,42 @@ namespace Beal {
         }
     }
     
+    size_t Cache::find(size_t v) const
+    {
+        size_t l_min = 0;
+        size_t l_max = helper().size();
+        while (l_max - l_min) {
+            size_t w = (l_max - l_min) / 2;
+            size_t i = l_min + w;
+            size_t p = power(i);
+            if (v < p) {
+                l_max = i;
+            } else if (v > p) {
+                l_min = i;
+            } else {
+                return i;
+            }
+        }
+        return SIZE_T_MAX;
+    }
+    
+    bool Cache::calculate(size_t a, size_t x, size_t b, size_t y) const
+    {
+        size_t v1 = table().data(a - 1, x - 1);
+        size_t v2 = table().data(b - 1, y - 1);
+        size_t v3 = v1 + v2;
+        size_t idx = find(v3);
+#ifdef _DEBUG
+        size_t idx1 = find(v1);
+        size_t idx2 = find(v2);
+        std::cout << v1 << " " << v2 << " " << v3 << " " << idx1 << " " << idx2 << " " << idx << std::endl;
+#endif
+        return true;
+    }
+    
     void Cache::print(std::ostream& o) const
     {
-#if 0
+#ifdef _DEBUG
         table().print(o);
         o << std::endl;
         helper().print(o);
@@ -255,7 +293,7 @@ namespace Beal {
             o << power(i) << " ";
         }
         o << std::endl;
-        o << (check() ? "OK" : "ERROR");
+        o << (checkSort() ? "OK" : "ERROR");
         o << std::endl;
     }
     

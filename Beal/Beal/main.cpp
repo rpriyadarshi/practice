@@ -10,11 +10,15 @@
 
 int main(int argc, const char * argv[])
 {
-    Beal::Cache c(25, 10);
-    //Beal::Cache c(10, 15);
-    //Beal::Cache c(100, 9);
-    c.sort();
-    std::cout << c;
+    Beal::Cache b(25, 10);
+    //Beal::Cache b(10, 15);
+    //Beal::Cache b(100, 9);
+    b.sort();
+    std::cout << b;
+    // 3^3 + 6^3 = 3^5
+    // 7^6 + 7^7 = 98^3
+    b.calculate(3, 3, 6, 3);
+    b.calculate(7, 6, 7, 7);
     return 0;
 }
 

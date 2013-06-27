@@ -80,8 +80,11 @@ namespace Beal {
         const size_t& power(size_t x, size_t y) const;
         const size_t& table(size_t i) const { return table()[i]; }
         const size_t& helper(size_t i) const { return helper()[i]; }
-        bool check() const;
+        
+        bool checkSort() const;
         void sort();
+        size_t find(size_t v) const;
+        bool calculate(size_t a, size_t x, size_t b, size_t y) const;
         void print(std::ostream& o) const;
 
     private:
@@ -92,7 +95,8 @@ namespace Beal {
         size_t& power(size_t x, size_t y);
         size_t& table(size_t i) { return table()[i]; }
         size_t& helper(size_t i) { return helper()[i]; }
-        bool check(size_t i, size_t j) const;
+        
+        bool checkSort(size_t i, size_t j) const;
         void merge(size_t x1, size_t x2, size_t y1, size_t y2);
         
     private:
