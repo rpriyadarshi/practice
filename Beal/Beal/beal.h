@@ -16,28 +16,31 @@ namespace Beal {
     template <typename T> T Min(T& t1, T& t2) { return t1 < t2 ? t1 : t2; }
     template <typename T> T Max(T& t1, T& t2) { return t1 > t2 ? t1 : t2; }
     
+    template <typename T>
     class Vector
     {
     public:
         explicit Vector(size_t s);
         ~Vector();
         
-        size_t& operator[](size_t i) const;
+        T& operator[](size_t i) const;
         size_t size() const { return _size; }
         void print(std::ostream& o) const;
         
     private:
-        size_t& data(size_t idx) const { return _data[idx]; }
+        T& data(size_t idx) const { return _data[idx]; }
         void fill();
         void linear();
         
     private:
         size_t  _size;
-        size_t* _data;
+        T*      _data;
     };
     
-    std::ostream& operator<<(std::ostream& o, Vector& v);
+    template <typename T>
+    std::ostream& operator<<(std::ostream& o, Vector<T>& v);
 
+    template <typename T>
     class Array
     {
     public:
@@ -47,14 +50,14 @@ namespace Beal {
         size_t xSize() const { return _xSize; }
         size_t ySize() const { return _ySize; }
         
-        size_t& operator[](size_t i) const;
-        size_t& operator()(size_t x, size_t y) const;
-        size_t& data(size_t x, size_t y) const;
+        T& operator[](size_t i) const;
+        T& operator()(size_t x, size_t y) const;
+        T& data(size_t x, size_t y) const;
         size_t index(size_t x, size_t y) const;
         void print(std::ostream& o) const;
         
     private:
-        size_t& data(size_t idx) const { return _data[idx]; }
+        T& data(size_t idx) const { return _data[idx]; }
         void fill();
         void linear();
         void power(size_t y);
@@ -62,53 +65,56 @@ namespace Beal {
     private:
         size_t  _xSize;
         size_t  _ySize;
-        size_t* _data;
+        T*      _data;
     };
     
-    std::ostream& operator<<(std::ostream& o, Array& a);
+    template <typename T>
+    std::ostream& operator<<(std::ostream& o, Array<T>& a);
     
+    template <typename T>
     class Cache
     {
     public:
         Cache(size_t x, size_t y);
         ~Cache();
         
-        const Array& table() const { return _table; }
-        const Vector& helper() const { return _helper; }
+        const Array<T>& table() const { return _table; }
+        const Vector<T>& helper() const { return _helper; }
         
-        const size_t& power(size_t i) const;
-        const size_t& power(size_t x, size_t y) const;
-        const size_t& table(size_t i) const { return table()[i]; }
-        const size_t& helper(size_t i) const { return helper()[i]; }
+        const T& power(size_t i) const;
+        const T& power(size_t x, size_t y) const;
+        const T& table(size_t i) const { return table()[i]; }
+        const T& helper(size_t i) const { return helper()[i]; }
         
         bool checkSort() const;
         void sort();
-        size_t find(size_t v) const;
+        size_t find(T v) const;
         bool search() const;
-        bool calculate(size_t a, size_t x, size_t b, size_t y, size_t& c, size_t& z) const;
+        bool calculate(T a, T x, T b, T y, T& c, T& z) const;
         
         void print(std::ostream& o) const;
-        void print(std::ostream& o, size_t a, size_t x, size_t b, size_t y, size_t c, size_t z) const;
+        void print(std::ostream& o, T a, T x, T b, T y, T c, T z) const;
 
     private:
-        Array& table() { return _table; }
-        Vector& helper() { return _helper; }
+        Array<T>& table() { return _table; }
+        Vector<T>& helper() { return _helper; }
         
-        size_t& power(size_t i);
-        size_t& power(size_t x, size_t y);
-        size_t& table(size_t i) { return table()[i]; }
-        size_t& helper(size_t i) { return helper()[i]; }
+        T& power(size_t i);
+        T& power(size_t x, size_t y);
+        T& table(size_t i) { return table()[i]; }
+        T& helper(size_t i) { return helper()[i]; }
         
         bool checkSort(size_t i, size_t j) const;
         void merge(size_t x1, size_t x2, size_t y1, size_t y2);
-        bool search(size_t a, size_t x, size_t b, size_t y, size_t& c, size_t& z) const;
+        bool search(T a, T x, T b, T y, T& c, T& z) const;
         
     private:
-        Array   _table;
-        Vector  _helper;
+        Array<T>   _table;
+        Vector<T>  _helper;
     };
     
-    std::ostream& operator<<(std::ostream& o, Cache& c);
+    template <typename T>
+    std::ostream& operator<<(std::ostream& o, Cache<T>& c);
 }
 
 #endif

@@ -8,33 +8,41 @@
 
 #include "beal.h"
 
+#ifndef Beal_beal_hpp
+#define Beal_beal_hpp
+
 //#define _DEBUG
 
 namespace Beal {
-    Vector::Vector(size_t s)
-    : _size(s), _data(new size_t[s])
+    template <typename T>
+    Vector<T>::Vector(size_t s)
+    : _size(s), _data(new T[s])
     {
         fill();
     }
     
-    Vector::~Vector()
+    template <typename T>
+    Vector<T>::~Vector()
     {
         delete _data;
     }
     
-    void Vector::fill()
+    template <typename T>
+    void Vector<T>::fill()
     {
         linear();
     }
     
-    void Vector::linear()
+    template <typename T>
+    void Vector<T>::linear()
     {
         for (size_t i = 0; i < size(); ++i) {
             data(i) = i;
         }
     }
 
-    void Vector::print(std::ostream& o) const
+    template <typename T>
+    void Vector<T>::print(std::ostream& o) const
     {
         for (size_t i = 0; i < size(); ++i) {
             o << data(i) << " ";
@@ -42,39 +50,46 @@ namespace Beal {
         o << std::endl;
     }
     
-    size_t& Vector::operator[](size_t i) const
+    template <typename T>
+    T& Vector<T>::operator[](size_t i) const
     {
         return data(i);
     }
     
-    std::ostream& operator<<(std::ostream& o, Vector& v)
+    template <typename T>
+    std::ostream& operator<<(std::ostream& o, Vector<T>& v)
     {
         v.print(o);
         return o;
     }
     
-    Array::Array(size_t x, size_t y)
-    : _xSize(x), _ySize(y), _data(new size_t[x * y])
+    template <typename T>
+    Array<T>::Array(size_t x, size_t y)
+    : _xSize(x), _ySize(y), _data(new T[x * y])
     {
         fill();
     }
     
-    Array::~Array()
+    template <typename T>
+    Array<T>::~Array()
     {
         delete _data;
     }
     
-    size_t& Array::data(size_t x, size_t y) const
+    template <typename T>
+    T& Array<T>::data(size_t x, size_t y) const
     {
         return data(index(x, y));
     }
     
-    size_t Array::index(size_t x, size_t y) const
+    template <typename T>
+    size_t Array<T>::index(size_t x, size_t y) const
     {
         return x + y * xSize();
     }
     
-    void Array::fill()
+    template <typename T>
+    void Array<T>::fill()
     {
         linear();
         for (size_t y = 1; y < ySize(); ++y) {
@@ -82,7 +97,8 @@ namespace Beal {
         }
     }
     
-    void Array::linear()
+    template <typename T>
+    void Array<T>::linear()
     {
         size_t i = 1;
         for (size_t x = 0; x < xSize(); ++x) {
@@ -90,14 +106,16 @@ namespace Beal {
         }
     }
     
-    void Array::power(size_t y)
+    template <typename T>
+    void Array<T>::power(size_t y)
     {
         for (size_t x = 0; x < xSize(); ++x) {
             data(x, y) = data(x, y - 1) * data(x, 0);
         }
     }
     
-    void Array::print(std::ostream& o) const
+    template <typename T>
+    void Array<T>::print(std::ostream& o) const
     {
         for (size_t y = 0; y < ySize(); ++y) {
             for (size_t x = 0; x < xSize(); ++x) {
@@ -107,52 +125,62 @@ namespace Beal {
         }
     }
     
-    size_t& Array::operator[](size_t i) const
+    template <typename T>
+    T& Array<T>::operator[](size_t i) const
     {
         return data(i);
     }
 
-    size_t& Array::operator()(size_t x, size_t y) const
+    template <typename T>
+    T& Array<T>::operator()(size_t x, size_t y) const
     {
         return data(x, y);
     }
 
-    std::ostream& operator<<(std::ostream& o, Array& a)
+    template <typename T>
+    std::ostream& operator<<(std::ostream& o, Array<T>& a)
     {
         a.print(o);
         return o;
     }
     
-    Cache::Cache(size_t x, size_t y)
+    template <typename T>
+    Cache<T>::Cache(size_t x, size_t y)
     : _table(x, y), _helper(x * y)
     {
     }
     
-    Cache::~Cache()
+    template <typename T>
+    Cache<T>::~Cache()
     {
     }
     
-    size_t& Cache::power(size_t i)
-    {
-        return table()[helper()[i]];
-    }
-    
-    const size_t& Cache::power(size_t i) const
+    template <typename T>
+    T& Cache<T>::power(size_t i)
     {
         return table()[helper()[i]];
     }
     
-    size_t& Cache::power(size_t x, size_t y)
+    template <typename T>
+    const T& Cache<T>::power(size_t i) const
+    {
+        return table()[helper()[i]];
+    }
+    
+    template <typename T>
+    T& Cache<T>::power(size_t x, size_t y)
     {
         return power(table().index(x, y));
     }
     
-    const size_t& Cache::power(size_t x, size_t y) const
+    template <typename T>
+    const T& Cache<T>::power(size_t x, size_t y) const
     {
         return power(table().index(x, y));
     }
     
-    bool Cache::checkSort(size_t i, size_t j) const
+    template <typename T>
+    bool Cache<T>::checkSort(size_t i, size_t j) const
     {
         size_t p = power(i);
         for (size_t l = i + 1; l < j; ++l) {
@@ -166,13 +194,15 @@ namespace Beal {
         return true;
     }
     
-    bool Cache::checkSort() const
+    template <typename T>
+    bool Cache<T>::checkSort() const
     {
         size_t l_max = table().xSize() * table().ySize();
         return checkSort(0, l_max);
     }
     
-    void Cache::sort()
+    template <typename T>
+    void Cache<T>::sort()
     {
         size_t l_max = table().xSize() * table().ySize();
         size_t l_step = table().xSize();
@@ -201,7 +231,8 @@ namespace Beal {
         std::cout << std::endl;
     }
 
-    void Cache::merge(size_t i1, size_t i2, size_t j1, size_t j2)
+    template <typename T>
+    void Cache<T>::merge(size_t i1, size_t i2, size_t j1, size_t j2)
     {
 #ifdef _DEBUG
         std::cout << "BINS - " << i1 << " " << i2 << " " << j1 << " " << j2 << std::endl;
@@ -209,7 +240,7 @@ namespace Beal {
         checkSort(j1, j2);
 #endif
         size_t idx_size = i2 - i1 + j2 - j1;
-        Vector idx(idx_size);
+        Vector<T> idx(idx_size);
         size_t i = i1;
         size_t j = j1;
         size_t k = 0;
@@ -248,7 +279,8 @@ namespace Beal {
         }
     }
     
-    size_t Cache::find(size_t v) const
+    template <typename T>
+    size_t Cache<T>::find(T v) const
     {
         size_t l_min = 0;
         size_t l_max = helper().size();
@@ -267,7 +299,8 @@ namespace Beal {
         return SIZE_T_MAX;
     }
     
-    bool Cache::calculate(size_t a, size_t x, size_t b, size_t y, size_t& c, size_t& z) const
+    template <typename T>
+    bool Cache<T>::calculate(T a, T x, T b, T y, T& c, T& z) const
     {
         bool status = search(a - 1, x - 1, b - 1, y - 1, c, z);
         c++;
@@ -275,27 +308,28 @@ namespace Beal {
         return status;
     }
     
-    bool Cache::search() const
+    template <typename T>
+    bool Cache<T>::search() const
     {
         bool found = false;
         size_t l_max = table().xSize() * table().ySize();
         for (size_t i = 0; i < l_max; ++i) {
-            size_t v1 = power(i);
+            T v1 = power(i);
             for (size_t j = 0; j < l_max; ++j) {
-                size_t v2 = power(j);
-                size_t v3 = v1 + v2;
+                T v2 = power(j);
+                T v3 = v1 + v2;
                 size_t idx = find(v3);
                 if (idx == SIZE_T_MAX) {
                     continue;
                 }
                 size_t idx1 = helper()[i];
                 size_t idx2 = helper()[j];
-                size_t a = idx1 % table().xSize();
-                size_t x = idx1 / table().xSize();
-                size_t b = idx2 % table().xSize();
-                size_t y = idx2 / table().xSize();
-                size_t c = idx % table().xSize();
-                size_t z = idx / table().xSize();
+                T a = idx1 % table().xSize();
+                T x = idx1 / table().xSize();
+                T b = idx2 % table().xSize();
+                T y = idx2 / table().xSize();
+                T c = idx % table().xSize();
+                T z = idx / table().xSize();
                 print(std::cout, a + 1, x + 1, b + 1, y + 1, c + 1, z + 1);
                 found = true;
             }
@@ -303,11 +337,12 @@ namespace Beal {
         return found;
     }
     
-    bool Cache::search(size_t a, size_t x, size_t b, size_t y, size_t& c, size_t& z) const
+    template <typename T>
+    bool Cache<T>::search(T a, T x, T b, T y, T& c, T& z) const
     {
-        size_t v1 = table().data(a, x);
-        size_t v2 = table().data(b, y);
-        size_t v3 = v1 + v2;
+        T v1 = table().data(a, x);
+        T v2 = table().data(b, y);
+        T v3 = v1 + v2;
         size_t idx = find(v3);
         if (idx == SIZE_T_MAX) {
             return false;
@@ -317,14 +352,13 @@ namespace Beal {
         return true;
     }
     
-    void Cache::print(std::ostream& o) const
+    template <typename T>
+    void Cache<T>::print(std::ostream& o) const
     {
-#ifdef _DEBUG
         table().print(o);
         o << std::endl;
         helper().print(o);
         o << std::endl;
-#endif
         for (size_t i = 0; i < helper().size(); ++i) {
             o << power(i) << " ";
         }
@@ -333,14 +367,18 @@ namespace Beal {
         o << std::endl;
     }
     
-    void Cache::print(std::ostream& o, size_t a, size_t x, size_t b, size_t y, size_t c, size_t z) const
+    template <typename T>
+    void Cache<T>::print(std::ostream& o, T a, T x, T b, T y, T c, T z) const
     {
         std::cout << "EQUATION - " << a << "^" << x << " + " << b << "^" << y << " = " << c << "^" << z << std::endl;
     }
     
-    std::ostream& operator<<(std::ostream& o, Cache& c)
+    template <typename T>
+    std::ostream& operator<<(std::ostream& o, Cache<T>& c)
     {
         c.print(o);
         return o;
     }
 }
+
+#endif
