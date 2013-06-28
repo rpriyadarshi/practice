@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		F92F5E411763AE6E006A043C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F92F5E401763AE6E006A043C /* main.cpp */; };
 		F92F5E431763AE6E006A043C /* Beal.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = F92F5E421763AE6E006A043C /* Beal.1 */; };
-		F956FC5217683ECA00305FF7 /* beal.hpp in Sources */ = {isa = PBXBuildFile; fileRef = F956FC5117683ECA00305FF7 /* beal.hpp */; };
+		F956FC5217683ECA00305FF7 /* beal_impl.h in Sources */ = {isa = PBXBuildFile; fileRef = F956FC5117683ECA00305FF7 /* beal_impl.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,7 +30,7 @@
 		F92F5E401763AE6E006A043C /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		F92F5E421763AE6E006A043C /* Beal.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = Beal.1; sourceTree = "<group>"; };
 		F956FC5017683DE200305FF7 /* beal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = beal.h; sourceTree = "<group>"; };
-		F956FC5117683ECA00305FF7 /* beal.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = beal.hpp; sourceTree = "<group>"; };
+		F956FC5117683ECA00305FF7 /* beal_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = beal_impl.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,7 +65,7 @@
 			children = (
 				F92F5E401763AE6E006A043C /* main.cpp */,
 				F956FC5017683DE200305FF7 /* beal.h */,
-				F956FC5117683ECA00305FF7 /* beal.hpp */,
+				F956FC5117683ECA00305FF7 /* beal_impl.h */,
 				F92F5E421763AE6E006A043C /* Beal.1 */,
 			);
 			path = Beal;
@@ -123,7 +123,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F92F5E411763AE6E006A043C /* main.cpp in Sources */,
-				F956FC5217683ECA00305FF7 /* beal.hpp in Sources */,
+				F956FC5217683ECA00305FF7 /* beal_impl.h in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

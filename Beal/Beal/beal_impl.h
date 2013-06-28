@@ -8,8 +8,8 @@
 
 #include "beal.h"
 
-#ifndef Beal_beal_hpp
-#define Beal_beal_hpp
+#ifndef Beal_beal_impl_h
+#define Beal_beal_impl_h
 
 //#define _DEBUG
 
@@ -182,15 +182,19 @@ namespace Beal {
     template <typename T>
     bool Cache<T>::checkSort(size_t i, size_t j) const
     {
+        error(false);
         size_t p = power(i);
         for (size_t l = i + 1; l < j; ++l) {
             size_t c = power(l);
             if (c < p) {
                 std::cout << "ERROR @ " << l << " " << p << " " << c << std::endl;
+                std::cout << "        Likely cause is that you have overflow." << std::endl;
+                error(true);
                 return false;
             }
             p = c;
         }
+        error(false);
         return true;
     }
     
@@ -202,7 +206,7 @@ namespace Beal {
     }
     
     template <typename T>
-    void Cache<T>::sort()
+    bool Cache<T>::sort()
     {
         size_t l_max = table().xSize() * table().ySize();
         size_t l_step = table().xSize();
@@ -228,7 +232,10 @@ namespace Beal {
             }
             l_step <<= 1;
         }
+#ifdef _DEBUG
         std::cout << std::endl;
+#endif
+        return checkSort();
     }
 
     template <typename T>
@@ -300,8 +307,23 @@ namespace Beal {
     }
     
     template <typename T>
-    bool Cache<T>::calculate(T a, T x, T b, T y, T& c, T& z) const
+    size_t Cache<T>::coefficient(size_t idx) const
     {
+        return idx % table().xSize();
+    }
+    
+    template <typename T>
+    size_t Cache<T>::exponent(size_t idx) const
+    {
+        return idx / table().xSize();
+    }
+    
+    template <typename T>
+    bool Cache<T>::calculate(size_t a, size_t x, size_t b, size_t y, size_t& c, size_t& z) const
+    {
+        if (error()) {
+            return false;
+        }
         bool status = search(a - 1, x - 1, b - 1, y - 1, c, z);
         c++;
         z++;
@@ -311,6 +333,9 @@ namespace Beal {
     template <typename T>
     bool Cache<T>::search() const
     {
+        if (error()) {
+            return false;
+        }
         bool found = false;
         size_t l_max = table().xSize() * table().ySize();
         for (size_t i = 0; i < l_max; ++i) {
@@ -318,37 +343,39 @@ namespace Beal {
             for (size_t j = 0; j < l_max; ++j) {
                 T v2 = power(j);
                 T v3 = v1 + v2;
-                size_t idx = find(v3);
-                if (idx == SIZE_T_MAX) {
+                size_t idx3 = find(v3);
+                if (idx3 == SIZE_T_MAX) {
                     continue;
                 }
-                size_t idx1 = helper()[i];
-                size_t idx2 = helper()[j];
-                T a = idx1 % table().xSize();
-                T x = idx1 / table().xSize();
-                T b = idx2 % table().xSize();
-                T y = idx2 / table().xSize();
-                T c = idx % table().xSize();
-                T z = idx / table().xSize();
-                print(std::cout, a + 1, x + 1, b + 1, y + 1, c + 1, z + 1);
                 found = true;
+                
+                size_t idx1 = helper(i);
+                size_t idx2 = helper(j);
+                
+                size_t a = coefficient(idx1);
+                size_t x = exponent(idx1);
+                size_t b = coefficient(idx2);
+                size_t y = exponent(idx2);
+                size_t c = coefficient(idx3);
+                size_t z = exponent(idx3);
+                print(std::cout, a + 1, x + 1, b + 1, y + 1, c + 1, z + 1);
             }
         }
         return found;
     }
     
     template <typename T>
-    bool Cache<T>::search(T a, T x, T b, T y, T& c, T& z) const
+    bool Cache<T>::search(size_t a, size_t x, size_t b, size_t y, size_t& c, size_t& z) const
     {
         T v1 = table().data(a, x);
         T v2 = table().data(b, y);
         T v3 = v1 + v2;
-        size_t idx = find(v3);
-        if (idx == SIZE_T_MAX) {
+        size_t idx3 = find(v3);
+        if (idx3 == SIZE_T_MAX) {
             return false;
         }
-        c = idx % table().xSize();
-        z = idx / table().xSize();
+        c = coefficient(idx3);
+        z = exponent(idx3);
         return true;
     }
     
@@ -363,12 +390,10 @@ namespace Beal {
             o << power(i) << " ";
         }
         o << std::endl;
-        o << (checkSort() ? "OK" : "ERROR");
-        o << std::endl;
     }
     
     template <typename T>
-    void Cache<T>::print(std::ostream& o, T a, T x, T b, T y, T c, T z) const
+    void Cache<T>::print(std::ostream& o, size_t a, size_t x, size_t b, size_t y, size_t c, size_t z) const
     {
         std::cout << "EQUATION - " << a << "^" << x << " + " << b << "^" << y << " = " << c << "^" << z << std::endl;
     }

@@ -80,6 +80,7 @@ namespace Beal {
         
         const Array<T>& table() const { return _table; }
         const Vector<T>& helper() const { return _helper; }
+        const bool error() const { return _error; }
         
         const T& power(size_t i) const;
         const T& power(size_t x, size_t y) const;
@@ -87,18 +88,21 @@ namespace Beal {
         const T& helper(size_t i) const { return helper()[i]; }
         
         bool checkSort() const;
-        void sort();
+        bool sort();
         size_t find(T v) const;
         bool search() const;
-        bool calculate(T a, T x, T b, T y, T& c, T& z) const;
+        bool calculate(size_t a, size_t x, size_t b, size_t y, size_t& c, size_t& z) const;
+        size_t coefficient(size_t idx) const;
+        size_t exponent(size_t idx) const;
         
         void print(std::ostream& o) const;
-        void print(std::ostream& o, T a, T x, T b, T y, T c, T z) const;
+        void print(std::ostream& o, size_t a, size_t x, size_t b, size_t y, size_t c, size_t z) const;
 
     private:
         Array<T>& table() { return _table; }
         Vector<T>& helper() { return _helper; }
-        
+        void error(bool e) const { _error = e; }
+
         T& power(size_t i);
         T& power(size_t x, size_t y);
         T& table(size_t i) { return table()[i]; }
@@ -106,11 +110,12 @@ namespace Beal {
         
         bool checkSort(size_t i, size_t j) const;
         void merge(size_t x1, size_t x2, size_t y1, size_t y2);
-        bool search(T a, T x, T b, T y, T& c, T& z) const;
+        bool search(size_t a, size_t x, size_t b, size_t y, size_t& c, size_t& z) const;
         
     private:
-        Array<T>   _table;
-        Vector<T>  _helper;
+        Array<T>        _table;
+        Vector<T>       _helper;
+        mutable bool    _error;
     };
     
     template <typename T>
