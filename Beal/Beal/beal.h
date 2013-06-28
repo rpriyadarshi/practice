@@ -84,8 +84,11 @@ namespace Beal {
         bool checkSort() const;
         void sort();
         size_t find(size_t v) const;
-        bool calculate(size_t a, size_t x, size_t b, size_t y) const;
+        bool search() const;
+        bool calculate(size_t a, size_t x, size_t b, size_t y, size_t& c, size_t& z) const;
+        
         void print(std::ostream& o) const;
+        void print(std::ostream& o, size_t a, size_t x, size_t b, size_t y, size_t c, size_t z) const;
 
     private:
         Array& table() { return _table; }
@@ -98,6 +101,7 @@ namespace Beal {
         
         bool checkSort(size_t i, size_t j) const;
         void merge(size_t x1, size_t x2, size_t y1, size_t y2);
+        bool search(size_t a, size_t x, size_t b, size_t y, size_t& c, size_t& z) const;
         
     private:
         Array   _table;

@@ -8,7 +8,7 @@
 
 #include "beal.h"
 
-#define _DEBUG
+//#define _DEBUG
 
 namespace Beal {
     Vector::Vector(size_t s)
@@ -252,8 +252,8 @@ namespace Beal {
     {
         size_t l_min = 0;
         size_t l_max = helper().size();
-        while (l_max - l_min) {
-            size_t w = (l_max - l_min) / 2;
+        while (l_max - l_min > 1) {
+            size_t w = (l_max - l_min) >> 1;
             size_t i = l_min + w;
             size_t p = power(i);
             if (v < p) {
@@ -261,23 +261,59 @@ namespace Beal {
             } else if (v > p) {
                 l_min = i;
             } else {
-                return i;
+                return helper()[i];
             }
         }
         return SIZE_T_MAX;
     }
     
-    bool Cache::calculate(size_t a, size_t x, size_t b, size_t y) const
+    bool Cache::calculate(size_t a, size_t x, size_t b, size_t y, size_t& c, size_t& z) const
     {
-        size_t v1 = table().data(a - 1, x - 1);
-        size_t v2 = table().data(b - 1, y - 1);
+        bool status = search(a - 1, x - 1, b - 1, y - 1, c, z);
+        c++;
+        z++;
+        return status;
+    }
+    
+    bool Cache::search() const
+    {
+        bool found = false;
+        size_t l_max = table().xSize() * table().ySize();
+        for (size_t i = 0; i < l_max; ++i) {
+            size_t v1 = power(i);
+            for (size_t j = 0; j < l_max; ++j) {
+                size_t v2 = power(j);
+                size_t v3 = v1 + v2;
+                size_t idx = find(v3);
+                if (idx == SIZE_T_MAX) {
+                    continue;
+                }
+                size_t idx1 = helper()[i];
+                size_t idx2 = helper()[j];
+                size_t a = idx1 % table().xSize();
+                size_t x = idx1 / table().xSize();
+                size_t b = idx2 % table().xSize();
+                size_t y = idx2 / table().xSize();
+                size_t c = idx % table().xSize();
+                size_t z = idx / table().xSize();
+                print(std::cout, a + 1, x + 1, b + 1, y + 1, c + 1, z + 1);
+                found = true;
+            }
+        }
+        return found;
+    }
+    
+    bool Cache::search(size_t a, size_t x, size_t b, size_t y, size_t& c, size_t& z) const
+    {
+        size_t v1 = table().data(a, x);
+        size_t v2 = table().data(b, y);
         size_t v3 = v1 + v2;
         size_t idx = find(v3);
-#ifdef _DEBUG
-        size_t idx1 = find(v1);
-        size_t idx2 = find(v2);
-        std::cout << v1 << " " << v2 << " " << v3 << " " << idx1 << " " << idx2 << " " << idx << std::endl;
-#endif
+        if (idx == SIZE_T_MAX) {
+            return false;
+        }
+        c = idx % table().xSize();
+        z = idx / table().xSize();
         return true;
     }
     
@@ -295,6 +331,11 @@ namespace Beal {
         o << std::endl;
         o << (checkSort() ? "OK" : "ERROR");
         o << std::endl;
+    }
+    
+    void Cache::print(std::ostream& o, size_t a, size_t x, size_t b, size_t y, size_t c, size_t z) const
+    {
+        std::cout << "EQUATION - " << a << "^" << x << " + " << b << "^" << y << " = " << c << "^" << z << std::endl;
     }
     
     std::ostream& operator<<(std::ostream& o, Cache& c)

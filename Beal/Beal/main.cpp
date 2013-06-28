@@ -10,15 +10,21 @@
 
 int main(int argc, const char * argv[])
 {
-    Beal::Cache b(25, 10);
-    //Beal::Cache b(10, 15);
-    //Beal::Cache b(100, 9);
-    b.sort();
-    std::cout << b;
+    //Beal::Cache beal(25, 10);
+    //Beal::Cache beal(10, 15);
+    Beal::Cache beal(100, 9);
+    beal.sort();
+    //std::cout << beal;
     // 3^3 + 6^3 = 3^5
     // 7^6 + 7^7 = 98^3
-    b.calculate(3, 3, 6, 3);
-    b.calculate(7, 6, 7, 7);
+    size_t a = 3, x = 3, b = 6, y = 3, c, z;
+    beal.calculate(a, x, b, y, c, z);
+    beal.print(std::cout, a, x, b, y, c, z);
+    a = 7; x = 6; b = 7; y = 7;
+    beal.calculate(a, x, b, y, c, z);
+    beal.print(std::cout, a, x, b, y, c, z);
+    
+    beal.search();
     return 0;
 }
 
