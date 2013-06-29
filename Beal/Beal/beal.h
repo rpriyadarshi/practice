@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <assert.h>
+#include <math.h>
 
 namespace Beal {
     template <typename T> T Min(T& t1, T& t2) { return t1 < t2 ? t1 : t2; }
@@ -79,13 +80,13 @@ namespace Beal {
         ~Cache();
         
         const Array<T>& table() const { return _table; }
-        const Vector<T>& helper() const { return _helper; }
+        const Vector<size_t>& helper() const { return _helper; }
         const bool error() const { return _error; }
         
         const T& power(size_t i) const;
         const T& power(size_t x, size_t y) const;
         const T& table(size_t i) const { return table()[i]; }
-        const T& helper(size_t i) const { return helper()[i]; }
+        const size_t& helper(size_t i) const { return helper()[i]; }
         
         bool checkSort() const;
         bool sort();
@@ -100,13 +101,13 @@ namespace Beal {
 
     private:
         Array<T>& table() { return _table; }
-        Vector<T>& helper() { return _helper; }
+        Vector<size_t>& helper() { return _helper; }
         void error(bool e) const { _error = e; }
 
         T& power(size_t i);
         T& power(size_t x, size_t y);
         T& table(size_t i) { return table()[i]; }
-        T& helper(size_t i) { return helper()[i]; }
+        size_t& helper(size_t i) { return helper()[i]; }
         
         bool checkSort(size_t i, size_t j) const;
         void merge(size_t x1, size_t x2, size_t y1, size_t y2);
@@ -114,7 +115,7 @@ namespace Beal {
         
     private:
         Array<T>        _table;
-        Vector<T>       _helper;
+        Vector<size_t>  _helper;
         mutable bool    _error;
     };
     

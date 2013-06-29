@@ -10,9 +10,10 @@
 
 int main(int argc, const char * argv[])
 {
-    //Beal::Cache beal<size_t>(25, 10);
-    //Beal::Cache beal<size_t>(10, 15);
-    Beal::Cache<unsigned long long> beal(100, 10);
+    Beal::Cache<size_t> beal(25, 10);
+    //Beal::Cache<size_t> beal(10, 15);
+    //Beal::Cache<unsigned long> beal(100, 10);
+    //Beal::Cache<unsigned long> beal(100, 9);
     beal.sort();
     //std::cout << beal;
     // 3^3 + 6^3 = 3^5
