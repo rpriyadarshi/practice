@@ -17,6 +17,35 @@ namespace Beal {
     template <typename T> T Min(T& t1, T& t2) { return t1 < t2 ? t1 : t2; }
     template <typename T> T Max(T& t1, T& t2) { return t1 > t2 ? t1 : t2; }
     
+    const unsigned int Word = 8;
+    const unsigned int BigIntSize = 1;
+    const unsigned int IntToShort = sizeof(unsigned int) / sizeof(unsigned short);
+    const unsigned int ShortSize = sizeof(unsigned short) * Word;
+    
+    class BigInt
+    {
+    public:
+        BigInt();
+        ~BigInt() {};
+        
+        size_t size() const;
+        unsigned short& data(size_t idx);
+        const unsigned short& data(size_t idx) const;
+
+        BigInt& mulhu(BigInt& u, BigInt& v);
+        void print(std::ostream& o) const;
+        
+        // Operators
+        unsigned short& operator[](size_t idx);
+        
+    private:
+        typedef union {
+            unsigned int    _uint;
+            unsigned short  _sint[IntToShort];
+        } IntType;
+        IntType _data[BigIntSize];
+    };
+    
     template <typename T>
     class Vector
     {

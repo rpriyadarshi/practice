@@ -8,7 +8,18 @@
 
 #include "beal_impl.h"
 
-int main(int argc, const char * argv[])
+void testMul()
+{
+    Beal::BigInt u, v, w;
+    u[0] = 5;
+    v[0] = 7;
+    u.print(std::cout);
+    v.print(std::cout);
+    w.mulhu(u, v);
+    w.print(std::cout);
+}
+
+void testBeal()
 {
     Beal::Cache<size_t> beal(25, 10);
     //Beal::Cache<size_t> beal(10, 15);
@@ -25,7 +36,13 @@ int main(int argc, const char * argv[])
     beal.calculate(a, x, b, y, c, z);
     beal.print(std::cout, a, x, b, y, c, z);
     
-    beal.search();
+    beal.search();    
+}
+
+int main(int argc, const char * argv[])
+{
+    //testBeal();
+    testMul();
     return 0;
 }
 

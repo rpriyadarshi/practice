@@ -14,6 +14,65 @@
 //#define _DEBUG
 
 namespace Beal {
+    BigInt::BigInt()
+    {
+        memset(this, 0, sizeof(*this));
+    }
+    
+    size_t BigInt::size() const
+    {
+        return IntToShort * BigIntSize;
+    }
+    
+    unsigned short& BigInt::operator[](size_t idx)
+    {
+        return data(idx);
+    }
+    
+    unsigned short& BigInt::data(size_t idx)
+    {
+        size_t i = idx / BigIntSize;
+        size_t j = idx % BigIntSize;
+        return _data[j]._sint[i];
+    }
+    
+    const unsigned short& BigInt::data(size_t idx) const
+    {
+        size_t i = idx / BigIntSize;
+        size_t j = idx % BigIntSize;
+        return _data[j]._sint[i];
+    }
+    
+    BigInt& BigInt::mulhu(BigInt& u, BigInt& v)
+    {
+        BigInt& w = *this;
+        unsigned int k, t;
+        size_t s = size();
+        
+        for (size_t j = 0; j < s; ++j) {
+            k = 0;
+            for (size_t i = 0; i < s; ++i) {
+                t = u[i] * v[j] + w[i + j] + k;
+                w[i + j] = t;
+                k = t >> ShortSize;
+            }
+            w[j + s] = k;
+        }
+        return *this;
+    }
+    
+    void BigInt::print(std::ostream& o) const
+    {
+        for (int i = 0; i < size(); ++i) {
+            o << data(i) << " ";
+        }
+        std::cout << std::endl;
+        for (int i = 0; i < BigIntSize; ++i) {
+            o << _data[i]._uint << " ";
+        }
+        std::cout << std::endl;
+    }
+    
     template <typename T>
     Vector<T>::Vector(size_t s)
     : _size(s), _data(new T[s])
