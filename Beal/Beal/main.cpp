@@ -10,13 +10,18 @@
 
 void testMul()
 {
-    Beal::BigInt u, v, w;
-    u[0] = 5;
-    v[0] = 7;
-    u.print(std::cout);
-    v.print(std::cout);
-    w.mulhu(u, v);
-    w.print(std::cout);
+    Beal::BigInt u, v, w, x;
+    for (size_t i = 0; i < Beal::Size; ++i) {
+        u[i] = 1;
+        v[i] = 1;
+    }
+    
+    w = u * v;
+    x = u + v;
+    std::cout << u << std::endl;
+    std::cout << v << std::endl;
+    std::cout << w << std::endl;
+    std::cout << x << std::endl;
 }
 
 void testBeal()

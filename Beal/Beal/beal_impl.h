@@ -21,7 +21,7 @@ namespace Beal {
     
     size_t BigInt::size() const
     {
-        return IntToShort * BigIntSize;
+        return Size;
     }
     
     unsigned short& BigInt::operator[](size_t idx)
@@ -43,20 +43,31 @@ namespace Beal {
         return _data[j]._sint[i];
     }
     
-    BigInt& BigInt::mulhu(BigInt& u, BigInt& v)
+    BigInt& BigInt::add(const BigInt& u, const BigInt& v)
     {
         BigInt& w = *this;
-        unsigned int k, t;
+        size_t s = size();
+        
+        for (size_t i = 0; i < s; ++i) {
+            w.data(i) = u.data(i) + v.data(i);
+        }
+        return *this;
+    }
+    
+    BigInt& BigInt::muliply(const BigInt& u, const BigInt& v)
+    {
+        BigInt& w = *this;
+        unsigned long k, t;
         size_t s = size();
         
         for (size_t j = 0; j < s; ++j) {
             k = 0;
             for (size_t i = 0; i < s; ++i) {
-                t = u[i] * v[j] + w[i + j] + k;
-                w[i + j] = t;
+                t = u.data(i) * v.data(j) + w.data(i + j) + k;
+                w.data(i + j) = t;
                 k = t >> ShortSize;
             }
-            w[j + s] = k;
+            w.data(j + s) = k;
         }
         return *this;
     }
@@ -66,13 +77,31 @@ namespace Beal {
         for (int i = 0; i < size(); ++i) {
             o << data(i) << " ";
         }
-        std::cout << std::endl;
+        std::cout << "[";
         for (int i = 0; i < BigIntSize; ++i) {
             o << _data[i]._uint << " ";
         }
-        std::cout << std::endl;
+        std::cout << "]";
     }
     
+    BigInt& operator+(const BigInt& u, const BigInt& v)
+    {
+        BigInt w;
+        return w.add(u, v);
+    }
+    
+    BigInt& operator*(const BigInt& u, const BigInt& v)
+    {
+        BigInt w;
+        return w.muliply(u, v);
+    }
+    
+    std::ostream& operator<<(std::ostream& o, const BigInt& b)
+    {
+        b.print(o);
+        return o;
+    }
+
     template <typename T>
     Vector<T>::Vector(size_t s)
     : _size(s), _data(new T[s])
@@ -116,7 +145,7 @@ namespace Beal {
     }
     
     template <typename T>
-    std::ostream& operator<<(std::ostream& o, Vector<T>& v)
+    std::ostream& operator<<(std::ostream& o, const Vector<T>& v)
     {
         v.print(o);
         return o;
@@ -197,7 +226,7 @@ namespace Beal {
     }
 
     template <typename T>
-    std::ostream& operator<<(std::ostream& o, Array<T>& a)
+    std::ostream& operator<<(std::ostream& o, const Array<T>& a)
     {
         a.print(o);
         return o;
@@ -458,7 +487,7 @@ namespace Beal {
     }
     
     template <typename T>
-    std::ostream& operator<<(std::ostream& o, Cache<T>& c)
+    std::ostream& operator<<(std::ostream& o, const Cache<T>& c)
     {
         c.print(o);
         return o;

@@ -17,11 +17,12 @@ namespace Beal {
     template <typename T> T Min(T& t1, T& t2) { return t1 < t2 ? t1 : t2; }
     template <typename T> T Max(T& t1, T& t2) { return t1 > t2 ? t1 : t2; }
     
-    const unsigned int Word = 8;
-    const unsigned int BigIntSize = 1;
-    const unsigned int IntToShort = sizeof(unsigned int) / sizeof(unsigned short);
-    const unsigned int ShortSize = sizeof(unsigned short) * Word;
-    
+    const unsigned long Word = 8;
+    const unsigned long LongToShort = sizeof(unsigned long) / sizeof(unsigned short);
+    const unsigned long ShortSize = sizeof(unsigned short) * Word;
+    const unsigned long BigIntSize = 2;
+    const unsigned long Size = LongToShort * BigIntSize;
+
     class BigInt
     {
     public:
@@ -32,7 +33,9 @@ namespace Beal {
         unsigned short& data(size_t idx);
         const unsigned short& data(size_t idx) const;
 
-        BigInt& mulhu(BigInt& u, BigInt& v);
+        BigInt& add(const BigInt& u, const BigInt& v);
+        BigInt& muliply(const BigInt& u, const BigInt& v);
+        
         void print(std::ostream& o) const;
         
         // Operators
@@ -40,12 +43,16 @@ namespace Beal {
         
     private:
         typedef union {
-            unsigned int    _uint;
-            unsigned short  _sint[IntToShort];
+            unsigned long    _uint;
+            unsigned short  _sint[LongToShort];
         } IntType;
         IntType _data[BigIntSize];
     };
     
+    BigInt& operator+(const BigInt& u, const BigInt& v);
+    BigInt& operator*(const BigInt& u, const BigInt& v);
+    std::ostream& operator<<(std::ostream& o, const BigInt& b);
+
     template <typename T>
     class Vector
     {
@@ -68,7 +75,7 @@ namespace Beal {
     };
     
     template <typename T>
-    std::ostream& operator<<(std::ostream& o, Vector<T>& v);
+    std::ostream& operator<<(std::ostream& o, const Vector<T>& v);
 
     template <typename T>
     class Array
@@ -99,7 +106,7 @@ namespace Beal {
     };
     
     template <typename T>
-    std::ostream& operator<<(std::ostream& o, Array<T>& a);
+    std::ostream& operator<<(std::ostream& o, const Array<T>& a);
     
     template <typename T>
     class Cache
@@ -149,7 +156,7 @@ namespace Beal {
     };
     
     template <typename T>
-    std::ostream& operator<<(std::ostream& o, Cache<T>& c);
+    std::ostream& operator<<(std::ostream& o, const Cache<T>& c);
 }
 
 #endif
