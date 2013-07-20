@@ -16,12 +16,26 @@
 namespace Beal {
     BigInt::BigInt()
     {
-        memset(this, 0, sizeof(*this));
+        for (size_t i = 0; i < dataSize(); ++i) {
+            _data[i] = 0;
+        }
+    }
+    
+    BigInt::BigInt(const BigInt& b)
+    {
+        for (size_t i = 0; i < b.dataSize(); ++i) {
+            _data[i] = b._data[i];
+        }
     }
     
     size_t BigInt::size() const
     {
         return Size;
+    }
+    
+    size_t BigInt::dataSize() const
+    {
+        return DataSize;
     }
     
     unsigned short& BigInt::operator[](size_t idx)
@@ -31,16 +45,19 @@ namespace Beal {
     
     unsigned short& BigInt::data(size_t idx)
     {
-        size_t i = idx / BigIntSize;
-        size_t j = idx % BigIntSize;
-        return _data[j]._sint[i];
+        return _data[idx];
     }
     
     const unsigned short& BigInt::data(size_t idx) const
     {
-        size_t i = idx / BigIntSize;
-        size_t j = idx % BigIntSize;
-        return _data[j]._sint[i];
+        return _data[idx];
+    }
+    
+    void BigInt::zero()
+    {
+        for (size_t i = 0; i < dataSize(); ++i) {
+            _data[i] = 0;
+        }
     }
     
     BigInt& BigInt::add(const BigInt& u, const BigInt& v)
@@ -57,43 +74,80 @@ namespace Beal {
     BigInt& BigInt::muliply(const BigInt& u, const BigInt& v)
     {
         BigInt& w = *this;
-        unsigned long k, t;
-        size_t s = size();
+        const size_t s = size();
         
         for (size_t j = 0; j < s; ++j) {
-            k = 0;
+            unsigned long _k = 0;
             for (size_t i = 0; i < s; ++i) {
-                t = u.data(i) * v.data(j) + w.data(i + j) + k;
-                w.data(i + j) = t;
-                k = t >> ShortSize;
+                unsigned long _u = u.data(i);
+                unsigned long _v = v.data(j);
+                unsigned long _w = w.data(i + j);
+                unsigned long _t = _u * _v + _w + _k;
+                w.data(i + j) = _t;
+                _k = _t >> ShortSize;
             }
-            w.data(j + s) = k;
+            w.data(j + s) = _k;
         }
         return *this;
+    }
+    
+    bool BigInt::validate(const unsigned short* val, const size_t sz) const
+    {
+        for (size_t i = 0; i < Beal::Size; ++i) {
+            unsigned short d = data(Beal::Size - i - 1);
+            unsigned short v = val[i];
+            if (d != v) {
+                return false;
+            }
+        }
+        return true;
     }
     
     void BigInt::print(std::ostream& o) const
     {
         for (int i = 0; i < size(); ++i) {
-            o << data(i) << " ";
+            o << data(size() - i - 1) << " ";
         }
-        std::cout << "[";
-        for (int i = 0; i < BigIntSize; ++i) {
-            o << _data[i]._uint << " ";
-        }
-        std::cout << "]";
+        std::cout << std::endl;
+        printBits(o);
     }
     
-    BigInt& operator+(const BigInt& u, const BigInt& v)
+    void BigInt::printBits(std::ostream& o) const
     {
-        BigInt w;
-        return w.add(u, v);
+        for (int i = 0; i < size(); ++i) {
+            unsigned short d = data(size() - i - 1);
+            std::cout << "[" << d << "] ";
+            for (int j = 0; j < ShortSize; j++) {
+                bool b = d & 0b1000000000000000;
+                d <<= 1;
+                o << b;
+            }
+            o << " ";
+        }
+        o << std::endl;
     }
     
-    BigInt& operator*(const BigInt& u, const BigInt& v)
+    BigInt& BigInt::operator+=(const BigInt& v)
     {
-        BigInt w;
-        return w.muliply(u, v);
+        BigInt u(*this);
+        return add(u, v);
+    }
+    
+    BigInt& BigInt::operator*=(const BigInt& v)
+    {
+        BigInt u(*this);
+        zero();
+        return muliply(u, v);
+    }
+    
+    BigInt operator+(const BigInt& u, const BigInt& v)
+    {
+        return BigInt(u) += v;
+    }
+    
+    BigInt operator*(const BigInt& u, const BigInt& v)
+    {
+        return BigInt(u) *= v;
     }
     
     std::ostream& operator<<(std::ostream& o, const BigInt& b)
@@ -271,9 +325,9 @@ namespace Beal {
     bool Cache<T>::checkSort(size_t i, size_t j) const
     {
         error(false);
-        size_t p = power(i);
+        T p = power(i);
         for (size_t l = i + 1; l < j; ++l) {
-            size_t c = power(l);
+            const T& c = power(l);
             if (c < p) {
                 std::cout << "ERROR @ " << l << " " << p << " " << c << std::endl;
                 std::cout << "        Likely cause is that you have overflow." << std::endl;
@@ -342,8 +396,8 @@ namespace Beal {
         while (i < i2 && j < j2) {
             size_t idx_i = helper(i);
             size_t idx_j = helper(j);
-            size_t v1 = table(idx_i);
-            size_t v2 = table(idx_j);
+            T v1 = table(idx_i);
+            T v2 = table(idx_j);
             if (v1 < v2) {
                 idx[k++] = idx_i;
                 i++;
@@ -382,7 +436,7 @@ namespace Beal {
         while (l_max - l_min > 1) {
             size_t w = (l_max - l_min) >> 1;
             size_t i = l_min + w;
-            size_t p = power(i);
+            const T& p = power(i);
             if (v < p) {
                 l_max = i;
             } else if (v > p) {

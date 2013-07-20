@@ -17,40 +17,46 @@ namespace Beal {
     template <typename T> T Min(T& t1, T& t2) { return t1 < t2 ? t1 : t2; }
     template <typename T> T Max(T& t1, T& t2) { return t1 > t2 ? t1 : t2; }
     
-    const unsigned long Word = 8;
-    const unsigned long LongToShort = sizeof(unsigned long) / sizeof(unsigned short);
-    const unsigned long ShortSize = sizeof(unsigned short) * Word;
-    const unsigned long BigIntSize = 2;
-    const unsigned long Size = LongToShort * BigIntSize;
+    constexpr const unsigned long WordSize    = 8;
+    constexpr const unsigned long LongToShort = sizeof(unsigned long) / sizeof(unsigned short);
+    constexpr const unsigned long ShortSize   = sizeof(unsigned short) * WordSize;
+    constexpr const unsigned long LongSize    = sizeof(unsigned long) * WordSize;
+    constexpr const unsigned long BigIntSize  = 4;
+    constexpr const unsigned long Size        = LongToShort * BigIntSize;
+    constexpr const unsigned long DataSize    = LongToShort * (BigIntSize << 2);
 
     class BigInt
     {
     public:
         BigInt();
+        BigInt(const BigInt& b);
         ~BigInt() {};
         
         size_t size() const;
+        size_t dataSize() const;
         unsigned short& data(size_t idx);
         const unsigned short& data(size_t idx) const;
 
         BigInt& add(const BigInt& u, const BigInt& v);
         BigInt& muliply(const BigInt& u, const BigInt& v);
+        void zero();
+        
+        bool validate(const unsigned short* mul, const size_t sz) const;
         
         void print(std::ostream& o) const;
+        void printBits(std::ostream& o) const;
         
         // Operators
         unsigned short& operator[](size_t idx);
+        BigInt& operator*=(const BigInt& rhs);
+        BigInt& operator+=(const BigInt& rhs);
         
     private:
-        typedef union {
-            unsigned long    _uint;
-            unsigned short  _sint[LongToShort];
-        } IntType;
-        IntType _data[BigIntSize];
+        unsigned short  _data[DataSize];
     };
     
-    BigInt& operator+(const BigInt& u, const BigInt& v);
-    BigInt& operator*(const BigInt& u, const BigInt& v);
+    BigInt operator+(const BigInt& u, const BigInt& v);
+    BigInt operator*(const BigInt& u, const BigInt& v);
     std::ostream& operator<<(std::ostream& o, const BigInt& b);
 
     template <typename T>
