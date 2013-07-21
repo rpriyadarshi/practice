@@ -13,53 +13,7 @@
 
 //#define _DEBUG
 
-namespace Beal {
-    BigInt::BigInt()
-    {
-        for (size_t i = 0; i < dataSize(); ++i) {
-            _data[i] = 0;
-        }
-    }
-    
-    BigInt::BigInt(const BigInt& b)
-    {
-        for (size_t i = 0; i < b.dataSize(); ++i) {
-            _data[i] = b._data[i];
-        }
-    }
-    
-    size_t BigInt::size() const
-    {
-        return Size;
-    }
-    
-    size_t BigInt::dataSize() const
-    {
-        return DataSize;
-    }
-    
-    unsigned short& BigInt::operator[](size_t idx)
-    {
-        return data(idx);
-    }
-    
-    unsigned short& BigInt::data(size_t idx)
-    {
-        return _data[idx];
-    }
-    
-    const unsigned short& BigInt::data(size_t idx) const
-    {
-        return _data[idx];
-    }
-    
-    void BigInt::zero()
-    {
-        for (size_t i = 0; i < dataSize(); ++i) {
-            _data[i] = 0;
-        }
-    }
-    
+namespace Beal {    
     BigInt& BigInt::add(const BigInt& u, const BigInt& v)
     {
         BigInt& w = *this;
@@ -84,7 +38,7 @@ namespace Beal {
                 unsigned long _w = w.data(i + j);
                 unsigned long _t = _u * _v + _w + _k;
                 w.data(i + j) = _t;
-                _k = _t >> ShortSize;
+                _k = _t >> UShortSize;
             }
             w.data(j + s) = _k;
         }
@@ -93,8 +47,8 @@ namespace Beal {
     
     bool BigInt::validate(const unsigned short* val, const size_t sz) const
     {
-        for (size_t i = 0; i < Beal::Size; ++i) {
-            unsigned short d = data(Beal::Size - i - 1);
+        for (size_t i = 0; i < Beal::BigIntSize; ++i) {
+            unsigned short d = data(Beal::BigIntSize - i - 1);
             unsigned short v = val[i];
             if (d != v) {
                 return false;
@@ -117,7 +71,7 @@ namespace Beal {
         for (int i = 0; i < size(); ++i) {
             unsigned short d = data(size() - i - 1);
             std::cout << "[" << d << "] ";
-            for (int j = 0; j < ShortSize; j++) {
+            for (int j = 0; j < UShortSize; j++) {
                 bool b = d & 0b1000000000000000;
                 d <<= 1;
                 o << b;
@@ -126,110 +80,16 @@ namespace Beal {
         }
         o << std::endl;
     }
-    
-    BigInt& BigInt::operator+=(const BigInt& v)
-    {
-        BigInt u(*this);
-        return add(u, v);
-    }
-    
-    BigInt& BigInt::operator*=(const BigInt& v)
-    {
-        BigInt u(*this);
-        zero();
-        return muliply(u, v);
-    }
-    
-    BigInt operator+(const BigInt& u, const BigInt& v)
-    {
-        return BigInt(u) += v;
-    }
-    
-    BigInt operator*(const BigInt& u, const BigInt& v)
-    {
-        return BigInt(u) *= v;
-    }
-    
-    std::ostream& operator<<(std::ostream& o, const BigInt& b)
-    {
-        b.print(o);
-        return o;
-    }
-
-    template <typename T>
-    Vector<T>::Vector(size_t s)
-    : _size(s), _data(new T[s])
-    {
-        fill();
-    }
-    
-    template <typename T>
-    Vector<T>::~Vector()
-    {
-        delete _data;
-    }
-    
-    template <typename T>
-    void Vector<T>::fill()
-    {
-        linear();
-    }
-    
-    template <typename T>
-    void Vector<T>::linear()
-    {
-        for (size_t i = 0; i < size(); ++i) {
-            data(i) = i;
-        }
-    }
-
+            
     template <typename T>
     void Vector<T>::print(std::ostream& o) const
     {
-        for (size_t i = 0; i < size(); ++i) {
+        for (T i = 0; i < size(); ++i) {
             o << data(i) << " ";
         }
         o << std::endl;
     }
-    
-    template <typename T>
-    T& Vector<T>::operator[](size_t i) const
-    {
-        return data(i);
-    }
-    
-    template <typename T>
-    std::ostream& operator<<(std::ostream& o, const Vector<T>& v)
-    {
-        v.print(o);
-        return o;
-    }
-    
-    template <typename T>
-    Array<T>::Array(size_t x, size_t y)
-    : _xSize(x), _ySize(y), _data(new T[x * y])
-    {
-        fill();
-    }
-    
-    template <typename T>
-    Array<T>::~Array()
-    {
-        delete _data;
-    }
-    
-    template <typename T>
-    T& Array<T>::data(size_t x, size_t y) const
-    {
-        return data(index(x, y));
-    }
-    
-    template <typename T>
-    size_t Array<T>::index(size_t x, size_t y) const
-    {
-        return x + y * xSize();
-    }
-    
+                    
     template <typename T>
     void Array<T>::fill()
     {
@@ -244,7 +104,7 @@ namespace Beal {
     {
         size_t i = 1;
         for (size_t x = 0; x < xSize(); ++x) {
-            data(x, 0) = i++;
+            data(x, 0) = static_cast<T>(i++);
         }
     }
     
@@ -266,61 +126,7 @@ namespace Beal {
             o << std::endl;
         }
     }
-    
-    template <typename T>
-    T& Array<T>::operator[](size_t i) const
-    {
-        return data(i);
-    }
-
-    template <typename T>
-    T& Array<T>::operator()(size_t x, size_t y) const
-    {
-        return data(x, y);
-    }
-
-    template <typename T>
-    std::ostream& operator<<(std::ostream& o, const Array<T>& a)
-    {
-        a.print(o);
-        return o;
-    }
-    
-    template <typename T>
-    Cache<T>::Cache(size_t x, size_t y)
-    : _table(x, y), _helper(x * y)
-    {
-    }
-    
-    template <typename T>
-    Cache<T>::~Cache()
-    {
-    }
-    
-    template <typename T>
-    T& Cache<T>::power(size_t i)
-    {
-        return table()[helper()[i]];
-    }
-    
-    template <typename T>
-    const T& Cache<T>::power(size_t i) const
-    {
-        return table()[helper()[i]];
-    }
-    
-    template <typename T>
-    T& Cache<T>::power(size_t x, size_t y)
-    {
-        return power(table().index(x, y));
-    }
-    
-    template <typename T>
-    const T& Cache<T>::power(size_t x, size_t y) const
-    {
-        return power(table().index(x, y));
-    }
-    
+                
     template <typename T>
     bool Cache<T>::checkSort(size_t i, size_t j) const
     {
@@ -389,7 +195,7 @@ namespace Beal {
         checkSort(j1, j2);
 #endif
         size_t idx_size = i2 - i1 + j2 - j1;
-        Vector<T> idx(idx_size);
+        Vector<size_t> idx(idx_size);
         size_t i = i1;
         size_t j = j1;
         size_t k = 0;
@@ -436,7 +242,7 @@ namespace Beal {
         while (l_max - l_min > 1) {
             size_t w = (l_max - l_min) >> 1;
             size_t i = l_min + w;
-            const T& p = power(i);
+            T p = power(i);
             if (v < p) {
                 l_max = i;
             } else if (v > p) {
@@ -447,19 +253,7 @@ namespace Beal {
         }
         return SIZE_T_MAX;
     }
-    
-    template <typename T>
-    size_t Cache<T>::coefficient(size_t idx) const
-    {
-        return idx % table().xSize();
-    }
-    
-    template <typename T>
-    size_t Cache<T>::exponent(size_t idx) const
-    {
-        return idx / table().xSize();
-    }
-    
+        
     template <typename T>
     bool Cache<T>::calculate(size_t a, size_t x, size_t b, size_t y, size_t& c, size_t& z) const
     {
@@ -528,7 +322,7 @@ namespace Beal {
         o << std::endl;
         helper().print(o);
         o << std::endl;
-        for (size_t i = 0; i < helper().size(); ++i) {
+        for (T i = 0; i < helper().size(); ++i) {
             o << power(i) << " ";
         }
         o << std::endl;
@@ -538,13 +332,6 @@ namespace Beal {
     void Cache<T>::print(std::ostream& o, size_t a, size_t x, size_t b, size_t y, size_t c, size_t z) const
     {
         std::cout << "EQUATION - " << a << "^" << x << " + " << b << "^" << y << " = " << c << "^" << z << std::endl;
-    }
-    
-    template <typename T>
-    std::ostream& operator<<(std::ostream& o, const Cache<T>& c)
-    {
-        c.print(o);
-        return o;
     }
 }
 

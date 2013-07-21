@@ -69,7 +69,7 @@ unsigned short mul[] = {
 void testBigIntCopy()
 {
     Beal::BigInt u;
-    for (size_t i = 0; i < Beal::Size; ++i) {
+    for (size_t i = 0; i < Beal::BigIntSize; ++i) {
         u[i] = i;
     }
     Beal::BigInt v(u);
@@ -84,7 +84,7 @@ void testBigIntCopy()
 void testBigIntFuncAdd()
 {
     Beal::BigInt u, v, w;
-    for (size_t i = 0; i < Beal::Size / 2; ++i) {
+    for (size_t i = 0; i < Beal::BigIntSize / 2; ++i) {
         u[i] = 1;
         v[i] = 1;
     }
@@ -102,7 +102,7 @@ void testBigIntFuncAdd()
 void testBigIntIntAdd()
 {
     Beal::BigInt u, v, w, x;
-    for (size_t i = 0; i < Beal::Size / 2; ++i) {
+    for (size_t i = 0; i < Beal::BigIntSize / 2; ++i) {
         u[i] = 1;
         v[i] = 1;
     }
@@ -119,7 +119,7 @@ void testBigIntIntAdd()
 void testBigIntExtAdd()
 {
     Beal::BigInt u, v, w;
-    for (size_t i = 0; i < Beal::Size / 2; ++i) {
+    for (size_t i = 0; i < Beal::BigIntSize / 2; ++i) {
         u[i] = 1;
         v[i] = 1;
     }
@@ -137,7 +137,7 @@ void testBigIntExtAdd()
 void testBigIntFuncMul()
 {
     Beal::BigInt u, v, w;
-    for (size_t i = 0; i < Beal::Size / 2; ++i) {
+    for (size_t i = 0; i < Beal::BigIntSize / 2; ++i) {
         u[i] = 1;
         v[i] = 1;
     }
@@ -154,7 +154,7 @@ void testBigIntFuncMul()
 void testBigIntIntMul()
 {
     Beal::BigInt u, v;
-    for (size_t i = 0; i < Beal::Size / 2; ++i) {
+    for (size_t i = 0; i < Beal::BigIntSize / 2; ++i) {
         u[i] = 1;
         v[i] = 1;
     }
@@ -171,7 +171,7 @@ void testBigIntIntMul()
 void testBigIntExtMul()
 {
     Beal::BigInt u, v, w;
-    for (size_t i = 0; i < Beal::Size / 2; ++i) {
+    for (size_t i = 0; i < Beal::BigIntSize / 2; ++i) {
         u[i] = 1;
         v[i] = 1;
     }
@@ -217,8 +217,8 @@ int main(int argc, const char * argv[])
     testBigIntExtMul();
     testBigIntIntMul();
     
-    //testBeal<size_t>();
     //testBeal<int>();
+    testBeal<size_t>();
     //testBeal<Beal::BigInt>();
     return 0;
 }
