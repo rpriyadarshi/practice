@@ -28,6 +28,26 @@ unsigned short copy[] = {
     
 };
 
+unsigned short copy_builtin[] = {
+    0b0000000000000000,
+    0b0000000000000000,
+    0b0000000000000000,
+    0b0000000000000000,
+    0b0000000000000000,
+    0b0000000000000000,
+    0b0000000000000000,
+    0b0000000000000000,
+    0b0000000000000000,
+    0b0000000000000000,
+    0b0000000000000000,
+    0b0000000000000000,
+    0b0000000000000000,
+    0b0000000000000000,
+    0b1000000000000000,
+    0b1000000000000000
+    
+};
+
 unsigned short add[] = {
     0b0000000000000000,
     0b0000000000000000,
@@ -66,7 +86,7 @@ unsigned short mul[] = {
     0b0000000000000001
 };
 
-void testBigIntCopy()
+void testBigIntCopyBigInt()
 {
     Beal::BigInt u;
     for (size_t i = 0; i < Beal::BigIntSize; ++i) {
@@ -75,6 +95,30 @@ void testBigIntCopy()
     Beal::BigInt v(u);
     
     if (! v.validate(copy, sizeof(copy))) {
+        std::cout << u << std::endl;
+        std::cout << v << std::endl;
+        std::cout << " @ copy failed!" << std::endl;
+    }
+}
+
+void testBigIntCopySizet()
+{
+    size_t u = 2147516416;
+    Beal::BigInt v(u);
+    
+    if (! v.validate(copy_builtin, sizeof(copy_builtin))) {
+        std::cout << u << std::endl;
+        std::cout << v << std::endl;
+        std::cout << " @ copy failed!" << std::endl;
+    }
+}
+
+void testBigIntCopyInt()
+{
+    int u = 2147516416;
+    Beal::BigInt v(u);
+    
+    if (! v.validate(copy_builtin, sizeof(copy_builtin))) {
         std::cout << u << std::endl;
         std::cout << v << std::endl;
         std::cout << " @ copy failed!" << std::endl;
@@ -207,7 +251,9 @@ void testBeal()
 
 int main(int argc, const char * argv[])
 {
-    testBigIntCopy();
+    testBigIntCopyBigInt();
+    testBigIntCopySizet();
+    testBigIntCopyInt();
     
     testBigIntFuncAdd();
     testBigIntExtAdd();

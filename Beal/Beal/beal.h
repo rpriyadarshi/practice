@@ -55,19 +55,27 @@ namespace Beal {
         BigInt& copy(const size_t& v) {
             unsigned short x = 0;
             size_t y = v;
-            for (size_t i = 0; i < SizetToUShort; ++i) {
+            size_t i = 0;
+            for (; i < SizetToUShort; ++i) {
                 x = y;
                 y >>= UShortSize;
                 data(i) = x;
+            }
+            for (; i < BigIntDataSize; ++i) {
+                data(i) = 0;
             }
             return *this; }
         BigInt& copy(const int& v) {
             unsigned short x = 0;
             int y = v;
-            for (size_t i = 0; i < SizetToUShort; ++i) {
+            size_t i = 0;
+            for (; i < IntToUShort; ++i) {
                 x = y;
                 y >>= UShortSize;
                 data(i) = x;
+            }
+            for (; i < BigIntDataSize; ++i) {
+                data(i) = 0;
             }
             return *this; }
         
