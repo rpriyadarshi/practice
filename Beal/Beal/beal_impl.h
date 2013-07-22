@@ -202,8 +202,8 @@ namespace Beal {
         while (i < i2 && j < j2) {
             size_t idx_i = helper(i);
             size_t idx_j = helper(j);
-            T v1 = table(idx_i);
-            T v2 = table(idx_j);
+            const T& v1 = table(idx_i);
+            const T& v2 = table(idx_j);
             if (v1 < v2) {
                 idx[k++] = idx_i;
                 i++;
@@ -235,7 +235,7 @@ namespace Beal {
     }
     
     template <typename T>
-    size_t Cache<T>::find(T v) const
+    size_t Cache<T>::find(const T& v) const
     {
         size_t l_min = 0;
         size_t l_max = helper().size();

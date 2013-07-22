@@ -177,7 +177,7 @@ namespace Beal {
         
         bool checkSort() const;
         bool sort();
-        size_t find(T v) const;
+        size_t find(const T& v) const;
         bool search() const;
         bool calculate(size_t a, size_t x, size_t b, size_t y, size_t& c, size_t& z) const;
         size_t coefficient(size_t idx) const { return idx % table().xSize(); }
