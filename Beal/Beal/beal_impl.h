@@ -38,7 +38,7 @@ namespace Beal {
                 unsigned long _w = w.data(i + j);
                 unsigned long _t = _u * _v + _w + _k;
                 w.data(i + j) = _t;
-                _k = _t >> UShortSize;
+                _k = _t >> UShortBits;
             }
             w.data(j + s) = _k;
         }
@@ -47,8 +47,8 @@ namespace Beal {
     
     bool BigInt::validate(const unsigned short* val, const size_t sz) const
     {
-        for (size_t i = 0; i < Beal::BigIntSize; ++i) {
-            unsigned short d = data(Beal::BigIntSize - i - 1);
+        for (size_t i = 0; i < Beal::BigIntUShortFact; ++i) {
+            unsigned short d = data(Beal::BigIntUShortFact - i - 1);
             unsigned short v = val[i];
             if (d != v) {
                 return false;
@@ -71,7 +71,7 @@ namespace Beal {
         for (int i = 0; i < size(); ++i) {
             unsigned short d = data(size() - i - 1);
             std::cout << "[" << d << "] ";
-            for (int j = 0; j < UShortSize; j++) {
+            for (int j = 0; j < UShortBits; j++) {
                 bool b = d & 0b1000000000000000;
                 d <<= 1;
                 o << b;
