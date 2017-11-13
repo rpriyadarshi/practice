@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>A5C6F1BF-2F7B-4049-BB83-5E2A43EB577D</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Beal</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>7319549772A28447847E36323B7D3C166CD41317</key>
+		<string>ssh://virtualsamaj.com//home/prvgit/git/practice</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Beal/Beal.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>7319549772A28447847E36323B7D3C166CD41317</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://virtualsamaj.com//home/prvgit/git/practice</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>7319549772A28447847E36323B7D3C166CD41317</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>7319549772A28447847E36323B7D3C166CD41317</string>
+			<key>IDESourceControlWCCName</key>
+			<string>practice</string>
+		</dict>
+	</array>
+</dict>
+</plist>
