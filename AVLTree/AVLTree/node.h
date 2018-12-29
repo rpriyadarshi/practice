@@ -103,7 +103,7 @@ namespace DS {
         }
     }
     
-    template <class T> inline inline bool 
+    template <class T> inline bool
     Node<T>::is_leaf() const
     {
         const Node* l = left();
@@ -111,7 +111,7 @@ namespace DS {
         return (l == 0 && r == 0);
     }
     
-    template <class T> inline inline void
+    template <class T> inline void
     Node<T>::update_height()
     {
         int h = 0;

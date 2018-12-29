@@ -9,12 +9,12 @@
 #include <iostream>
 #include <vector>
 
-int BinarySearch(const std::vector<int>& v, int x)
+size_t BinarySearch(const std::vector<int>& v, int x)
 {
-    int low = 0;
-    int high = v.size()-1;
+    size_t low = 0;
+    size_t high = v.size()-1;
     while (low <= high) {
-        int mid = (high+low)/2;
+        size_t mid = (high+low)/2;
         if (v[mid] < x) {
             low = mid+1;
         }
@@ -38,12 +38,12 @@ int main (int argc, const char * argv[])
     for (int i = 0; i < 100; ++i) {
         v.push_back(i);
     }
-    int a = BinarySearch(v, 5);
-    int b = BinarySearch(v, 97);
-    int c = BinarySearch(v, 25);
-    int d = BinarySearch(v, 55);
-    int e = BinarySearch(v, 75);
-    int f = BinarySearch(v, 15);
+    size_t a = BinarySearch(v, 5);
+    size_t b = BinarySearch(v, 97);
+    size_t c = BinarySearch(v, 25);
+    size_t d = BinarySearch(v, 55);
+    size_t e = BinarySearch(v, 75);
+    size_t f = BinarySearch(v, 15);
     
     std::cout << a << b << c << d << e << f << std::endl;
     return 0;
