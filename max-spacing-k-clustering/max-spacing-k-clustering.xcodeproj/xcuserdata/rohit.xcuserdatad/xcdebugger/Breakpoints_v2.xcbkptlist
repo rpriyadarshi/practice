@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "max-spacing-k-clustering/main.cpp"
-            timestampString = "567763350.15897"
+            timestampString = "567797446.526354"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "345"
-            endingLineNumber = "345"
+            startingLineNumber = "340"
+            endingLineNumber = "340"
             landmarkName = "Graph::merge(int v1, int v2)"
             landmarkType = "7">
          </BreakpointContent>

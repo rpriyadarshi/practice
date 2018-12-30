@@ -130,8 +130,7 @@ public:
     ~Graph();
     
 public:
-    bool readSmall(const std::string& filename);
-    bool readBig(const std::string& filename);
+    bool read(const std::string& filename);
     bool readSize(std::ifstream& ifstr);
     bool readEdge(std::ifstream& ifstr);
     
@@ -214,7 +213,7 @@ inline bool Graph::readEdge(std::ifstream& ifstr) {
     return true;
 }
 
-inline bool Graph::readSmall(const std::string& filename) {
+inline bool Graph::read(const std::string& filename) {
     std::ifstream ifstr(filename);
     if (! ifstr.good()) {
         std::cout << "ERROR: Could not read \"" << filename << "\"" << std::endl;
@@ -226,10 +225,6 @@ inline bool Graph::readSmall(const std::string& filename) {
     }
     
     while (readEdge(ifstr));
-    return false;
-}
-
-inline bool Graph::readBig(const std::string& filename) {
     return false;
 }
 
@@ -418,7 +413,6 @@ int Graph::clusterCount() {
 ////////////////////////////////////////////////////////////////////////////////
 //
 int main(int argc, const char * argv[]) {
-////////////////////////////////////////////////////////////////////////////////
 //    c=106 [v1=414 v2=455]
     std::string filename("/Users/rohit/Documents/Development/practice/max-spacing-k-clustering/clustering1.txt");
 // K = 2 --> 5, K = 3 --> 2, K = 4 --> 1
@@ -449,15 +443,8 @@ int main(int argc, const char * argv[]) {
 // k=4, 6720
 //    std::string filename("/Users/rohit/Documents/Development/practice/max-spacing-k-clustering/input_completeRandom_31_1024.txt");
 
-////////////////////////////////////////////////////////////////////////////////
-//    std::string filename("/Users/rohit/Documents/Development/practice/max-spacing-k-clustering/clustering_big.txt");
-// 2
-//    std::string filename("/Users/rohit/Documents/Development/practice/max-spacing-k-clustering/clustering_big2.txt");
-// 6
-//    std::string filename("/Users/rohit/Documents/Development/practice/max-spacing-k-clustering/clustering_big3.txt");
-
     Graph g;
-    g.readSmall(filename);
+    g.read(filename);
 //    g.dumpGraph(std::cout);
 //    std::cout << std::endl;
     
