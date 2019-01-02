@@ -352,12 +352,10 @@ inline void Cluster::cluster(int maxDist) {
             if (i == j) {
                 continue;
             }
-            for (int d = 0; d < maxDist; d++) {
-                unsigned long dist = hammingDist(i, j);
-                if (dist <= d) {
-                    merge(i, j);
-                    compress(i, j);
-                }
+            unsigned long dist = hammingDist(i, j);
+            if (dist < maxDist) {
+                merge(i, j);
+                compress(i, j);
             }
         }
     }
