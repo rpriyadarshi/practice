@@ -155,7 +155,7 @@ inline size_t Knapsack::at(const int i, const int x) {
 }
 
 inline void Knapsack::at(const int i, const int x, size_t val) {
-    m_table[i % 2][x] = val; // m_table[i][x] = val; 
+    m_table[i % 2][x] = val; // m_table[i][x] = val;
 }
 
 inline size_t Knapsack::compute() {
@@ -200,7 +200,7 @@ int main(int argc, const char * argv[]) {
 //    std::string filename("/Users/rohit/Documents/Development/practice/knapsack/input_random_44_2000000_2000.txt");
     // 2493893
 //    std::string filename("/Users/rohit/Documents/Development/practice/knapsack/knapsack1.txt");
-    //
+    //4243395
     std::string filename("/Users/rohit/Documents/Development/practice/knapsack/knapsack_big.txt");
 
     Knapsack k;
