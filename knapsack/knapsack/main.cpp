@@ -53,7 +53,9 @@ public:
     size_t compute();
     size_t value(int i);
     int weight(int i);
-    
+    size_t at(const int i, const int x);
+    void at(const int i, const int x, size_t val);
+
 public:
     bool readSize(std::ifstream& ifstr);
     bool readItem(std::ifstream& ifstr);
@@ -125,7 +127,7 @@ inline void Knapsack::dumpItems(std::ostream& o) {
 inline void Knapsack::dumpTable(std::ostream& o) {
     for (int x = static_cast<int>(m_size); x >= 0; x--) {
         for (int i = 0; i < m_cache.size(); i++) {
-            o << m_table[i][x] << " ";
+            o << at(i, x) << " ";
         }
         o << std::endl;
     }
@@ -148,6 +150,14 @@ inline int Knapsack::weight(int i) {
     return 0;
 }
 
+inline size_t Knapsack::at(const int i, const int x) {
+    return m_table[i % 2][x]; // m_table[i][x];
+}
+
+inline void Knapsack::at(const int i, const int x, size_t val) {
+    m_table[i % 2][x] = val; // m_table[i][x] = val; 
+}
+
 inline size_t Knapsack::compute() {
     for (int i = 1; i < m_cache.size(); i++) {
         for (int x = 0; x <= m_size; x++) {
@@ -156,17 +166,17 @@ inline size_t Knapsack::compute() {
             int wi = weight(i);
             size_t v = 0;
             if (wi > x) {
-                v = m_table[i - 1][x];
+                v = at(i - 1, x);
             } else {
-                size_t a = m_table[i - 1][x];
-                size_t b = m_table[i - 1][x - wi];
+                size_t a = at(i - 1, x);
+                size_t b = at(i - 1, x - wi);
                 v = std::max(a, b + vi);
             }
-            m_table[i][x] = v;
+            at(i, x, v);
         }
     }
     // return A[m_cache.size()-1, m_size]
-    size_t res = m_table[static_cast<int>(m_cache.size()) - 1][static_cast<int>(m_size)];
+    size_t res = at(static_cast<int>(m_cache.size()) - 1, static_cast<int>(m_size));
     return res;
 }
 
