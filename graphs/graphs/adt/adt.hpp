@@ -11,6 +11,11 @@
 
 #include <vector>
 #include <memory>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <exception>
 
 #include "common.hpp"
 #include "factory.hpp"

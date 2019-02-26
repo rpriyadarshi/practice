@@ -12,46 +12,79 @@
 ////////////////////////////////////////////////////////////////////////////////
 namespace adt {
     
-    ////////////////////////////////////////////////////////////////////////////
-    template <typename DV, typename DE>
-    class edge {
-    public: // Constructors/destructors
-        edge();
-        edge(vertex<DV, DE>* f, vertex<DV, DE>* b);
-        ~edge();
-        
-    private: // Accessors
-        const vertex<DV, DE>* front() const { return m_front; }
-        const vertex<DV, DE>* back() const { return m_back; }
-        const DE& data() const { return m_data; }
-        
-    protected: // Accessors
-        vertex<DV, DE>* front() { return m_front; }
-        vertex<DV, DE>* back() { return m_back; }
-        DE& data() { return m_data; }
+////////////////////////////////////////////////////////////////////////////////
+template <typename DV, typename DE>
+class edge {
+public: // Constructors/destructors
+    explicit edge(unsigned int idx);
+    edge(unsigned int idx, vertex<DV, DE>* f, vertex<DV, DE>* b);
+    ~edge();
+    
+public: // Utility functions
+    void dump(std::ostream& o) const;
+    
+public: // Accessors
+    unsigned int id() const { return m_id; }
+    const vertex<DV, DE>* front() const { return m_front; }
+    const vertex<DV, DE>* back() const { return m_back; }
+    DE& data() const { return m_data; }
 
-    protected: // Accessors
-        void front(vertex<DV, DE>* v) { m_front = v; }
-        void back(vertex<DV, DE>* v) { m_back = v; }
-        
-    private:
-        vertex<DV, DE>* m_front;
-        vertex<DV, DE>* m_back;
-        DE m_data;
-    };
+protected: // Accessors
+    unsigned int id() { return m_id; }
+    vertex<DV, DE>* front() { return m_front; }
+    vertex<DV, DE>* back() { return m_back; }
+
+protected: // Accessors
+    void front(vertex<DV, DE>* v) { m_front = v; }
+    void back(vertex<DV, DE>* v) { m_back = v; }
     
-    ////////////////////////////////////////////////////////////////////////////
-    template <typename DV, typename DE>
-    edge<DV, DE>::edge() : m_front(nullptr), m_back(nullptr) {
+private:
+    unsigned int m_id;
+    vertex<DV, DE>* m_front;
+    vertex<DV, DE>* m_back;
+    mutable DE m_data;
+};
+
+////////////////////////////////////////////////////////////////////////////////
+template <typename DV, typename DE>
+std::ostream& operator<< (std::ostream& o, edge<DV, DE>& e) {
+    e.dump(o);
+    return o;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+template <typename DV, typename DE>
+edge<DV, DE>::edge(unsigned int idx)
+: m_id(idx), m_front(nullptr), m_back(nullptr) {
+}
+
+template <typename DV, typename DE>
+edge<DV, DE>::edge(unsigned int idx, vertex<DV, DE>* f, vertex<DV, DE>* b)
+: m_id(idx), m_front(f), m_back(b) {
+}
+
+template <typename DV, typename DE>
+edge<DV, DE>::~edge() {
+}
+
+template <typename DV, typename DE>
+void edge<DV, DE>::dump(std::ostream& o) const {
+    const vertex<DV, DE>* bptr = back();
+    const vertex<DV, DE>* fptr = front();
+    if (bptr != nullptr) {
+        o << bptr->id();
+    } else {
+        o << "nullptr";
     }
-    
-    template <typename DV, typename DE>
-    edge<DV, DE>::edge(vertex<DV, DE>* f, vertex<DV, DE>* b) : m_front(f), m_back(b) {
+    o << " ";
+    if (fptr != nullptr) {
+        o << fptr->id();
+    } else {
+        o << "nullptr";
     }
-    
-    template <typename DV, typename DE>
-    edge<DV, DE>::~edge() {
-    }
+    o << " ";
+    o << data();
+}
     
 };
 

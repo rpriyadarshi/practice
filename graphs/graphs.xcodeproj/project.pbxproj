@@ -24,6 +24,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F997716C2223D5D000B6C91B /* edgebuilder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = edgebuilder.hpp; sourceTree = "<group>"; };
+		F997716E22250AA500B6C91B /* edgetote.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = edgetote.hpp; sourceTree = "<group>"; };
 		F9AA04A622210F36006EADC5 /* graphs */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = graphs; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9AA04A922210F36006EADC5 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		F9AA04BA222110B6006EADC5 /* vertex.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vertex.hpp; sourceTree = "<group>"; };
@@ -50,6 +52,83 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F997715D2223C0DE00B6C91B /* BellmanFord */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = BellmanFord;
+			sourceTree = "<group>";
+		};
+		F997715E2223C10400B6C91B /* FloydWarshall */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = FloydWarshall;
+			sourceTree = "<group>";
+		};
+		F997715F2223C12200B6C91B /* Johnson */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Johnson;
+			sourceTree = "<group>";
+		};
+		F99771602223C13100B6C91B /* allPairShortestPath */ = {
+			isa = PBXGroup;
+			children = (
+				F997715D2223C0DE00B6C91B /* BellmanFord */,
+				F997715E2223C10400B6C91B /* FloydWarshall */,
+				F997715F2223C12200B6C91B /* Johnson */,
+			);
+			path = allPairShortestPath;
+			sourceTree = "<group>";
+		};
+		F99771612223C16A00B6C91B /* singleSourceShortestPath */ = {
+			isa = PBXGroup;
+			children = (
+				F99771622223C17D00B6C91B /* Dijkstra */,
+			);
+			path = singleSourceShortestPath;
+			sourceTree = "<group>";
+		};
+		F99771622223C17D00B6C91B /* Dijkstra */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Dijkstra;
+			sourceTree = "<group>";
+		};
+		F99771632223C23900B6C91B /* minimumSpanningTree */ = {
+			isa = PBXGroup;
+			children = (
+				F99771652223CE6700B6C91B /* Prim */,
+				F99771642223C24D00B6C91B /* Kruskal */,
+			);
+			path = minimumSpanningTree;
+			sourceTree = "<group>";
+		};
+		F99771642223C24D00B6C91B /* Kruskal */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Kruskal;
+			sourceTree = "<group>";
+		};
+		F99771652223CE6700B6C91B /* Prim */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Prim;
+			sourceTree = "<group>";
+		};
+		F997716F22251A6A00B6C91B /* eb */ = {
+			isa = PBXGroup;
+			children = (
+				F9E063222223BABF0018BDB2 /* builders */,
+			);
+			path = eb;
+			sourceTree = "<group>";
+		};
 		F9AA049D22210F36006EADC5 = {
 			isa = PBXGroup;
 			children = (
@@ -69,6 +148,7 @@
 		F9AA04A822210F36006EADC5 /* graphs */ = {
 			isa = PBXGroup;
 			children = (
+				F997716F22251A6A00B6C91B /* eb */,
 				F9E063202223187C0018BDB2 /* adt */,
 				F9AA04A922210F36006EADC5 /* main.cpp */,
 			);
@@ -87,6 +167,9 @@
 		F9E0631E2223173E0018BDB2 /* algo */ = {
 			isa = PBXGroup;
 			children = (
+				F99771632223C23900B6C91B /* minimumSpanningTree */,
+				F99771612223C16A00B6C91B /* singleSourceShortestPath */,
+				F99771602223C13100B6C91B /* allPairShortestPath */,
 			);
 			path = algo;
 			sourceTree = "<group>";
@@ -104,7 +187,6 @@
 		F9E063202223187C0018BDB2 /* adt */ = {
 			isa = PBXGroup;
 			children = (
-				F9E063222223BABF0018BDB2 /* loaders */,
 				F9E0632122238B490018BDB2 /* adt.hpp */,
 				F9E0631F2223174B0018BDB2 /* common */,
 				F9E0631E2223173E0018BDB2 /* algo */,
@@ -114,20 +196,22 @@
 			path = adt;
 			sourceTree = "<group>";
 		};
-		F9E063222223BABF0018BDB2 /* loaders */ = {
+		F9E063222223BABF0018BDB2 /* builders */ = {
 			isa = PBXGroup;
 			children = (
-				F9E063232223BB620018BDB2 /* allPairShortestPath */,
+				F9E063232223BB620018BDB2 /* edge */,
 			);
-			path = loaders;
+			path = builders;
 			sourceTree = "<group>";
 		};
-		F9E063232223BB620018BDB2 /* allPairShortestPath */ = {
+		F9E063232223BB620018BDB2 /* edge */ = {
 			isa = PBXGroup;
 			children = (
+				F997716C2223D5D000B6C91B /* edgebuilder.hpp */,
+				F997716E22250AA500B6C91B /* edgetote.hpp */,
 				F9E063282223BB970018BDB2 /* testcases */,
 			);
-			path = allPairShortestPath;
+			path = edge;
 			sourceTree = "<group>";
 		};
 		F9E063282223BB970018BDB2 /* testcases */ = {
