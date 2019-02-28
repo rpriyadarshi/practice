@@ -26,7 +26,9 @@ public: // Create
 public: // Utility functions
     void resize(unsigned int v, unsigned int e);
     void dump(std::ostream& o) const;
-    
+    void dumpVertexVec(std::ostream& o) const;
+    void dumpEdgeVec(std::ostream& o) const;
+
 public: // Accessors
     const VertexVec<DV, DE>& vertices() const { return m_vertices; }
     const EdgeVec<DV, DE>& edges() const { return m_edges; }
@@ -95,6 +97,7 @@ graph<DV, DE>::createEdge(unsigned int id, vertex<DV, DE>* v1, vertex<DV, DE>* v
         if (ptr == nullptr) {
             edge<DV, DE> e(id, v1, v2);
             ptr = fac.create(e);
+            ptr->connect();
             edges().at(id) = ptr;
         }
     }
@@ -103,15 +106,31 @@ graph<DV, DE>::createEdge(unsigned int id, vertex<DV, DE>* v1, vertex<DV, DE>* v
     }
     return ptr;
 }
-
 template <typename DV, typename DE>
 void graph<DV, DE>::dump(std::ostream& o) const {
+    dumpVertexVec(o);
+}
+
+template <typename DV, typename DE>
+void graph<DV, DE>::dumpEdgeVec(std::ostream& o) const {
     for (int i = 0; i < edges().size(); i++) {
-    edge<DV, DE>* e = edges()[i];
+        edge<DV, DE>* e = edges()[i];
         if (e == nullptr) {
             o << i << " nullptr" << std::endl;
         } else {
             o << *e << std::endl;
+        }
+    }
+}
+
+template <typename DV, typename DE>
+void graph<DV, DE>::dumpVertexVec(std::ostream& o) const {
+    for (int i = 0; i < vertices().size(); i++) {
+        vertex<DV, DE>* v = vertices()[i];
+        if (v == nullptr) {
+            o << i << " nullptr" << std::endl;
+        } else {
+            o << *v << std::endl;
         }
     }
 }

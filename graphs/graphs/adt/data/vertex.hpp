@@ -11,7 +11,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 namespace adt {
-    
+
 ////////////////////////////////////////////////////////////////////////////////
 template <typename DV, typename DE>
 class vertex {
@@ -20,6 +20,8 @@ public: // Constructors/destructors
     ~vertex();
     
 public: // Utility functions
+    void fanin(edge<DV, DE>* e);
+    void fanout(edge<DV, DE>* e);
     void dump(std::ostream& o) const;
     
 public: // Accessors
@@ -57,7 +59,40 @@ vertex<DV, DE>::~vertex() {
 }
 
 template <typename DV, typename DE>
+void vertex<DV, DE>::fanin(edge<DV, DE>* e) {
+    fanin().push_back(e);
+}
+
+template <typename DV, typename DE>
+void vertex<DV, DE>::fanout(edge<DV, DE>* e) {
+    fanout().push_back(e);
+}
+
+template <typename DV, typename DE>
 void vertex<DV, DE>::dump(std::ostream& o) const {
+    o << id() << " [" << data() << "] -> ";
+    for (auto& e : fanout()) {
+        auto fptr = e->front();
+        if (fptr != nullptr) {
+            o << fptr->id();
+        } else {
+            o << "nullptr";
+        }
+        o << " ";
+    }
+    o << std::endl;
+    
+    o << id() << " [" << data() << "] <- ";
+    for (auto& e : fanin()) {
+        auto bptr = e->back();
+        if (bptr != nullptr) {
+            o << bptr->id();
+        } else {
+            o << "nullptr";
+        }
+        o << " ";
+    }
+    o << std::endl;
 }
     
 };

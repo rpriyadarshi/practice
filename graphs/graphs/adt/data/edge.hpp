@@ -21,6 +21,7 @@ public: // Constructors/destructors
     ~edge();
     
 public: // Utility functions
+    void connect();
     void dump(std::ostream& o) const;
     
 public: // Accessors
@@ -29,7 +30,7 @@ public: // Accessors
     const vertex<DV, DE>* back() const { return m_back; }
     DE& data() const { return m_data; }
 
-protected: // Accessors
+public: // Accessors
     unsigned int id() { return m_id; }
     vertex<DV, DE>* front() { return m_front; }
     vertex<DV, DE>* back() { return m_back; }
@@ -59,13 +60,26 @@ edge<DV, DE>::edge(unsigned int idx)
 }
 
 template <typename DV, typename DE>
-edge<DV, DE>::edge(unsigned int idx, vertex<DV, DE>* f, vertex<DV, DE>* b)
-: m_id(idx), m_front(f), m_back(b) {
+edge<DV, DE>::edge(unsigned int idx, vertex<DV, DE>* fv, vertex<DV, DE>* bv)
+: m_id(idx), m_front(fv), m_back(bv) {
 }
 
 template <typename DV, typename DE>
 edge<DV, DE>::~edge() {
 }
+
+template <typename DV, typename DE>
+void edge<DV, DE>::connect() {
+    vertex<DV, DE>* fptr = front();
+    vertex<DV, DE>* bptr = back();
+    if (fptr) {
+        fptr->fanin(this);
+    }
+    if (bptr) {
+        bptr->fanout(this);
+    }
+}
+
 
 template <typename DV, typename DE>
 void edge<DV, DE>::dump(std::ostream& o) const {
