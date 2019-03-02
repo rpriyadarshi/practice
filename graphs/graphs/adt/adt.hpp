@@ -9,13 +9,15 @@
 #ifndef adt_h
 #define adt_h
 
-#include <vector>
 #include <memory>
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
 #include <exception>
+#include <vector>
+#include <array>
+#include <limits>
 
 #include "common.hpp"
 #include "factory.hpp"

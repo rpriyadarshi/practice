@@ -70,11 +70,14 @@ void vertex<DV, DE>::fanout(edge<DV, DE>* e) {
 
 template <typename DV, typename DE>
 void vertex<DV, DE>::dump(std::ostream& o) const {
-    o << id() << " [" << data() << "] -> ";
+    const DV& dv = data();
+    o << id() << " [" << dv << "] -> ";
     for (auto& e : fanout()) {
         auto fptr = e->front();
         if (fptr != nullptr) {
+            const DE& de = e->data();
             o << fptr->id();
+            o << "[" << de << "]";
         } else {
             o << "nullptr";
         }
@@ -82,11 +85,13 @@ void vertex<DV, DE>::dump(std::ostream& o) const {
     }
     o << std::endl;
     
-    o << id() << " [" << data() << "] <- ";
+    o << id() << " [" << dv << "] <- ";
     for (auto& e : fanin()) {
         auto bptr = e->back();
         if (bptr != nullptr) {
+            const DE& de = e->data();
             o << bptr->id();
+            o << "[" << de << "]";
         } else {
             o << "nullptr";
         }
