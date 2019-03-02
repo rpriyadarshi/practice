@@ -69,16 +69,22 @@ void bellmanford<DV, DE>::init(int sv) {
 template <typename DV, typename DE>
 int bellmanford<DV, DE>::run(int sv) {
     init(sv);
-    int intMax = std::numeric_limits<int>::max();
-    const VertexVec<DV, DE>& vVec = graph().vertices();
+    
+    bool match = true;
+    int icurr = -1;
+    int iprev = -1;
     Matrix& m = matrix();
-    for (int i = 1; i < graph().edges().size(); i++) {
+    const VertexVec<DV, DE>& vVec = graph().vertices();
+    int i = 1;
+    for (; i < graph().edges().size() + 1; i++) { // + 1 to detect -ve cost cycle
+        match = true;
         for (int v = 1; v < graph().vertices().size(); v++) {
-            int icurr = odd(i);
-            int iprev = !odd(i);
+            icurr = odd(i);
+            iprev = !odd(i);
             
-            int pm = intMax;
+            int pm = std::numeric_limits<int>::max();
             const vertex<DV, DE>* vptr = vVec[v];
+            
             // Unused vertex index unless the implementation is switched to
             // an unordered_map
             if (vptr == nullptr) {
@@ -91,18 +97,36 @@ int bellmanford<DV, DE>::run(int sv) {
                     const DE& de = eptr->data();
                     int cost = de.data();
                     int pval = m[iprev][bptr->id()];
-                    int val = pval == intMax ? pval : pval + cost;
+                    if (pval == std::numeric_limits<int>::max()) {
+                        continue;
+                    }
+                    int val = pval + cost;
                     pm = std::min(pm, val);
                 }
             }
             
             m[icurr][v] = std::min(m[iprev][v], pm);
+            if (m[icurr][v] != m[iprev][v]) {
+                match = false;
+            }
+        }
+        if (match) {
+            break;
         }
     }
     
-    int ncurr = odd(static_cast<int>(graph().edges().size()) - 1);
-    int res = intMax;
-    for (auto val : m[ncurr]) {
+    if (i < graph().edges().size() - 1) {
+        std::cout << "Early result found (" << i << " : " << graph().edges().size() - 1 << ")" << std::endl;
+    }
+    
+    if (match) {
+//        std::cout << "Match found " << i << std::endl;
+    } else {
+        std::cout << "Mismatch found " << i << std::endl;
+    }
+    
+    int res = std::numeric_limits<int>::max();
+    for (auto val : m[icurr]) {
         res = std::min(val, res);
     }
     
