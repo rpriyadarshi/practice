@@ -13,6 +13,7 @@
 namespace adt {
 
 using Matrix = std::array<std::vector<int>, 2>;
+using Path = std::vector<int>;
 
 ////////////////////////////////////////////////////////////////////////////////
 template <typename DV, typename DE>
@@ -24,8 +25,13 @@ public: // Constructors/destructors
 public: // Utilities
     bool odd(int n) const;
     void init(int sv);
-    
+    void dump(std::ostream& o) const;
+    void dumpSpValue(std::ostream& o) const;
+    void dumpPath(std::ostream& o) const;
+
 public: // Algorithms
+    int computeSpMatrix(int sv);
+    void computePath();
     int run(int sv);
     int run();
 
@@ -36,18 +42,41 @@ public: // Operators
 public: // Accessors
     const graph<DV, DE>& graph() const { return m_graph; }
     const Matrix& matrix() const { return m_matrix; }
+    const Path& path() const { return m_path; }
+    int spVertex() const { return m_spVertex; }
+    int spIndex() const { return m_spIndex; }
+    int spValue() const { return m_spValue; }
 
 protected: // Accessors
     Matrix& matrix() { return m_matrix; }
+    Path& path() { return m_path; }
+    int spVertex() { return m_spVertex; }
+    int spIndex() { return m_spIndex; }
+    int spValue() { return m_spValue; }
+    void spVertex(int spv) { m_spVertex = spv; }
+    void spIndex(int idx) { m_spIndex = idx; }
+    void spValue(int val) { m_spValue = val; }
 
 private:
     const adt::graph<DV, DE>& m_graph;
     Matrix m_matrix;
+    Path m_path;
+    int m_spVertex;
+    int m_spIndex;
+    int m_spValue;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 template <typename DV, typename DE>
-bellmanford<DV, DE>::bellmanford(const adt::graph<DV, DE>& g) : m_graph(g) {
+std::ostream& operator<< (std::ostream& o, bellmanford<DV, DE>& bf) {
+    bf.dump(o);
+    return o;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+template <typename DV, typename DE>
+bellmanford<DV, DE>::bellmanford(const adt::graph<DV, DE>& g) : m_graph(g),
+    m_spVertex(-1), m_spIndex(-1), m_spValue(std::numeric_limits<int>::max()) {
 }
 
 template <typename DV, typename DE>
@@ -67,7 +96,7 @@ void bellmanford<DV, DE>::init(int sv) {
 }
 
 template <typename DV, typename DE>
-int bellmanford<DV, DE>::run(int sv) {
+int bellmanford<DV, DE>::computeSpMatrix(int sv) {
     init(sv);
     
     bool match = true;
@@ -117,8 +146,14 @@ int bellmanford<DV, DE>::run(int sv) {
     
     int res = std::numeric_limits<int>::max();
     if (match) {
-        for (auto val : m[icurr]) {
-            res = std::min(val, res);
+        for (int v = 1; v < graph().vertices().size(); v++) {
+            int val = m[icurr][v];
+            if (val < res) {
+                res = val;
+                spVertex(v);
+                spIndex(icurr);
+                spValue(val);
+            }
         }
     } else {
         res = std::numeric_limits<int>::min();
@@ -128,16 +163,59 @@ int bellmanford<DV, DE>::run(int sv) {
 }
 
 template <typename DV, typename DE>
+void bellmanford<DV, DE>::computePath() {
+    path().clear();
+    Matrix& m = matrix();
+    const VertexVec<DV, DE>& vVec = graph().vertices();
+    
+    int icurr = spIndex();
+    int v = spVertex();
+    
+    while (v > 0) {
+        path().push_back(v);
+        const vertex<DV, DE>* vptr = vVec[v];
+        if (vptr == nullptr) {
+            return;
+        }
+        
+        int w = -1;
+        v = w;
+        int minval = std::numeric_limits<int>::max();
+
+        const EdgeVec<DV, DE>& eVec = vptr->fanin();
+        for (auto eptr : eVec) {
+            const vertex<DV, DE>* bptr = eptr->back();
+            if (bptr == nullptr) {
+                continue;
+            }
+            w = bptr->id();
+            int wval = m[icurr][w];
+            if (wval < minval) {
+                minval = wval;
+                v = w;
+            }
+        }
+    }
+}
+
+template <typename DV, typename DE>
+int bellmanford<DV, DE>::run(int sv) {
+    return computeSpMatrix(sv);
+}
+
+template <typename DV, typename DE>
 int bellmanford<DV, DE>::run() {
     int rmin = std::numeric_limits<int>::max();
     for (int v = 1; v < graph().vertices().size(); v++) {
-        int res = run(v);
+        int res = computeSpMatrix(v);
         if (res == std::numeric_limits<int>::min()) {
             return res;
         }
-        rmin = std::min(rmin, res);
+        if (rmin > res) {
+            rmin = res;
+            computePath();
+        }
     }
-    
     return rmin;
 }
 
@@ -149,6 +227,31 @@ int bellmanford<DV, DE>::operator()(int sv) {
 template <typename DV, typename DE>
 int bellmanford<DV, DE>::operator()() {
     return run();
+}
+
+template <typename DV, typename DE>
+void bellmanford<DV, DE>::dump(std::ostream& o) const {
+    dumpSpValue(o);
+    o << ": ";
+    dumpPath(o);
+}
+
+template <typename DV, typename DE>
+void bellmanford<DV, DE>::dumpSpValue(std::ostream& o) const {
+    o << spValue();
+}
+
+template <typename DV, typename DE>
+void bellmanford<DV, DE>::dumpPath(std::ostream& o) const {
+    o << "[";
+    for (int i = 0; i < path().size(); i++) {
+        int v = path()[path().size() - i - 1];
+        if (i > 0) {
+            o << ", ";
+        }
+        o << v;
+    }
+    o << "]";
 }
 
 };

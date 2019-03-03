@@ -9,7 +9,7 @@
 #include "adt.hpp"
 #include "edgetote.hpp"
 #include "edgebuilder.hpp"
-#include "bellmanford.hpp"
+#include "bellmanFord.hpp"
 
 void runtest(const std::string& filename) {
     adt::factory fac;
@@ -20,7 +20,8 @@ void runtest(const std::string& filename) {
 //    std::cout << g << std::endl;
     
     adt::bellmanford<adt::vertexTote, adt::edgeTote> bf(g);
-    std::cout << bf() << std::endl;
+    bf();
+    std::cout << bf << std::endl;
 }
 
 int main(int argc, const char * argv[]) {
