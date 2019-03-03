@@ -132,7 +132,7 @@ int bellmanford<DV, DE>::run() {
     int rmin = std::numeric_limits<int>::max();
     for (int v = 1; v < graph().vertices().size(); v++) {
         int res = run(v);
-        if (res == std::numeric_limits<int>::max()) {
+        if (res == std::numeric_limits<int>::min()) {
             return res;
         }
         rmin = std::min(rmin, res);

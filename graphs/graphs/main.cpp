@@ -27,10 +27,10 @@ int main(int argc, const char * argv[]) {
     // Load files
     const std::string path("/Users/rohit/Documents/Development/practice/graphs/graphs/adt/builders/edge/testcases/");
     // course
-    const std::string g1(path + "g1.txt");
-    const std::string g2(path + "g2.txt");
-    const std::string g3(path + "g3.txt");
-    const std::string large(path + "glarge.txt");
+    const std::string g1(path + "g1.txt");                                      // NULL
+    const std::string g2(path + "g2.txt");                                      // NULL
+    const std::string g3(path + "g3.txt");                                      // -19
+    const std::string large(path + "large.txt");
     
     const std::string input_random_1_2(path + "input_random_1_2.txt");          // NULL
     const std::string input_random_4_2(path + "input_random_4_2.txt");          // -54
@@ -55,6 +55,7 @@ int main(int argc, const char * argv[]) {
 //    runtest(g1);
 //    runtest(g2);
 //    runtest(g3);
+//    runtest(large);
 
     return 0;
 }
