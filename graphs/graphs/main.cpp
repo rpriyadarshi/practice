@@ -32,18 +32,16 @@ int main(int argc, const char * argv[]) {
     const std::string g3(path + "g3.txt");
     const std::string large(path + "glarge.txt");
     
-    // fail
-    const std::string input_random_1_2(path + "input_random_1_2.txt");      // NULL
-    // pass
-    const std::string input_random_4_2(path + "input_random_4_2.txt");      // -54
-    const std::string input_random_8_4(path + "input_random_8_4.txt");      // -36
-    const std::string input_random_10_8(path + "input_random_10_8.txt");    // -41
-    // fail
-    const std::string input_random_13_16(path + "input_random_13_16.txt");  // NULL
-    // pass
-    const std::string input_random_15_16(path + "input_random_15_16.txt");  // -100
-    const std::string input_random_20_32(path + "input_random_20_32.txt");  // -242
-    
+    const std::string input_random_1_2(path + "input_random_1_2.txt");          // NULL
+    const std::string input_random_4_2(path + "input_random_4_2.txt");          // -54
+    const std::string input_random_8_4(path + "input_random_8_4.txt");          // -36
+    const std::string input_random_10_8(path + "input_random_10_8.txt");        // -41
+    const std::string input_random_13_16(path + "input_random_13_16.txt");      // NULL
+    const std::string input_random_15_16(path + "input_random_15_16.txt");      // -100
+    const std::string input_random_20_32(path + "input_random_20_32.txt");      // -242
+    const std::string input_random_30_256(path + "input_random_30_256.txt");    // -961
+    const std::string input_random_44_2048(path + "input_random_44_2048.txt");  // -3127
+
     runtest(input_random_1_2);
     runtest(input_random_4_2);
     runtest(input_random_8_4);
@@ -51,6 +49,12 @@ int main(int argc, const char * argv[]) {
     runtest(input_random_13_16);
     runtest(input_random_15_16);
     runtest(input_random_20_32);
+    runtest(input_random_30_256);
+    runtest(input_random_44_2048);
+
+//    runtest(g1);
+//    runtest(g2);
+//    runtest(g3);
 
     return 0;
 }

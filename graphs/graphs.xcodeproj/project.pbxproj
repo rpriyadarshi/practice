@@ -24,6 +24,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F97F957F222B700B005CFF29 /* path_random_30_256.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = path_random_30_256.txt; sourceTree = "<group>"; };
+		F97F9580222B700B005CFF29 /* output_random_30_256.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = output_random_30_256.txt; sourceTree = "<group>"; };
+		F97F9581222B700B005CFF29 /* input_random_30_256.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input_random_30_256.txt; sourceTree = "<group>"; };
+		F97F9582222B70FE005CFF29 /* input_random_44_2048.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input_random_44_2048.txt; sourceTree = "<group>"; };
+		F97F9583222B70FE005CFF29 /* output_random_44_2048.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = output_random_44_2048.txt; sourceTree = "<group>"; };
+		F97F9584222B70FE005CFF29 /* path_random_44_2048.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = path_random_44_2048.txt; sourceTree = "<group>"; };
 		F997716C2223D5D000B6C91B /* edgebuilder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = edgebuilder.hpp; sourceTree = "<group>"; };
 		F997716E22250AA500B6C91B /* edgetote.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = edgetote.hpp; sourceTree = "<group>"; };
 		F9AA04A622210F36006EADC5 /* graphs */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = graphs; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -177,6 +183,12 @@
 				F9F77EFE2229FDE2002CDD62 /* input_random_20_32.txt */,
 				F9F77EFF2229FDE2002CDD62 /* output_random_20_32.txt */,
 				F9F77F002229FDE2002CDD62 /* path_random_20_32.txt */,
+				F97F9581222B700B005CFF29 /* input_random_30_256.txt */,
+				F97F9580222B700B005CFF29 /* output_random_30_256.txt */,
+				F97F957F222B700B005CFF29 /* path_random_30_256.txt */,
+				F97F9582222B70FE005CFF29 /* input_random_44_2048.txt */,
+				F97F9583222B70FE005CFF29 /* output_random_44_2048.txt */,
+				F97F9584222B70FE005CFF29 /* path_random_44_2048.txt */,
 			);
 			path = testcases;
 			sourceTree = "<group>";

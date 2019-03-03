@@ -115,19 +115,13 @@ int bellmanford<DV, DE>::run(int sv) {
         }
     }
     
-    if (i < graph().edges().size() - 1) {
-        std::cout << "Early result found (" << i << " : " << graph().edges().size() - 1 << ")" << std::endl;
-    }
-    
-    if (match) {
-//        std::cout << "Match found " << i << std::endl;
-    } else {
-        std::cout << "Mismatch found " << i << std::endl;
-    }
-    
     int res = std::numeric_limits<int>::max();
-    for (auto val : m[icurr]) {
-        res = std::min(val, res);
+    if (match) {
+        for (auto val : m[icurr]) {
+            res = std::min(val, res);
+        }
+    } else {
+        res = std::numeric_limits<int>::min();
     }
     
     return res;
@@ -138,6 +132,9 @@ int bellmanford<DV, DE>::run() {
     int rmin = std::numeric_limits<int>::max();
     for (int v = 1; v < graph().vertices().size(); v++) {
         int res = run(v);
+        if (res == std::numeric_limits<int>::max()) {
+            return res;
+        }
         rmin = std::min(rmin, res);
     }
     
