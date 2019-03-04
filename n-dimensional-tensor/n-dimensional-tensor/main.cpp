@@ -39,7 +39,7 @@ void testTwo() {
 
     nten::UIntVec idx;
     idx.resize(evec.size(), 0);
-    float* data = nullptr;
+    float* data = new float[4*3*5];
     
     nten::tensor<nten::runfunc> ten(data, evec);
     ten.indexTree(idx);

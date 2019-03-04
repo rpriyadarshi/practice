@@ -22,7 +22,7 @@ public: // Utility
     void dump(std::ostream& o, const UIntVec& idx) const;
 
 public: // Operators
-    void operator()(const UIntVec& idx);
+    unsigned int operator()(const UIntVec& idx);
     
 public: // Accessors
     const UIntVec& pdVec() const { return m_pdVec; }
@@ -58,8 +58,9 @@ inline void runfunc::dump(std::ostream& o, const UIntVec& idx) const {
     o << std::endl;
 }
 
-inline void runfunc::operator()(const UIntVec& idx) {
+inline unsigned int runfunc::operator()(const UIntVec& idx) {
     dump(std::cout, idx);
+    return index(idx);
 }
 
 };

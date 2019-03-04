@@ -29,6 +29,7 @@
 		F975398B222CC68300815666 /* C++ Question.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "C++ Question.pdf"; sourceTree = SOURCE_ROOT; };
 		F975398E222CE05000815666 /* runfunc.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = runfunc.hpp; sourceTree = "<group>"; };
 		F9753991222CE10F00815666 /* common.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = common.hpp; sourceTree = "<group>"; };
+		F9753993222CFB7900815666 /* tensorindexing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tensorindexing.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +67,7 @@
 				F9753989222CA18E00815666 /* tensor.hpp */,
 				F9753991222CE10F00815666 /* common.hpp */,
 				F975398B222CC68300815666 /* C++ Question.pdf */,
+				F9753993222CFB7900815666 /* tensorindexing.png */,
 			);
 			path = "n-dimensional-tensor";
 			sourceTree = "<group>";
