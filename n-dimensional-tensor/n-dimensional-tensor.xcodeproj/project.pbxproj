@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		F9753982222CA17300815666 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9753981222CA17300815666 /* main.cpp */; };
-		F975398A222CA18E00815666 /* tensor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9753988222CA18E00815666 /* tensor.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,9 +25,10 @@
 /* Begin PBXFileReference section */
 		F975397E222CA17300815666 /* n-dimensional-tensor */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "n-dimensional-tensor"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9753981222CA17300815666 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		F9753988222CA18E00815666 /* tensor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = tensor.cpp; sourceTree = "<group>"; };
 		F9753989222CA18E00815666 /* tensor.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = tensor.hpp; sourceTree = "<group>"; };
 		F975398B222CC68300815666 /* C++ Question.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "C++ Question.pdf"; sourceTree = SOURCE_ROOT; };
+		F975398E222CE05000815666 /* runfunc.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = runfunc.hpp; sourceTree = "<group>"; };
+		F9753991222CE10F00815666 /* common.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = common.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,9 +61,10 @@
 		F9753980222CA17300815666 /* n-dimensional-tensor */ = {
 			isa = PBXGroup;
 			children = (
+				F975398E222CE05000815666 /* runfunc.hpp */,
 				F9753981222CA17300815666 /* main.cpp */,
-				F9753988222CA18E00815666 /* tensor.cpp */,
 				F9753989222CA18E00815666 /* tensor.hpp */,
+				F9753991222CE10F00815666 /* common.hpp */,
 				F975398B222CC68300815666 /* C++ Question.pdf */,
 			);
 			path = "n-dimensional-tensor";
@@ -125,7 +126,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F975398A222CA18E00815666 /* tensor.cpp in Sources */,
 				F9753982222CA17300815666 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,8 +9,11 @@
 #include <iostream>
 #include <vector>
 
+#include "common.hpp"
 #include "tensor.hpp"
+#include "runfunc.hpp"
 
+////////////////////////////////////////////////////////////////////////////////
 void testOne() {
     nten::UIntVec evec;
     evec.push_back(3);
@@ -23,10 +26,11 @@ void testOne() {
     idx.resize(evec.size(), 0);
     float* data = nullptr;
     
-    nten::tensor ten(data, evec);
+    nten::tensor<nten::runfunc> ten(data, evec);
     ten.indexTree(idx);
 }
 
+////////////////////////////////////////////////////////////////////////////////
 void testTwo() {
     nten::UIntVec evec;
     evec.push_back(4);
@@ -37,10 +41,11 @@ void testTwo() {
     idx.resize(evec.size(), 0);
     float* data = nullptr;
     
-    nten::tensor ten(data, evec);
+    nten::tensor<nten::runfunc> ten(data, evec);
     ten.indexTree(idx);
 }
 
+////////////////////////////////////////////////////////////////////////////////
 int main(int argc, const char * argv[]) {
     testOne();
     testTwo();
