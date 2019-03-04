@@ -11,61 +11,96 @@
 
 namespace nten {
 
-using ExtentVec = std::vector<unsigned int>;
-using IndexVec = std::vector<unsigned int>;
+using UIntVec = std::vector<unsigned int>;
 
 class tensor {
 public: // Constructors/destructors
-    tensor(const float* data, const ExtentVec& evec);
+    tensor(const float* data, const UIntVec& evec);
     ~tensor();
     
 public: // Utility
-    void indexTree(IndexVec& idx);
-    void indexTree(IndexVec& idx, unsigned int loc);
-    void callIndex(IndexVec& idx, unsigned int loc);
+    unsigned int index(const UIntVec& idx) const;
+    void indexTree(UIntVec& idx);
+    void indexTree(UIntVec& idx, unsigned int loc);
+    void callIndex(UIntVec& idx, unsigned int loc);
+    void calculatePdVec();
     
 public: // Accessors
     const float* data() { return m_data; }
-    const ExtentVec& evec() const { return m_evec; }
+    const UIntVec& extVec() const { return m_extVec; }
+    const UIntVec& pdVec() const { return m_pdVec; }
 
 protected: // Accessors
+    UIntVec& pdVec() { return m_pdVec; }
 
 private:
     const float* m_data;
-    const ExtentVec& m_evec;
+    const UIntVec& m_extVec;
+    UIntVec m_pdVec;
 };
 
-inline tensor::tensor(const float* data, const ExtentVec& evec)
-    : m_data(data), m_evec(evec) {
+inline tensor::tensor(const float* data, const UIntVec& evec)
+    : m_data(data), m_extVec(evec) {
+    calculatePdVec();
 }
 
 inline tensor::~tensor() {
 }
 
-inline void tensor::indexTree(IndexVec& idx) {
+inline void tensor::indexTree(UIntVec& idx) {
     indexTree(idx, 0);
 }
 
-inline void tensor::indexTree(IndexVec& idx, unsigned int loc) {
-    int ext = evec()[loc];
+inline void tensor::indexTree(UIntVec& idx, unsigned int loc) {
+    int ext = extVec()[loc];
     for (int i = 0; i < ext; i++) {
         idx[loc] = i;
         callIndex(idx, loc);
         int nextloc = loc + 1;
-        if (nextloc < evec().size()) {
+        if (nextloc < extVec().size()) {
             indexTree(idx, nextloc);
         }
     }
 };
 
-inline void tensor::callIndex(IndexVec& idx, unsigned int loc) {
-    if (loc != evec().size() - 1) {
+inline void tensor::callIndex(UIntVec& idx, unsigned int loc) {
+    if (loc != extVec().size() - 1) {
         return;
     }
+    std::cout << index(idx) << ": ";
     for (auto id: idx) {
         std::cout << id << " ";
     }
     std::cout << std::endl;
+}
+
+inline void tensor::calculatePdVec() {
+    const UIntVec& extvec = extVec();
+    UIntVec& pdvec = pdVec();
+    pdvec.resize(extvec.size());
+    pdvec[0] = 1;
+    for (int i = 1; i < extvec.size(); i++) {
+        pdvec[i] = pdvec[i - 1] * extvec[i - 1];
+    }
+    
+    for (auto ev : extvec) {
+        std::cout << ev << " ";
+    }
+    std::cout << std::endl;
+    for (auto pd : pdvec) {
+        std::cout << pd << " ";
+    }
+    std::cout << std::endl;
+}
+
+inline unsigned int tensor::index(const UIntVec& idx) const {
+    const UIntVec& pdvec = pdVec();
+    unsigned int flatidx = 0;
+    for (int i = 0; i < idx.size(); i++) {
+        flatidx += idx[i] * pdvec[i];
+    }
+    
+    return flatidx;
 }
 
 };

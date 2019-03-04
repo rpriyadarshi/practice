@@ -11,20 +11,39 @@
 
 #include "tensor.hpp"
 
-int main(int argc, const char * argv[]) {
-    nten::ExtentVec evec;
+void testOne() {
+    nten::UIntVec evec;
     evec.push_back(3);
     evec.push_back(4);
     evec.push_back(5);
     evec.push_back(3);
     evec.push_back(1);
     
-    nten::IndexVec idx;
+    nten::UIntVec idx;
     idx.resize(evec.size(), 0);
     float* data = nullptr;
     
     nten::tensor ten(data, evec);
     ten.indexTree(idx);
+}
+
+void testTwo() {
+    nten::UIntVec evec;
+    evec.push_back(4);
+    evec.push_back(3);
+    evec.push_back(5);
+
+    nten::UIntVec idx;
+    idx.resize(evec.size(), 0);
+    float* data = nullptr;
+    
+    nten::tensor ten(data, evec);
+    ten.indexTree(idx);
+}
+
+int main(int argc, const char * argv[]) {
+    testOne();
+    testTwo();
 
     return 0;
 }
