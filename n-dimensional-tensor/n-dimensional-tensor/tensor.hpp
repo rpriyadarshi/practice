@@ -11,6 +11,37 @@
 
 namespace nten {
 
+/*******************************************************************************
+    The data-structure and algorithm: Since Tensor is an N-dimenstional matrix,
+    we will build a matrix and extennd it for N dimensions.
+ 
+    Review the idea in tensorindexing.png. This outlines tensor indexing
+    index = dn*(D1*D2*...*Dn-1) + dn-1*(D1*D2*...*Dn-2) + ... + d2*(D1) + d1
+ 
+    Build a product vector as follows:
+    PDn = D1*D2*...*Dn-1
+    PDn-1 = D1*D2*...*Dn-2
+    ...
+    PD2 = D1
+    PD1 = 1
+ 
+    Now this can be iteratively precomputed:
+    PDn = PDn-1 * Dn-1
+    PDn-1 = PDn-2 * Dn-2
+    ...
+    PD3 = PD2 * D2
+    PD2 = PD1 * D1
+    PD1 = 1
+ 
+    index = dn*PDn + dn-1*PDn-1 + ... + d1*PD1
+ 
+    TBD --
+    1. Compute +/- 1 indexes and add the values to get a total_value
+       (Similer to indexTree function)
+    2. mean = total_value/#elements
+    3. save the mean on the index
+*******************************************************************************/
+
 ////////////////////////////////////////////////////////////////////////////////
 template<typename F>
 class tensor {
