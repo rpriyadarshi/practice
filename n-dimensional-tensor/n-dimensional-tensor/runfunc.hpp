@@ -12,6 +12,8 @@
 namespace nten {
 
 ////////////////////////////////////////////////////////////////////////////////
+// This class has marginal value at this time. The intent was to abstract out
+// Computation from tensor navigation
 class runfunc {
 public: // Constructors/destructors
     runfunc(const UIntVec& vec);
@@ -41,6 +43,7 @@ inline runfunc::runfunc(const UIntVec& vec)
 inline runfunc::~runfunc() {
 }
 
+// Compute linear index, given a an index vector
 inline unsigned int runfunc::index(const UIntVec& idx) const {
     const UIntVec& pdvec = pdVec();
     unsigned int flatidx = 0;

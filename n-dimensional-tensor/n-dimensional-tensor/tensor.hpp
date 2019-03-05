@@ -35,11 +35,19 @@ namespace nten {
  
     index = dn*PDn + dn-1*PDn-1 + ... + d1*PD1
  
-    TBD --
     1. Compute +/- 1 indexes and add the values to get a total_value
        (Similer to indexTree function)
     2. mean = total_value/#elements
     3. save the mean on the index
+ 
+    TBD --
+    1. Change recursive indexing functions to iterative. This will help using
+       the navigational mechanism for more than 1 purpose (mean calculation)
+    2. The item 1 above leads to creation of const/non-const iterators
+    3. Allocation of memory in the class is not a good idea. These must be
+       managed separately for performance
+    4. The algorithm used is brute force. Performance measurements on large
+       datasets may be in order.
 *******************************************************************************/
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -106,6 +114,7 @@ tensor<F>::~tensor() {
     delete [] m_cache;
 }
 
+// Consolidates building and book keeping
 template<typename F>
 void tensor<F>::build() {
     calculatePdVec();
@@ -116,6 +125,7 @@ void tensor<F>::build() {
     cache(fc);
 }
 
+// Run the indexer. Must be converted to an inerator
 template<typename F>
 void tensor<F>::indexTree(UIntVec& idx) {
     indexTree(idx, 0);
@@ -134,6 +144,7 @@ void tensor<F>::indexTree(UIntVec& idx, unsigned int loc) {
     }
 };
 
+// Run the envelop, given a location. Must be converted to an inerator
 template<typename F>
 unsigned int tensor<F>::envelope(const UIntVec& atIdx, UIntVec& idx, float& val) {
     return envelope(atIdx, idx, 0, val);
@@ -158,6 +169,7 @@ unsigned int tensor<F>::envelope(const UIntVec& atIdx, UIntVec& idx, unsigned in
     return cells;
 };
 
+// Index tree termination point. Runs anvelope here
 template<typename F>
 unsigned int tensor<F>::callIndex(const UIntVec& atIdx, unsigned int loc) {
     if (loc != extVec().size() - 1) {
@@ -182,6 +194,7 @@ unsigned int tensor<F>::callIndex(const UIntVec& atIdx, unsigned int loc) {
     return 1;
 }
 
+// Gather the value from input tensor
 template<typename F>
 unsigned int tensor<F>::callEnvelope(const UIntVec& atIdx, unsigned int loc, float& val) {
     if (loc != extVec().size() - 1) {
@@ -195,6 +208,7 @@ unsigned int tensor<F>::callEnvelope(const UIntVec& atIdx, unsigned int loc, flo
     return 1;
 }
 
+// Small optimization to prevent repeated multiplications
 template<typename F>
 void tensor<F>::calculatePdVec() {
     const UIntVec& extvec = extVec();
@@ -206,6 +220,7 @@ void tensor<F>::calculatePdVec() {
     }
 }
 
+// Precompute tensor size
 template<typename F>
 void tensor<F>::calculateSize() {
     unsigned int sz = 1;
@@ -216,6 +231,7 @@ void tensor<F>::calculateSize() {
     size(sz);
 }
 
+// Run mean computation
 template<typename F>
 float* tensor<F>::calculateMean() {
     UIntVec idx(extVec().size(), 0);
