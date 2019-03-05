@@ -23,13 +23,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F9493B02222E5D7200338818 /* tensorindexing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tensorindexing.png; path = ../../../../../Desktop/tensorindexing.png; sourceTree = "<group>"; };
 		F975397E222CA17300815666 /* n-dimensional-tensor */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "n-dimensional-tensor"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9753981222CA17300815666 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		F9753989222CA18E00815666 /* tensor.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = tensor.hpp; sourceTree = "<group>"; };
 		F975398B222CC68300815666 /* C++ Question.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "C++ Question.pdf"; sourceTree = SOURCE_ROOT; };
 		F975398E222CE05000815666 /* runfunc.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = runfunc.hpp; sourceTree = "<group>"; };
 		F9753991222CE10F00815666 /* common.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = common.hpp; sourceTree = "<group>"; };
-		F9753993222CFB7900815666 /* tensorindexing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tensorindexing.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,7 +67,7 @@
 				F9753989222CA18E00815666 /* tensor.hpp */,
 				F9753991222CE10F00815666 /* common.hpp */,
 				F975398B222CC68300815666 /* C++ Question.pdf */,
-				F9753993222CFB7900815666 /* tensorindexing.png */,
+				F9493B02222E5D7200338818 /* tensorindexing.png */,
 			);
 			path = "n-dimensional-tensor";
 			sourceTree = "<group>";

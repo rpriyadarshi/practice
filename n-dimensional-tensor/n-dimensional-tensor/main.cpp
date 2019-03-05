@@ -22,14 +22,14 @@ void testOne() {
     evec.push_back(5);
     evec.push_back(3);
     evec.push_back(1);
-    
-    nten::UIntVec idx;
-    idx.resize(evec.size(), 0);
-    float* data = nullptr;
-    
+    unsigned int size = 3*4*5*3*1;
+
+    float* data = new float[size];
+    std::memset(data, 0.0, size*sizeof(float));
+
     nten::tensor<nten::runfunc> ten(data, evec);
     std::cout << "Running index-tree --" << std::endl;
-    ten.indexTree(idx);
+    ten.calculateMean();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -40,25 +40,31 @@ void testTwo() {
     evec.push_back(3);
     evec.push_back(5);
 
-    nten::UIntVec idx;
-    idx.resize(evec.size(), 0);
-    float* data = new float[4*3*5];
-    
+    float data[] = {
+        1, 2, 3, 2,
+        2, 3, 4, 3,
+        1, 2, 3, 2,
+        
+        2, 3, 4, 3,
+        3, 4, 5, 4,
+        2, 3, 4, 3,
+
+        3, 4, 5, 4,
+        4, 5, 6, 5,
+        5, 4, 5, 4,
+        
+        2, 3, 4, 3,
+        3, 4, 5, 4,
+        2, 3, 4, 3,
+
+        1, 2, 3, 2,
+        2, 3, 4, 3,
+        1, 2, 3, 2
+    };
+
     nten::tensor<nten::runfunc> ten(data, evec);
     std::cout << "Running index-tree --" << std::endl;
-    ten.indexTree(idx);
-
-    std::cout << "Running envelop 1 --" << std::endl;
-    idx.resize(evec.size(), 0);
-    nten::UIntVec envIdx = {2, 1, 3};
-    unsigned int cells = ten.envelope(envIdx, idx);
-    std::cout << "Cells: " << cells << std::endl;
-    
-    std::cout << "Running envelop 2 --" << std::endl;
-    idx.resize(evec.size(), 0);
-    envIdx = {0, 0, 0};
-    cells = ten.envelope(envIdx, idx);
-    std::cout << "Cells: " << cells << std::endl;
+    ten.calculateMean();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -70,28 +76,25 @@ void testThree() {
 
     nten::UIntVec idx;
     idx.resize(evec.size(), 0);
-    float* data = new float[4*3];
+    float data[] = {
+        1, 2, 3, 2,
+        2, 3, 4, 3,
+        1, 2, 3, 2
+    };
     
     nten::tensor<nten::runfunc> ten(data, evec);
     std::cout << "Running index-tree --" << std::endl;
-    ten.indexTree(idx);
-    
-    std::cout << "Running envelop 1 --" << std::endl;
-    idx.resize(evec.size(), 0);
-    nten::UIntVec envIdx = {2, 1};
-    unsigned int cells = ten.envelope(envIdx, idx);
-    std::cout << "Cells: " << cells << std::endl;
-    std::cout << "Running envelop 2 --" << std::endl;
-    idx.resize(evec.size(), 0);
-    envIdx = {0, 0};
-    cells = ten.envelope(envIdx, idx);
-    std::cout << "Cells: " << cells << std::endl;
+    float* mean = ten.calculateMean();
+    unsigned int sz = sizeof(data) / sizeof(float);
+    for (int i = 0; i < sz; i++) {
+        std::cout << mean[i] << std::endl;
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 int main(int argc, const char * argv[]) {
-    testOne();
-    testTwo();
+//    testOne();
+//    testTwo();
     testThree();
 
     return 0;

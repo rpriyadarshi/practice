@@ -34,7 +34,8 @@ private:
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-inline runfunc::runfunc(const UIntVec& vec) : m_pdVec(vec) {
+inline runfunc::runfunc(const UIntVec& vec)
+    : m_pdVec(vec) {
 }
 
 inline runfunc::~runfunc() {
