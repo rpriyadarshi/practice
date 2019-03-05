@@ -62,7 +62,9 @@ public: // Utility
     unsigned int callEnvelope(const UIntVec& atIdx, unsigned int loc, float& val);
     void calculatePdVec();
     void calculateSize();
-    
+    void enableDebug() { debug(true); }
+    void disableDebug() { debug(false); }
+
 public: // Accessors
     unsigned int size() const { return m_size; }
     const float* cache() const { return m_cache; }
@@ -70,15 +72,18 @@ public: // Accessors
     const UIntVec& extVec() const { return m_extVec; }
     const UIntVec& pdVec() const { return m_pdVec; }
     const F& func() const { return m_func; }
+    bool debug() const { return m_debug; }
 
 protected: // Accessors
     unsigned int size() { return m_size; }
     float* cache() { return m_cache; }
     UIntVec& pdVec() { return m_pdVec; }
     F& func() { return m_func; }
+    bool debug() { return m_debug; }
     void size(unsigned int s) { m_size = s; }
     void cache(float* cf) { m_cache = cf; }
-
+    void debug(bool d) { m_debug = d; }
+    
 private:
     unsigned int m_size;
     float* m_cache;
@@ -86,12 +91,14 @@ private:
     const UIntVec& m_extVec;
     UIntVec m_pdVec;
     F m_func;
+    bool m_debug;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 template<typename F>
 tensor<F>::tensor(const float* data, const UIntVec& evec)
-    : m_size(0), m_cache(nullptr), m_data(data), m_extVec(evec), m_func(m_pdVec) {
+    : m_size(0), m_cache(nullptr), m_data(data), m_extVec(evec),
+    m_func(m_pdVec), m_debug(false) {
 }
 
 template<typename F>
@@ -166,8 +173,12 @@ unsigned int tensor<F>::callIndex(const UIntVec& atIdx, unsigned int loc) {
     float mean = val / cells;
     cf[ival] = mean;
     
-    func()(atIdx);
-    std::cout << "cells: (" << cells << ", " << val << ", " << mean << ")" << std::endl;
+    if (debug()) {
+        std::cout << "location: [";
+        func().dump(std::cout, atIdx);
+        std::cout << "], cells: [" << cells << ", " << val << ", " << mean << "]" << std::endl;
+    }
+    
     return 1;
 }
 
@@ -193,15 +204,6 @@ void tensor<F>::calculatePdVec() {
     for (int i = 1; i < extvec.size(); i++) {
         pdvec[i] = pdvec[i - 1] * extvec[i - 1];
     }
-    
-//    for (auto ev : extvec) {
-//        std::cout << ev << " ";
-//    }
-//    std::cout << std::endl;
-//    for (auto pd : pdvec) {
-//        std::cout << pd << " ";
-//    }
-//    std::cout << std::endl;
 }
 
 template<typename F>

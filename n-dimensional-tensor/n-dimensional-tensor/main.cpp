@@ -28,6 +28,7 @@ void testOne() {
     std::memset(data, 0.0, size*sizeof(float));
 
     nten::tensor<nten::runfunc> ten(data, evec);
+    ten.enableDebug();
     std::cout << "Running index-tree --" << std::endl;
     ten.calculateMean();
 }
@@ -63,6 +64,7 @@ void testTwo() {
     };
 
     nten::tensor<nten::runfunc> ten(data, evec);
+    ten.enableDebug();
     std::cout << "Running index-tree --" << std::endl;
     ten.calculateMean();
 }
@@ -83,6 +85,7 @@ void testThree() {
     };
     
     nten::tensor<nten::runfunc> ten(data, evec);
+    ten.enableDebug();
     std::cout << "Running index-tree --" << std::endl;
     float* mean = ten.calculateMean();
     unsigned int sz = sizeof(data) / sizeof(float);
@@ -93,8 +96,8 @@ void testThree() {
 
 ////////////////////////////////////////////////////////////////////////////////
 int main(int argc, const char * argv[]) {
-//    testOne();
-//    testTwo();
+    testOne();
+    testTwo();
     testThree();
 
     return 0;

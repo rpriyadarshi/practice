@@ -56,7 +56,6 @@ inline void runfunc::dump(std::ostream& o, const UIntVec& idx) const {
     for (auto id: idx) {
         o << id << " ";
     }
-    o << std::endl;
 }
 
 inline unsigned int runfunc::operator()(const UIntVec& idx) {
