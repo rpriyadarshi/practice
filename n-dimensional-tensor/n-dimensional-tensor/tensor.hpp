@@ -52,7 +52,10 @@ public: // Constructors/destructors
 public: // Utility
     void indexTree(UIntVec& idx);
     void indexTree(UIntVec& idx, unsigned int loc);
-    void callIndex(UIntVec& idx, unsigned int loc);
+    unsigned int envelope(const UIntVec& atIdx, UIntVec& idx);
+    unsigned int envelope(const UIntVec& atIdx, UIntVec& idx, unsigned int loc);
+    unsigned int callIndex(const UIntVec& atIdx, unsigned int loc);
+    unsigned int callEnvelope(const UIntVec& atIdx, unsigned int loc);
     void calculatePdVec();
     
 public: // Accessors
@@ -102,11 +105,45 @@ void tensor<F>::indexTree(UIntVec& idx, unsigned int loc) {
 };
 
 template<typename F>
-void tensor<F>::callIndex(UIntVec& idx, unsigned int loc) {
-    if (loc != extVec().size() - 1) {
-        return;
+unsigned int tensor<F>::envelope(const UIntVec& atIdx, UIntVec& idx) {
+    return envelope(atIdx, idx, 0);
+}
+
+template<typename F>
+unsigned int tensor<F>::envelope(const UIntVec& atIdx, UIntVec& idx, unsigned int loc) {
+    unsigned int cells = 0;
+    int ext = extVec()[loc];
+    int ival = atIdx[loc];
+    int ib = std::max(ival - 1, 0);
+    int ie = std::min(ival + 1, ext);
+    
+    for (int i = ib; i <= ie; i++) {
+        idx[loc] = i;
+        cells += callEnvelope(idx, loc);
+        int nextloc = loc + 1;
+        if (nextloc < extVec().size()) {
+            cells += envelope(atIdx, idx, nextloc);
+        }
     }
-    func()(idx);
+    return cells;
+};
+
+template<typename F>
+unsigned int tensor<F>::callIndex(const UIntVec& atIdx, unsigned int loc) {
+    if (loc != extVec().size() - 1) {
+        return 0;
+    }
+    func()(atIdx);
+    return 1;
+}
+
+template<typename F>
+unsigned int tensor<F>::callEnvelope(const UIntVec& atIdx, unsigned int loc) {
+    if (loc != extVec().size() - 1) {
+        return 0;
+    }
+    func()(atIdx);
+    return 1;
 }
 
 template<typename F>
