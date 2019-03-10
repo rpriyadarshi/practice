@@ -28,7 +28,14 @@ template <typename DV, typename DE>
 using EdgeVec = std::vector<edge<DV, DE>*, EdgeAlloc<DV, DE>>;
 template <typename DV, typename DE>
 using VertexVec = std::vector<vertex<DV, DE>*, VertexAlloc<DV, DE>>;
-    
+
+// Constants
+const int NegInfLimit = std::numeric_limits<int>::min() * 0.9;
+const int PosInfLimit = std::numeric_limits<int>::max() * 0.9;
+
+// Functions
+void dumpVal(std::ostream& o, int val);
+
 };
 
 #endif /* common_h */

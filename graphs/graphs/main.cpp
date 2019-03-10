@@ -9,7 +9,8 @@
 #include "adt.hpp"
 #include "edgetote.hpp"
 #include "edgebuilder.hpp"
-#include "bellmanFord.hpp"
+#include "bellmanford.hpp"
+#include "floydwarshall.hpp"
 
 void runtest(const std::string& filename) {
     adt::factory fac;
@@ -21,7 +22,12 @@ void runtest(const std::string& filename) {
     
     adt::bellmanford<adt::vertexTote, adt::edgeTote> bf(g);
     bf();
-    std::cout << bf << std::endl;
+    std::cout << "BF: " << bf << std::endl;
+    
+    adt::floydwarshall<adt::vertexTote, adt::edgeTote> fw(g);
+    fw();
+    std::cout << "FW: " << fw << std::endl;
+    std::cout << std::endl;
 }
 
 int main(int argc, const char * argv[]) {
@@ -51,7 +57,7 @@ int main(int argc, const char * argv[]) {
     runtest(input_random_15_16);
     runtest(input_random_20_32);
     runtest(input_random_30_256);
-    runtest(input_random_44_2048);
+//    runtest(input_random_44_2048);
 
 //    runtest(g1);
 //    runtest(g2);

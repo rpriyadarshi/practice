@@ -14,7 +14,6 @@
 #include "runfunc.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
-// 5-Tensor
 void testOne() {
     std::cout << __FUNCTION__ << std::endl;
     nten::UIntVec evec;
@@ -35,7 +34,6 @@ void testOne() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// 3D matrix
 void testTwo() {
     std::cout << __FUNCTION__ << std::endl;
     nten::UIntVec evec;
@@ -72,13 +70,14 @@ void testTwo() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// Simple 2D matrix
 void testThree() {
     std::cout << __FUNCTION__ << std::endl;
     nten::UIntVec evec;
     evec.push_back(4);
     evec.push_back(3);
 
+    nten::UIntVec idx;
+    idx.resize(evec.size(), 0);
     float data[] = {
         1, 2, 3, 2,
         2, 3, 4, 3,
@@ -89,7 +88,6 @@ void testThree() {
     ten.enableDebug();
     std::cout << "Running index-tree --" << std::endl;
     float* mean = ten.calculateMean();
-    std::cout << "Dumping mean tensor --" << std::endl;
     unsigned int sz = sizeof(data) / sizeof(float);
     for (int i = 0; i < sz; i++) {
         std::cout << mean[i] << std::endl;

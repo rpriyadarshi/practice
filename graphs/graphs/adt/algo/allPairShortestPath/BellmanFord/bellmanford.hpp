@@ -12,12 +12,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 namespace adt {
 
-using Matrix = std::array<std::vector<int>, 2>;
-using Path = std::vector<int>;
-
 ////////////////////////////////////////////////////////////////////////////////
 template <typename DV, typename DE>
 class bellmanford {
+public: // Aliases
+using Matrix = std::array<std::vector<int>, 2>;
+using Path = std::vector<int>;
+
 public: // Constructors/destructors
     explicit bellmanford(const adt::graph<DV, DE>& g);
     ~bellmanford();
@@ -144,6 +145,7 @@ int bellmanford<DV, DE>::computeSpMatrix(int sv) {
         }
     }
     
+    spIndex(icurr);
     int res = std::numeric_limits<int>::max();
     if (match) {
         for (int v = 1; v < graph().vertices().size(); v++) {
@@ -151,7 +153,6 @@ int bellmanford<DV, DE>::computeSpMatrix(int sv) {
             if (val < res) {
                 res = val;
                 spVertex(v);
-                spIndex(icurr);
                 spValue(val);
             }
         }
@@ -238,7 +239,7 @@ void bellmanford<DV, DE>::dump(std::ostream& o) const {
 
 template <typename DV, typename DE>
 void bellmanford<DV, DE>::dumpSpValue(std::ostream& o) const {
-    o << spValue();
+    dumpVal(o, spValue());
 }
 
 template <typename DV, typename DE>

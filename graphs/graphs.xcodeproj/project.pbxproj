@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F96FE2602235B8420090C8FD /* common.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F96FE25F2235B8420090C8FD /* common.cpp */; };
 		F9AA04AA22210F36006EADC5 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9AA04A922210F36006EADC5 /* main.cpp */; };
 		F9AA04C5222131EA006EADC5 /* factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9AA04C3222131EA006EADC5 /* factory.cpp */; };
 /* End PBXBuildFile section */
@@ -24,6 +25,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F96FE25F2235B8420090C8FD /* common.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = common.cpp; sourceTree = "<group>"; };
 		F97F957F222B700B005CFF29 /* path_random_30_256.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = path_random_30_256.txt; sourceTree = "<group>"; };
 		F97F9580222B700B005CFF29 /* output_random_30_256.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = output_random_30_256.txt; sourceTree = "<group>"; };
 		F97F9581222B700B005CFF29 /* input_random_30_256.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input_random_30_256.txt; sourceTree = "<group>"; };
@@ -40,6 +42,7 @@
 		F9AA04C222211870006EADC5 /* common.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = common.hpp; sourceTree = "<group>"; };
 		F9AA04C3222131EA006EADC5 /* factory.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = factory.cpp; sourceTree = "<group>"; };
 		F9AA04C4222131EA006EADC5 /* factory.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = factory.hpp; sourceTree = "<group>"; };
+		F9CE13F522337D1A005F96EB /* floydwarshall.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = floydwarshall.hpp; sourceTree = "<group>"; };
 		F9E0632122238B490018BDB2 /* adt.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = adt.hpp; path = graphs/adt/adt.hpp; sourceTree = SOURCE_ROOT; };
 		F9F77EE92228EEFF002CDD62 /* bellmanford.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = bellmanford.hpp; sourceTree = "<group>"; };
 		F9F77EF422291728002CDD62 /* g3.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = g3.txt; sourceTree = "<group>"; };
@@ -120,6 +123,7 @@
 				F9AA04C3222131EA006EADC5 /* factory.cpp */,
 				F9AA04C4222131EA006EADC5 /* factory.hpp */,
 				F9AA04C222211870006EADC5 /* common.hpp */,
+				F96FE25F2235B8420090C8FD /* common.cpp */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -231,6 +235,7 @@
 		F9F77EE62228EEFF002CDD62 /* FloydWarshall */ = {
 			isa = PBXGroup;
 			children = (
+				F9CE13F522337D1A005F96EB /* floydwarshall.hpp */,
 			);
 			path = FloydWarshall;
 			sourceTree = "<group>";
@@ -330,6 +335,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9AA04C5222131EA006EADC5 /* factory.cpp in Sources */,
+				F96FE2602235B8420090C8FD /* common.cpp in Sources */,
 				F9AA04AA22210F36006EADC5 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
