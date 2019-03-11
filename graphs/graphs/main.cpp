@@ -39,6 +39,8 @@ int main(int argc, const char * argv[]) {
     const std::string g3(path + "g3.txt");                                      // -19
     const std::string large(path + "large.txt");
     
+    const std::string wikipedia(path + "wikipedia.txt");                        //
+    
     const std::string input_random_1_2(path + "input_random_1_2.txt");          // NULL
     const std::string input_random_4_2(path + "input_random_4_2.txt");          // -54
     const std::string input_random_8_4(path + "input_random_8_4.txt");          // -36
@@ -56,8 +58,10 @@ int main(int argc, const char * argv[]) {
     runtest(input_random_13_16);
     runtest(input_random_15_16);
     runtest(input_random_20_32);
-    runtest(input_random_30_256);
+//    runtest(input_random_30_256);
 //    runtest(input_random_44_2048);
+
+    runtest(wikipedia);
 
 //    runtest(g1);
 //    runtest(g2);

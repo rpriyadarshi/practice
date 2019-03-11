@@ -166,6 +166,7 @@ int bellmanford<DV, DE>::computeSpMatrix(int sv) {
 template <typename DV, typename DE>
 void bellmanford<DV, DE>::computePath() {
     path().clear();
+    graph().resetVertices();
     Matrix& m = matrix();
     const VertexVec<DV, DE>& vVec = graph().vertices();
     
@@ -173,12 +174,16 @@ void bellmanford<DV, DE>::computePath() {
     int v = spVertex();
     
     while (v > 0) {
-        path().push_back(v);
         const vertex<DV, DE>* vptr = vVec[v];
         if (vptr == nullptr) {
             return;
         }
-        
+        if (vptr->isVisited()) {
+            return;
+        }
+        vptr->markVisited();
+        path().push_back(v);
+
         int w = -1;
         v = w;
         int minval = std::numeric_limits<int>::max();

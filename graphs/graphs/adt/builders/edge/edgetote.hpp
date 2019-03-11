@@ -15,20 +15,23 @@ namespace adt {
 ////////////////////////////////////////////////////////////////////////////////
 class tote {
 public:
-    tote() : m_data(0) {}
+    tote() : m_flags(0), m_data(0) {}
     ~tote() {}
     
 public: // Utility functions
     void dump(std::ostream& o) const;
     
 public: // Accessors
+    int flags() const { return m_flags; }
     int data() const { return m_data; }
-    
+
 public: // Accessors
     int data() { return m_data; }
+    void flags(int f) const { m_flags = f; }
     void data(int d) { m_data = d; }
 
 private:
+    mutable int m_flags;
     int m_data;
 };
 

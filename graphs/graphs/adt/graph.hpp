@@ -25,6 +25,7 @@ public: // Create
 
 public: // Utility functions
     void resize(unsigned int v, unsigned int e);
+    void resetVertices() const;
     void dump(std::ostream& o) const;
     void dumpVertexVec(std::ostream& o) const;
     void dumpEdgeVec(std::ostream& o) const;
@@ -106,6 +107,16 @@ graph<DV, DE>::createEdge(unsigned int id, vertex<DV, DE>* v1, vertex<DV, DE>* v
     }
     return ptr;
 }
+
+template <typename DV, typename DE>
+void graph<DV, DE>::resetVertices() const {
+    for (auto vptr : vertices()) {
+        if (vptr != nullptr) {
+            vptr->clearVisited();
+        }
+    }
+}
+
 template <typename DV, typename DE>
 void graph<DV, DE>::dump(std::ostream& o) const {
     dumpVertexVec(o);

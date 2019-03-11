@@ -22,6 +22,9 @@ public: // Constructors/destructors
 public: // Utility functions
     void fanin(edge<DV, DE>* e);
     void fanout(edge<DV, DE>* e);
+    bool isVisited() const;
+    void clearVisited() const;
+    void markVisited() const;
     void dump(std::ostream& o) const;
     
 public: // Accessors
@@ -66,6 +69,24 @@ void vertex<DV, DE>::fanin(edge<DV, DE>* e) {
 template <typename DV, typename DE>
 void vertex<DV, DE>::fanout(edge<DV, DE>* e) {
     fanout().push_back(e);
+}
+
+template <typename DV, typename DE>
+bool vertex<DV, DE>::isVisited() const {
+    const DV& dv = data();
+    return dv.flags();
+}
+
+template <typename DV, typename DE>
+void vertex<DV, DE>::markVisited() const {
+    const DV& dv = data();
+    dv.flags(1);
+}
+
+template <typename DV, typename DE>
+void vertex<DV, DE>::clearVisited() const {
+    const DV& dv = data();
+    dv.flags(0);
 }
 
 template <typename DV, typename DE>

@@ -16,7 +16,7 @@ namespace adt {
 template <typename DV, typename DE>
 class floydwarshall {
 public: // Aliases
-using Matrix = std::array<std::vector<std::vector<int>>, 2>;
+using Matrix = std::array<std::vector<std::vector<int>>, 3>;
 using Path = std::vector<int>;
 
 public: // Constructors/destructors
@@ -94,10 +94,12 @@ void floydwarshall<DV, DE>::init() {
     Matrix& m = matrix();
     m[0].resize(sz);
     m[1].resize(sz);
-    
+    m[2].resize(sz);
+
     for (int i = 0; i < sz; i++) {
         m[0][i].resize(sz, std::numeric_limits<int>::max());
         m[1][i].resize(sz, std::numeric_limits<int>::max());
+        m[2][i].resize(sz, std::numeric_limits<int>::min());
         m[0][i][i] = 0;
     }
     
@@ -106,13 +108,14 @@ void floydwarshall<DV, DE>::init() {
         const vertex<DV, DE>* fptr = eptr->front();
         const DE& de = eptr->data();
         m[0][bptr->id()][fptr->id()] = std::min(m[0][bptr->id()][fptr->id()], de.data());
+        m[2][bptr->id()][fptr->id()] = 0;
     }
 }
 
 template <typename DV, typename DE>
 int floydwarshall<DV, DE>::computeSpMatrix() {
     init();
-    
+
     Matrix& m = matrix();
     
     int kcurr = -1;
@@ -122,21 +125,29 @@ int floydwarshall<DV, DE>::computeSpMatrix() {
         kprev = !odd(k);
         for (int i = 1; i < graph().vertices().size(); i++) {
             for (int j = 1; j < graph().vertices().size(); j++) {
-                int pval0 = m[kprev][i][j];
+                int pvalc1 = m[kprev][i][j];
                 int pval1 = m[kprev][i][k];
                 int pval2 = m[kprev][k][j];
-                int pvals = 0;
+                int pvalc2 = 0;
                 if (pval1 == std::numeric_limits<int>::max() ||
                     pval2 == std::numeric_limits<int>::max()) {
-                    pvals = std::numeric_limits<int>::max();
+                    pvalc2 = std::numeric_limits<int>::max();
                 } else if (pval1 == std::numeric_limits<int>::min() ||
                     pval2 == std::numeric_limits<int>::min()) {
-                    pvals = std::numeric_limits<int>::min();
+                    pvalc2 = std::numeric_limits<int>::min();
                 } else {
-                    pvals = pval1 + pval2;
+                    pvalc2 = pval1 + pval2;
                 }
                 
-                int pval = std::min(pval0, pvals);
+                int pval = 0;
+                if (pvalc1 < pvalc2) {
+                    pval = pvalc1;
+                } else {
+                    pval = pvalc2;
+//                    if (m[2][i][j] >= 0) {
+                        m[2][i][j] = k;
+//                    }
+                }
                 
                 m[kcurr][i][j] = pval;
             }
@@ -144,6 +155,8 @@ int floydwarshall<DV, DE>::computeSpMatrix() {
     }
     
     spIndex(kcurr);
+    int si = 0;
+    int ej = 0;
     int res = std::numeric_limits<int>::max();
     for (int i = 1; i < graph().vertices().size(); i++) {
         for (int j = 1; j < graph().vertices().size(); j++) {
@@ -155,13 +168,21 @@ int floydwarshall<DV, DE>::computeSpMatrix() {
                     continue;
                 }
             } else if (val < res) {
+                si = i;
+                ej = j;
                 res = val;
                 spVertex(j);
                 spValue(val);
             }
         }
     }
-
+    
+//    dump(std::cout, kcurr);
+//    std::cout << "(" << si << ", " << ej << ") -> ";
+//    dumpVal(std::cout, m[2][si][ej]);
+//    std::cout << std::endl;
+//    dump(std::cout, 2);
+    
     return res;
 }
 
