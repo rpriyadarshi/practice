@@ -35,6 +35,8 @@
 		F997716C2223D5D000B6C91B /* builder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = builder.hpp; sourceTree = "<group>"; };
 		F997716E22250AA500B6C91B /* tote.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = tote.hpp; sourceTree = "<group>"; };
 		F99FFE7B223CB1510018E033 /* dijkstra.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = dijkstra.hpp; sourceTree = "<group>"; };
+		F99FFE7F223CB7860018E033 /* dijkstraData.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = dijkstraData.txt; sourceTree = "<group>"; };
+		F99FFE80223CB7860018E033 /* dijkstraSmallData.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = dijkstraSmallData.txt; sourceTree = "<group>"; };
 		F9AA04A622210F36006EADC5 /* graphs */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = graphs; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9AA04A922210F36006EADC5 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		F9AA04BA222110B6006EADC5 /* vertex.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vertex.hpp; sourceTree = "<group>"; };
@@ -84,6 +86,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F99FFE7D223CB7080018E033 /* adjacencylist */ = {
+			isa = PBXGroup;
+			children = (
+				F99FFE7E223CB7360018E033 /* testcases */,
+			);
+			path = adjacencylist;
+			sourceTree = "<group>";
+		};
+		F99FFE7E223CB7360018E033 /* testcases */ = {
+			isa = PBXGroup;
+			children = (
+				F99FFE7F223CB7860018E033 /* dijkstraData.txt */,
+				F99FFE80223CB7860018E033 /* dijkstraSmallData.txt */,
+			);
+			path = testcases;
+			sourceTree = "<group>";
+		};
 		F9AA049D22210F36006EADC5 = {
 			isa = PBXGroup;
 			children = (
@@ -145,6 +164,7 @@
 		F9E063222223BABF0018BDB2 /* builders */ = {
 			isa = PBXGroup;
 			children = (
+				F99FFE7D223CB7080018E033 /* adjacencylist */,
 				F997716E22250AA500B6C91B /* tote.hpp */,
 				F997716C2223D5D000B6C91B /* builder.hpp */,
 				F9E063232223BB620018BDB2 /* edge */,
