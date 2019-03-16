@@ -30,8 +30,10 @@ template <typename DV, typename DE>
 using VertexVec = std::vector<vertex<DV, DE>*, VertexAlloc<DV, DE>>;
 
 // Constants
-const int NegInfLimit = std::numeric_limits<int>::min() * 0.9;
-const int PosInfLimit = std::numeric_limits<int>::max() * 0.9;
+const int PosInf = std::numeric_limits<int>::max();
+const int NegInf = std::numeric_limits<int>::min();
+const int PosInfLimit = PosInf * 0.9;
+const int NegInfLimit = NegInf * 0.9;
 
 // Functions
 void dumpVal(std::ostream& o, int val);

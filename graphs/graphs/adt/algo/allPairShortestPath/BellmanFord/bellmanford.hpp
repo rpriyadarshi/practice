@@ -77,7 +77,7 @@ std::ostream& operator<< (std::ostream& o, bellmanford<DV, DE>& bf) {
 ////////////////////////////////////////////////////////////////////////////////
 template <typename DV, typename DE>
 bellmanford<DV, DE>::bellmanford(const adt::graph<DV, DE>& g) : m_graph(g),
-    m_spVertex(-1), m_spIndex(-1), m_spValue(std::numeric_limits<int>::max()) {
+    m_spVertex(-1), m_spIndex(-1), m_spValue(PosInf) {
 }
 
 template <typename DV, typename DE>
@@ -91,8 +91,8 @@ bool bellmanford<DV, DE>::odd(int n) const {
 
 template <typename DV, typename DE>
 void bellmanford<DV, DE>::init(int sv) {
-    matrix()[0].resize(graph().vertices().size(), std::numeric_limits<int>::max());
-    matrix()[1].resize(graph().vertices().size(), std::numeric_limits<int>::max());
+    matrix()[0].resize(graph().vertices().size(), PosInf);
+    matrix()[1].resize(graph().vertices().size(), PosInf);
     matrix()[0][sv] = 0;
 }
 
@@ -112,7 +112,7 @@ int bellmanford<DV, DE>::computeSpMatrix(int sv) {
             icurr = odd(i);
             iprev = !odd(i);
             
-            int pm = std::numeric_limits<int>::max();
+            int pm = PosInf;
             const vertex<DV, DE>* vptr = vVec[v];
             
             // Unused vertex index unless the implementation is switched to
@@ -127,7 +127,7 @@ int bellmanford<DV, DE>::computeSpMatrix(int sv) {
                     const DE& de = eptr->data();
                     int cost = de.data();
                     int pval = m[iprev][bptr->id()];
-                    if (pval == std::numeric_limits<int>::max()) {
+                    if (pval == PosInf) {
                         continue;
                     }
                     int val = pval + cost;
@@ -146,7 +146,7 @@ int bellmanford<DV, DE>::computeSpMatrix(int sv) {
     }
     
     spIndex(icurr);
-    int res = std::numeric_limits<int>::max();
+    int res = PosInf;
     if (match) {
         for (int v = 1; v < graph().vertices().size(); v++) {
             int val = m[icurr][v];
@@ -157,7 +157,7 @@ int bellmanford<DV, DE>::computeSpMatrix(int sv) {
             }
         }
     } else {
-        res = std::numeric_limits<int>::min();
+        res = NegInf;
     }
     
     return res;
@@ -186,7 +186,7 @@ void bellmanford<DV, DE>::computePath() {
 
         int w = -1;
         v = w;
-        int minval = std::numeric_limits<int>::max();
+        int minval = PosInf;
 
         const EdgeVec<DV, DE>& eVec = vptr->fanin();
         for (auto eptr : eVec) {
@@ -211,10 +211,10 @@ int bellmanford<DV, DE>::run(int sv) {
 
 template <typename DV, typename DE>
 int bellmanford<DV, DE>::run() {
-    int rmin = std::numeric_limits<int>::max();
+    int rmin = PosInf;
     for (int v = 1; v < graph().vertices().size(); v++) {
         int res = computeSpMatrix(v);
-        if (res == std::numeric_limits<int>::min()) {
+        if (res == NegInf) {
             return res;
         }
         if (rmin > res) {

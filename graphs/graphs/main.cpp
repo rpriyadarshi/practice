@@ -58,8 +58,8 @@ int main(int argc, const char * argv[]) {
     runtest(input_random_13_16);
     runtest(input_random_15_16);
     runtest(input_random_20_32);
-//    runtest(input_random_30_256);
-//    runtest(input_random_44_2048);
+    runtest(input_random_30_256);
+    runtest(input_random_44_2048);
 
     runtest(wikipedia);
 

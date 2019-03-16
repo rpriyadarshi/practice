@@ -43,17 +43,20 @@ public: // Accessors
     const graph<DV, DE>& graph() const { return m_graph; }
     const Matrix& matrix() const { return m_matrix; }
     const Path& path() const { return m_path; }
-    int spVertex() const { return m_spVertex; }
+    int spBVertex() const { return m_spBVertex; }
+    int spFVertex() const { return m_spFVertex; }
     int spIndex() const { return m_spIndex; }
     int spValue() const { return m_spValue; }
 
 protected: // Accessors
     Matrix& matrix() { return m_matrix; }
     Path& path() { return m_path; }
-    int spVertex() { return m_spVertex; }
+    int spBVertex() { return m_spBVertex; }
+    int spFVertex() { return m_spFVertex; }
     int spIndex() { return m_spIndex; }
     int spValue() { return m_spValue; }
-    void spVertex(int spv) { m_spVertex = spv; }
+    void spBVertex(int spv) { m_spBVertex = spv; }
+    void spFVertex(int spv) { m_spFVertex = spv; }
     void spIndex(int idx) { m_spIndex = idx; }
     void spValue(int val) { m_spValue = val; }
 
@@ -61,7 +64,8 @@ private:
     const adt::graph<DV, DE>& m_graph;
     Matrix m_matrix;
     Path m_path;
-    int m_spVertex;
+    int m_spBVertex;
+    int m_spFVertex;
     int m_spIndex;
     int m_spValue;
 };
@@ -76,7 +80,7 @@ std::ostream& operator<< (std::ostream& o, floydwarshall<DV, DE>& fw) {
 ////////////////////////////////////////////////////////////////////////////////
 template <typename DV, typename DE>
 floydwarshall<DV, DE>::floydwarshall(const adt::graph<DV, DE>& g) : m_graph(g),
-    m_spVertex(-1), m_spIndex(-1), m_spValue(std::numeric_limits<int>::max()) {
+    m_spBVertex(-1), m_spFVertex(-1), m_spIndex(-1), m_spValue(PosInf) {
 }
 
 template <typename DV, typename DE>
@@ -97,9 +101,9 @@ void floydwarshall<DV, DE>::init() {
     m[2].resize(sz);
 
     for (int i = 0; i < sz; i++) {
-        m[0][i].resize(sz, std::numeric_limits<int>::max());
-        m[1][i].resize(sz, std::numeric_limits<int>::max());
-        m[2][i].resize(sz, std::numeric_limits<int>::min());
+        m[0][i].resize(sz, PosInf);
+        m[1][i].resize(sz, PosInf);
+        m[2][i].resize(sz, NegInf);
         m[0][i][i] = 0;
     }
     
@@ -108,7 +112,7 @@ void floydwarshall<DV, DE>::init() {
         const vertex<DV, DE>* fptr = eptr->front();
         const DE& de = eptr->data();
         m[0][bptr->id()][fptr->id()] = std::min(m[0][bptr->id()][fptr->id()], de.data());
-        m[2][bptr->id()][fptr->id()] = 0;
+        m[2][bptr->id()][fptr->id()] = bptr->id();
     }
 }
 
@@ -117,36 +121,35 @@ int floydwarshall<DV, DE>::computeSpMatrix() {
     init();
 
     Matrix& m = matrix();
-    
+    size_t sz = graph().vertices().size();
+
     int kcurr = -1;
     int kprev = -1;
-    for (int k = 1; k < graph().vertices().size(); k++) {
+    for (int k = 1; k < sz; k++) {
         kcurr = odd(k);
         kprev = !odd(k);
-        for (int i = 1; i < graph().vertices().size(); i++) {
-            for (int j = 1; j < graph().vertices().size(); j++) {
+        for (int i = 1; i < sz; i++) {
+            for (int j = 1; j < sz; j++) {
                 int pvalc1 = m[kprev][i][j];
                 int pval1 = m[kprev][i][k];
                 int pval2 = m[kprev][k][j];
                 int pvalc2 = 0;
-                if (pval1 == std::numeric_limits<int>::max() ||
-                    pval2 == std::numeric_limits<int>::max()) {
-                    pvalc2 = std::numeric_limits<int>::max();
-                } else if (pval1 == std::numeric_limits<int>::min() ||
-                    pval2 == std::numeric_limits<int>::min()) {
-                    pvalc2 = std::numeric_limits<int>::min();
+                if (pval1 == PosInf ||
+                    pval2 == PosInf) {
+                    pvalc2 = PosInf;
+                } else if (pval1 == NegInf ||
+                    pval2 == NegInf) {
+                    pvalc2 = NegInf;
                 } else {
                     pvalc2 = pval1 + pval2;
                 }
                 
                 int pval = 0;
-                if (pvalc1 < pvalc2) {
-                    pval = pvalc1;
-                } else {
+                if (pvalc1 > pvalc2) {
                     pval = pvalc2;
-//                    if (m[2][i][j] >= 0) {
-                        m[2][i][j] = k;
-//                    }
+                    m[2][i][j] = m[2][k][j];
+                } else {
+                    pval = pvalc1;
                 }
                 
                 m[kcurr][i][j] = pval;
@@ -155,40 +158,40 @@ int floydwarshall<DV, DE>::computeSpMatrix() {
     }
     
     spIndex(kcurr);
-    int si = 0;
-    int ej = 0;
-    int res = std::numeric_limits<int>::max();
-    for (int i = 1; i < graph().vertices().size(); i++) {
-        for (int j = 1; j < graph().vertices().size(); j++) {
+    int res = PosInf;
+    for (int i = 1; i < sz; i++) {
+        for (int j = 1; j < sz; j++) {
             int val = m[kcurr][i][j];
             if (i == j) {
                 if (val < 0) {
-                    return std::numeric_limits<int>::min();
+                    return NegInf;
                 } else {
                     continue;
                 }
             } else if (val < res) {
-                si = i;
-                ej = j;
                 res = val;
-                spVertex(j);
+                spBVertex(i);
+                spFVertex(j);
                 spValue(val);
             }
         }
     }
-    
-//    dump(std::cout, kcurr);
-//    std::cout << "(" << si << ", " << ej << ") -> ";
-//    dumpVal(std::cout, m[2][si][ej]);
-//    std::cout << std::endl;
-//    dump(std::cout, 2);
     
     return res;
 }
 
 template <typename DV, typename DE>
 void floydwarshall<DV, DE>::computePath() {
+    int u = spBVertex();
+    int v = spFVertex();
+    const Matrix& m = matrix();
+    
     path().clear();
+    path().push_back(v);
+    while(u != v) {
+        v = m[2][u][v];
+        path().push_back(v);
+    }
 }
 
 template <typename DV, typename DE>
@@ -212,9 +215,10 @@ void floydwarshall<DV, DE>::dump(std::ostream& o) const {
 
 template <typename DV, typename DE>
 void floydwarshall<DV, DE>::dump(std::ostream& o, int k) const {
+    size_t sz = graph().vertices().size();
     const Matrix& m = matrix();
-    for (int i = 1; i < graph().vertices().size(); i++) {
-        for (int j = 1; j < graph().vertices().size(); j++) {
+    for (int i = 1; i < sz; i++) {
+        for (int j = 1; j < sz; j++) {
             dumpVal(o, m[k][i][j]);
             o << " ";
         }
