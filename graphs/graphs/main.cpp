@@ -7,8 +7,8 @@
 //
 
 #include "adt.hpp"
-#include "edgetote.hpp"
-#include "edgebuilder.hpp"
+#include "tote.hpp"
+#include "builder.hpp"
 #include "bellmanford.hpp"
 #include "floydwarshall.hpp"
 

@@ -6,8 +6,8 @@
 //  Copyright © 2019 Rohit Priyadarshi. All rights reserved.
 //
 
-#ifndef edgebuilder_hpp
-#define edgebuilder_hpp
+#ifndef builder_hpp
+#define builder_hpp
 
 ////////////////////////////////////////////////////////////////////////////////
 namespace adt {
@@ -104,4 +104,4 @@ void builder<DV, DE>::dump(std::ostream& o) const {
 
 };
 
-#endif /* edgebuilder_hpp */
+#endif /* builder_hpp */

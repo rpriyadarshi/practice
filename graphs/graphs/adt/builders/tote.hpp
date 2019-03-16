@@ -6,8 +6,8 @@
 //  Copyright © 2019 Rohit Priyadarshi. All rights reserved.
 //
 
-#ifndef edgetote_h
-#define edgetote_h
+#ifndef tote_hpp
+#define tote_hpp
 
 ////////////////////////////////////////////////////////////////////////////////
 namespace adt {
@@ -62,4 +62,4 @@ void tote::dump(std::ostream& o) const {
 
 };
 
-#endif /* edgetote_h */
+#endif /* tote_hpp */

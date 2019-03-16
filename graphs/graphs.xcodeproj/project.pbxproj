@@ -32,8 +32,9 @@
 		F97F9582222B70FE005CFF29 /* input_random_44_2048.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input_random_44_2048.txt; sourceTree = "<group>"; };
 		F97F9583222B70FE005CFF29 /* output_random_44_2048.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = output_random_44_2048.txt; sourceTree = "<group>"; };
 		F97F9584222B70FE005CFF29 /* path_random_44_2048.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = path_random_44_2048.txt; sourceTree = "<group>"; };
-		F997716C2223D5D000B6C91B /* edgebuilder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = edgebuilder.hpp; sourceTree = "<group>"; };
-		F997716E22250AA500B6C91B /* edgetote.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = edgetote.hpp; sourceTree = "<group>"; };
+		F997716C2223D5D000B6C91B /* builder.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = builder.hpp; sourceTree = "<group>"; };
+		F997716E22250AA500B6C91B /* tote.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = tote.hpp; sourceTree = "<group>"; };
+		F99FFE7B223CB1510018E033 /* dijkstra.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = dijkstra.hpp; sourceTree = "<group>"; };
 		F9AA04A622210F36006EADC5 /* graphs */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = graphs; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9AA04A922210F36006EADC5 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		F9AA04BA222110B6006EADC5 /* vertex.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vertex.hpp; sourceTree = "<group>"; };
@@ -144,6 +145,8 @@
 		F9E063222223BABF0018BDB2 /* builders */ = {
 			isa = PBXGroup;
 			children = (
+				F997716E22250AA500B6C91B /* tote.hpp */,
+				F997716C2223D5D000B6C91B /* builder.hpp */,
 				F9E063232223BB620018BDB2 /* edge */,
 			);
 			path = builders;
@@ -152,8 +155,6 @@
 		F9E063232223BB620018BDB2 /* edge */ = {
 			isa = PBXGroup;
 			children = (
-				F997716C2223D5D000B6C91B /* edgebuilder.hpp */,
-				F997716E22250AA500B6C91B /* edgetote.hpp */,
 				F9E063282223BB970018BDB2 /* testcases */,
 			);
 			path = edge;
@@ -218,6 +219,7 @@
 		F9F77EE42228EEFF002CDD62 /* Dijkstra */ = {
 			isa = PBXGroup;
 			children = (
+				F99FFE7B223CB1510018E033 /* dijkstra.hpp */,
 			);
 			path = Dijkstra;
 			sourceTree = "<group>";
