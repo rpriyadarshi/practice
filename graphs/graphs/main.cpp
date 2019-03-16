@@ -11,22 +11,13 @@
 #include "builder.hpp"
 #include "bellmanford.hpp"
 #include "floydwarshall.hpp"
+#include "testers.hpp"
 
 void runtest(const std::string& filename) {
-    adt::factory fac;
-    adt::graph<adt::vertexTote, adt::edgeTote> g;
-    
-    adt::builder<adt::vertexTote, adt::edgeTote> b(g);
-    b.read(filename, fac);
-//    std::cout << g << std::endl;
-    
-    adt::bellmanford<adt::vertexTote, adt::edgeTote> bf(g);
-    bf();
-    std::cout << "BF: " << bf << std::endl;
-    
-    adt::floydwarshall<adt::vertexTote, adt::edgeTote> fw(g);
-    fw();
-    std::cout << "FW: " << fw << std::endl;
+    adt::testers<adt::vertexTote, adt::edgeTote> tst;
+    tst.bldedge(filename);
+    tst.runbelf();
+    tst.runflw();
     std::cout << std::endl;
 }
 
@@ -59,7 +50,7 @@ int main(int argc, const char * argv[]) {
     runtest(input_random_15_16);
     runtest(input_random_20_32);
     runtest(input_random_30_256);
-    runtest(input_random_44_2048);
+//    runtest(input_random_44_2048);
 
     runtest(wikipedia);
 

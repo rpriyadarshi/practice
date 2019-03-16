@@ -37,6 +37,7 @@
 		F99FFE7B223CB1510018E033 /* dijkstra.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = dijkstra.hpp; sourceTree = "<group>"; };
 		F99FFE7F223CB7860018E033 /* dijkstraData.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = dijkstraData.txt; sourceTree = "<group>"; };
 		F99FFE80223CB7860018E033 /* dijkstraSmallData.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = dijkstraSmallData.txt; sourceTree = "<group>"; };
+		F99FFE83223CBB9F0018E033 /* testers.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = testers.hpp; sourceTree = "<group>"; };
 		F9AA04A622210F36006EADC5 /* graphs */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = graphs; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9AA04A922210F36006EADC5 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		F9AA04BA222110B6006EADC5 /* vertex.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vertex.hpp; sourceTree = "<group>"; };
@@ -103,6 +104,14 @@
 			path = testcases;
 			sourceTree = "<group>";
 		};
+		F99FFE81223CBB470018E033 /* testers */ = {
+			isa = PBXGroup;
+			children = (
+				F99FFE83223CBB9F0018E033 /* testers.hpp */,
+			);
+			path = testers;
+			sourceTree = "<group>";
+		};
 		F9AA049D22210F36006EADC5 = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +160,7 @@
 		F9E063202223187C0018BDB2 /* adt */ = {
 			isa = PBXGroup;
 			children = (
+				F99FFE81223CBB470018E033 /* testers */,
 				F9E063222223BABF0018BDB2 /* builders */,
 				F9F77EE22228EEFF002CDD62 /* algo */,
 				F9E0632122238B490018BDB2 /* adt.hpp */,
