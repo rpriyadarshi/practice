@@ -21,7 +21,8 @@ public: // Constructors/destructors
     
 public: // Builders
     void bldedge(const std::string& filename);
-    
+    void bldadjlist(const std::string& filename);
+
 public: // Tester
     void runbelf();
     void runflw();
@@ -59,7 +60,13 @@ testers<DV, DE>::~testers() {
 
 template <typename DV, typename DE>
 void testers<DV, DE>::bldedge(const std::string& filename) {
-    bld().read(filename, fac());
+    bld().readEdges(filename, fac());
+//    std::cout << gr() << std::endl;
+}
+
+template <typename DV, typename DE>
+void testers<DV, DE>::bldadjlist(const std::string& filename) {
+    bld().readAdjList(filename, fac());
 //    std::cout << gr() << std::endl;
 }
 

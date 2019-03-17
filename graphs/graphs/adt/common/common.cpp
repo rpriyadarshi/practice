@@ -7,6 +7,7 @@
 //
 
 #include <iostream>
+#include <fstream>
 #include "common.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -20,6 +21,28 @@ void dumpVal(std::ostream& o, int val) {
     } else {
         o << val;
     }
+}
+
+// http://www.cplusplus.com/forum/general/108679/
+std::istream& ignoreline(std::ifstream& ifstr, std::ifstream::pos_type& pos) {
+    pos = ifstr.tellg();
+    return ifstr.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+}
+
+std::string getlastline(std::ifstream& ifstr) {
+    std::ifstream::pos_type pos = ifstr.tellg();
+
+    std::ifstream::pos_type lastPos;
+    while (ifstr >> std::ws && ignoreline(ifstr, lastPos)) {
+        pos = lastPos;
+    }
+    
+    ifstr.clear();
+    ifstr.seekg(pos);
+
+    std::string line;
+    std::getline(ifstr, line);
+    return line;
 }
 
 };

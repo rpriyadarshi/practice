@@ -29,9 +29,15 @@ protected: // Accessors
     adt::graph<DV, DE>& graph() { return m_graph; }
     
 public: // Readers
-    bool read(const std::string& filename, adt::factory& fac);
+    // Edge based
     bool readSize(std::ifstream& ifstr);
     bool readEdges(std::ifstream& ifstr, adt::factory& fac);
+    bool readEdges(const std::string& filename, adt::factory& fac);
+    
+    // Adjacency list based
+    bool readSizeFromEnd(std::ifstream& ifstr);
+    bool readAdjList(std::ifstream& ifstr, adt::factory& fac);
+    bool readAdjList(const std::string& filename, adt::factory& fac);
 
 private:
     adt::graph<DV, DE>& m_graph;
@@ -70,20 +76,16 @@ bool builder<DV, DE>::readEdges(std::ifstream& ifstr, adt::factory& fac) {
     while (std::getline(ifstr, line)) {
         std::stringstream sstr(line);
         
-        int tail, head, length;
-        sstr >> tail >> head >> length;
-        adt::vertex<DV, DE>* vt = graph().createVertex(tail, fac);
-        adt::vertex<DV, DE>* vh = graph().createVertex(head, fac);
-        adt::edge<DV, DE>* e = graph().createEdge(idx++, vh, vt, fac);
-        DE& de = e->data();
-        de.data(length);
+        int v2idx, v1idx, cost;
+        sstr >> v2idx >> v1idx >> cost;
+        graph().createEdge(idx++, v1idx, v2idx, cost, fac);
     }
     
     return idx != 0;
 }
 
 template <typename DV, typename DE>
-bool builder<DV, DE>::read(const std::string& filename, adt::factory& fac) {
+bool builder<DV, DE>::readEdges(const std::string& filename, adt::factory& fac) {
     std::ifstream ifstr(filename);
     if (! ifstr.good()) {
         std::cout << "ERROR: Cannot read " << filename << std::endl;
@@ -95,6 +97,59 @@ bool builder<DV, DE>::read(const std::string& filename, adt::factory& fac) {
         rc = readEdges(ifstr, fac);
     }
     
+    return rc;
+}
+
+template <typename DV, typename DE>
+bool builder<DV, DE>::readSizeFromEnd(std::ifstream& ifstr) {
+    std::string line(getlastline(ifstr));
+    std::stringstream sstr(line);
+    int vSize;
+    sstr >> vSize;
+    graph().resize(vSize);
+    return true;
+}
+
+template <typename DV, typename DE>
+bool builder<DV, DE>::readAdjList(std::ifstream& ifstr, adt::factory& fac) {
+    int idx = 0;
+    std::string line, head, tok, ver, len;
+    ifstr.clear();
+    ifstr.seekg(0, std::ios::beg);
+    while (std::getline(ifstr, line).good()) {
+        std::stringstream strstr(line);
+        strstr >> head;
+        int fval = std::stoi(head);
+        while (strstr >> tok) {
+            size_t pos = tok.find(",");
+            if (pos == std::string::npos) {
+                continue;
+            }
+            ver = tok.substr(0, pos++);
+            len = tok.substr(pos, std::string::npos);
+            
+            int tval = std::stoi(ver);
+            int cost = std::stoi(len);
+            
+            graph().createEdge(idx++, fval, tval, cost, fac);
+        }
+    }
+    return true;
+}
+
+template <typename DV, typename DE>
+bool builder<DV, DE>::readAdjList(const std::string& filename, adt::factory& fac) {
+    std::ifstream ifstr(filename);
+    if (! ifstr.good()) {
+        std::cout << "ERROR: Cannot read " << filename << std::endl;
+        return false;
+    }
+    
+    bool rc = readSizeFromEnd(ifstr);
+    if (rc) {
+        rc = readAdjList(ifstr, fac);
+    }
+
     return rc;
 }
 

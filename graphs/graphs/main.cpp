@@ -13,7 +13,7 @@
 #include "floydwarshall.hpp"
 #include "testers.hpp"
 
-void runtest(const std::string& filename) {
+void runedgetest(const std::string& filename) {
     adt::testers<adt::vertexTote, adt::edgeTote> tst;
     tst.bldedge(filename);
     tst.runbelf();
@@ -21,7 +21,13 @@ void runtest(const std::string& filename) {
     std::cout << std::endl;
 }
 
-int main(int argc, const char * argv[]) {
+void runadjlisttest(const std::string& filename) {
+    adt::testers<adt::vertexTote, adt::edgeTote> tst;
+    tst.bldadjlist(filename);
+    std::cout << std::endl;
+}
+
+void runedgetests() {
     // Load files
     const std::string path("/Users/rohit/Documents/Development/practice/graphs/graphs/adt/builders/edge/testcases/");
     // course
@@ -42,22 +48,37 @@ int main(int argc, const char * argv[]) {
     const std::string input_random_30_256(path + "input_random_30_256.txt");    // -961
     const std::string input_random_44_2048(path + "input_random_44_2048.txt");  // -3127
 
-    runtest(input_random_1_2);
-    runtest(input_random_4_2);
-    runtest(input_random_8_4);
-    runtest(input_random_10_8);
-    runtest(input_random_13_16);
-    runtest(input_random_15_16);
-    runtest(input_random_20_32);
-    runtest(input_random_30_256);
-//    runtest(input_random_44_2048);
+    runedgetest(input_random_1_2);
+    runedgetest(input_random_4_2);
+    runedgetest(input_random_8_4);
+    runedgetest(input_random_10_8);
+    runedgetest(input_random_13_16);
+    runedgetest(input_random_15_16);
+    runedgetest(input_random_20_32);
+    runedgetest(input_random_30_256);
+//    runedgetest(input_random_44_2048);
 
-    runtest(wikipedia);
+    runedgetest(wikipedia);
 
-//    runtest(g1);
-//    runtest(g2);
-//    runtest(g3);
-//    runtest(large);
+//    runedgetest(g1);
+//    runedgetest(g2);
+//    runedgetest(g3);
+//    runedgetest(large);
+}
 
+void runadjlisttests() {
+    // Load files
+    const std::string path("/Users/rohit/Documents/Development/practice/graphs/graphs/adt/builders/adjacencylist/testcases/");
+    // course
+    const std::string dijkstraSmallData(path + "dijkstraSmallData.txt");        //
+    const std::string dijkstraData(path + "dijkstraData.txt");                  //
+
+    runadjlisttest(dijkstraSmallData);
+    runadjlisttest(dijkstraData);
+}
+
+int main(int argc, const char * argv[]) {
+    runedgetests();
+    runadjlisttests();
     return 0;
 }

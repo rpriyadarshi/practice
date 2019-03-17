@@ -22,8 +22,10 @@ public: // Constructors/destructors
 public: // Create
     vertex<DV, DE>* createVertex(unsigned int id, factory& fac);
     edge<DV, DE>* createEdge(unsigned int id, vertex<DV, DE>* v1, vertex<DV, DE>* v2, factory& fac);
+    edge<DV, DE>* createEdge(unsigned int id, unsigned int v1idx, unsigned int v2idx, int cost, factory& fac);
 
 public: // Utility functions
+    void resize(unsigned int v);
     void resize(unsigned int v, unsigned int e);
     void resetVertices() const;
     void dump(std::ostream& o) const;
@@ -63,6 +65,11 @@ template <typename DV, typename DE>
 void graph<DV, DE>::resize(unsigned int v, unsigned int e) {
     vertices().resize(v);
     edges().resize(e);
+}
+
+template <typename DV, typename DE>
+void graph<DV, DE>::resize(unsigned int v) {
+    vertices().resize(v);
 }
 
 template <typename DV, typename DE>
@@ -106,6 +113,17 @@ graph<DV, DE>::createEdge(unsigned int id, vertex<DV, DE>* v1, vertex<DV, DE>* v
         std::cout << "ERROR: " << e.what() << " out of range" << std::endl;
     }
     return ptr;
+}
+
+template <typename DV, typename DE>
+edge<DV, DE>*
+graph<DV, DE>::createEdge(unsigned int id, unsigned int v1idx, unsigned int v2idx, int cost, factory& fac) {
+    vertex<DV, DE>* v1ptr = createVertex(v1idx, fac);
+    vertex<DV, DE>* v2ptr = createVertex(v2idx, fac);
+    edge<DV, DE>* eptr = createEdge(id, v1ptr, v2ptr, fac);
+    DE& de = eptr->data();
+    de.data(cost);
+    return eptr;
 }
 
 template <typename DV, typename DE>

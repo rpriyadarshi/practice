@@ -37,6 +37,7 @@ const int NegInfLimit = NegInf * 0.9;
 
 // Functions
 void dumpVal(std::ostream& o, int val);
+std::string getlastline(std::ifstream& ifstr);
 
 };
 
