@@ -38,8 +38,18 @@ private:
 ////////////////////////////////////////////////////////////////////////////////
 class vertexTote : public tote {
 public:
-    vertexTote() : tote() {}
+    vertexTote() : tote(), m_cache(0) {}
     ~vertexTote() {}
+    
+public: // Accessors
+    int cache() const { return m_cache; }
+
+public: // Accessors
+    int cache() { return m_cache; }
+    void cache(int c) { m_cache = c; }
+
+private:
+    int m_cache;
 };
 
 ////////////////////////////////////////////////////////////////////////////////

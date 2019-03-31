@@ -18,6 +18,7 @@
 #include <vector>
 #include <array>
 #include <limits>
+#include <queue>
 
 #include "common.hpp"
 #include "factory.hpp"

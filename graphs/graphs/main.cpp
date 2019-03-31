@@ -11,6 +11,7 @@
 #include "builder.hpp"
 #include "bellmanford.hpp"
 #include "floydwarshall.hpp"
+#include "dijkstra.hpp"
 #include "testers.hpp"
 
 void runedgetest(const std::string& filename) {
