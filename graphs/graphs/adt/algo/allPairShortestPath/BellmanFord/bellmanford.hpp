@@ -41,7 +41,7 @@ public: // Operators
     int operator()();
 
 public: // Accessors
-    const graph<DV, DE>& graph() const { return m_graph; }
+    const adt::graph<DV, DE>& graph() const { return m_graph; }
     const Matrix& matrix() const { return m_matrix; }
     const Path& path() const { return m_path; }
     int spVertex() const { return m_spVertex; }
@@ -105,10 +105,12 @@ int bellmanford<DV, DE>::computeSpMatrix(int sv) {
     int iprev = -1;
     Matrix& m = matrix();
     const VertexVec<DV, DE>& vVec = graph().vertices();
+	const int vsz = static_cast<int>(graph().vertices().size());
+	const int esz = static_cast<int>(graph().edges().size());
     int i = 1;
-    for (; i < graph().edges().size() + 1; i++) { // + 1 to detect -ve cost cycle
+    for (; i < esz + 1; i++) { // + 1 to detect -ve cost cycle
         match = true;
-        for (int v = 1; v < graph().vertices().size(); v++) {
+        for (int v = 1; v < vsz; v++) {
             icurr = odd(i);
             iprev = !odd(i);
             
@@ -148,7 +150,7 @@ int bellmanford<DV, DE>::computeSpMatrix(int sv) {
     spIndex(icurr);
     int res = PosInf;
     if (match) {
-        for (int v = 1; v < graph().vertices().size(); v++) {
+        for (int v = 1; v < vsz; v++) {
             int val = m[icurr][v];
             if (val < res) {
                 res = val;
@@ -211,8 +213,9 @@ int bellmanford<DV, DE>::run(int sv) {
 
 template <typename DV, typename DE>
 int bellmanford<DV, DE>::run() {
+	const int vsz = static_cast<int>(graph().vertices().size());
     int rmin = PosInf;
-    for (int v = 1; v < graph().vertices().size(); v++) {
+    for (int v = 1; v < vsz; v++) {
         int res = computeSpMatrix(v);
         if (res == NegInf) {
             return res;
@@ -249,9 +252,10 @@ void bellmanford<DV, DE>::dumpSpValue(std::ostream& o) const {
 
 template <typename DV, typename DE>
 void bellmanford<DV, DE>::dumpPath(std::ostream& o) const {
+	const int psz = static_cast<int>(path().size());
     o << "[";
-    for (int i = 0; i < path().size(); i++) {
-        int v = path()[path().size() - i - 1];
+    for (int i = 0; i < psz; i++) {
+        int v = path()[psz - i - 1];
         if (i > 0) {
             o << ", ";
         }

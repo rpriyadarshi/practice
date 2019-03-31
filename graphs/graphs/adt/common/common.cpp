@@ -8,6 +8,8 @@
 
 #include <iostream>
 #include <fstream>
+#include <vector>
+#include <limits>
 #include "common.hpp"
 
 ////////////////////////////////////////////////////////////////////////////////

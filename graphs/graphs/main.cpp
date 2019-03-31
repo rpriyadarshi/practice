@@ -30,7 +30,7 @@ void runadjlisttest(const std::string& filename) {
 
 void runedgetests() {
     // Load files
-    const std::string path("/Users/rohit/Documents/Development/practice/graphs/graphs/adt/builders/edge/testcases/");
+    const std::string path("../graphs/adt/builders/edge/testcases/");
     // course
     const std::string g1(path + "g1.txt");                                      // NULL
     const std::string g2(path + "g2.txt");                                      // NULL
@@ -57,7 +57,7 @@ void runedgetests() {
     runedgetest(input_random_15_16);
     runedgetest(input_random_20_32);
     runedgetest(input_random_30_256);
-//    runedgetest(input_random_44_2048);
+    runedgetest(input_random_44_2048);
 
     runedgetest(wikipedia);
 
@@ -69,7 +69,7 @@ void runedgetests() {
 
 void runadjlisttests() {
     // Load files
-    const std::string path("/Users/rohit/Documents/Development/practice/graphs/graphs/adt/builders/adjacencylist/testcases/");
+    const std::string path("../graphs/adt/builders/adjacencylist/testcases/");
     // course
     const std::string dijkstraSmallData(path + "dijkstraSmallData.txt");        //
     const std::string dijkstraData(path + "dijkstraData.txt");                  //

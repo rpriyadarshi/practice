@@ -40,7 +40,7 @@ public: // Operators
     int operator()();
 
 public: // Accessors
-    const graph<DV, DE>& graph() const { return m_graph; }
+    const adt::graph<DV, DE>& graph() const { return m_graph; }
 
 protected: // Accessors
 

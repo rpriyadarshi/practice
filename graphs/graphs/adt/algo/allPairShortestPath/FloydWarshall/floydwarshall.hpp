@@ -40,7 +40,7 @@ public: // Operators
     int operator()();
 
 public: // Accessors
-    const graph<DV, DE>& graph() const { return m_graph; }
+    const adt::graph<DV, DE>& graph() const { return m_graph; }
     const Matrix& matrix() const { return m_matrix; }
     const Path& path() const { return m_path; }
     int spBVertex() const { return m_spBVertex; }
@@ -94,16 +94,16 @@ bool floydwarshall<DV, DE>::odd(int n) const {
 
 template <typename DV, typename DE>
 void floydwarshall<DV, DE>::init() {
-    size_t sz = graph().vertices().size();
+	const int vsz = static_cast<int>(graph().vertices().size());
     Matrix& m = matrix();
-    m[0].resize(sz);
-    m[1].resize(sz);
-    m[2].resize(sz);
+    m[0].resize(vsz);
+    m[1].resize(vsz);
+    m[2].resize(vsz);
 
-    for (int i = 0; i < sz; i++) {
-        m[0][i].resize(sz, PosInf);
-        m[1][i].resize(sz, PosInf);
-        m[2][i].resize(sz, NegInf);
+    for (int i = 0; i < vsz; i++) {
+        m[0][i].resize(vsz, PosInf);
+        m[1][i].resize(vsz, PosInf);
+        m[2][i].resize(vsz, NegInf);
         m[0][i][i] = 0;
     }
     
@@ -121,15 +121,15 @@ int floydwarshall<DV, DE>::computeSpMatrix() {
     init();
 
     Matrix& m = matrix();
-    size_t sz = graph().vertices().size();
+	const int vsz = static_cast<int>(graph().vertices().size());
 
     int kcurr = -1;
     int kprev = -1;
-    for (int k = 1; k < sz; k++) {
+    for (int k = 1; k < vsz; k++) {
         kcurr = odd(k);
         kprev = !odd(k);
-        for (int i = 1; i < sz; i++) {
-            for (int j = 1; j < sz; j++) {
+        for (int i = 1; i < vsz; i++) {
+            for (int j = 1; j < vsz; j++) {
                 int pvalc1 = m[kprev][i][j];
                 int pval1 = m[kprev][i][k];
                 int pval2 = m[kprev][k][j];
@@ -159,8 +159,8 @@ int floydwarshall<DV, DE>::computeSpMatrix() {
     
     spIndex(kcurr);
     int res = PosInf;
-    for (int i = 1; i < sz; i++) {
-        for (int j = 1; j < sz; j++) {
+    for (int i = 1; i < vsz; i++) {
+        for (int j = 1; j < vsz; j++) {
             int val = m[kcurr][i][j];
             if (i == j) {
                 if (val < 0) {
@@ -234,9 +234,10 @@ void floydwarshall<DV, DE>::dumpSpValue(std::ostream& o) const {
 
 template <typename DV, typename DE>
 void floydwarshall<DV, DE>::dumpPath(std::ostream& o) const {
+	const int psz = static_cast<int>(path().size());
     o << "[";
-    for (int i = 0; i < path().size(); i++) {
-        int v = path()[path().size() - i - 1];
+    for (int i = 0; i < psz; i++) {
+        int v = path()[psz - i - 1];
         if (i > 0) {
             o << ", ";
         }

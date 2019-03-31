@@ -12,6 +12,7 @@
 #include <fstream>
 #include <string>
 #include <exception>
+#include <limits>
 
 #include "common.hpp"
 #include "factory.hpp"
