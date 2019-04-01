@@ -28,9 +28,9 @@ void runadjlisttest(const std::string& filename) {
     std::cout << std::endl;
 }
 
-void runedgetests() {
+void runedgetests(const std::string& root) {
     // Load files
-    const std::string path("../graphs/adt/builders/edge/testcases/");
+    const std::string path(root + "/graphs/adt/builders/edge/testcases/");
     // course
     const std::string g1(path + "g1.txt");                                      // NULL
     const std::string g2(path + "g2.txt");                                      // NULL
@@ -67,9 +67,9 @@ void runedgetests() {
 //    runedgetest(large);
 }
 
-void runadjlisttests() {
+void runadjlisttests(const std::string& root) {
     // Load files
-    const std::string path("../graphs/adt/builders/adjacencylist/testcases/");
+    const std::string path(root + "/graphs/adt/builders/adjacencylist/testcases/");
     // course
     const std::string dijkstraSmallData(path + "dijkstraSmallData.txt");        //
     const std::string dijkstraData(path + "dijkstraData.txt");                  //
@@ -79,7 +79,12 @@ void runadjlisttests() {
 }
 
 int main(int argc, const char * argv[]) {
-    runedgetests();
-    runadjlisttests();
+#ifdef __APPLE__
+	const std::string root("..");
+#else
+	const std::string root("..");
+#endif
+    runedgetests(root);
+    runadjlisttests(root);
     return 0;
 }
