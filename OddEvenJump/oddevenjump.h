@@ -1,11 +1,11 @@
 class Solution {
 public: // Aliases
     using IntVec = std::vector<int>;
-    using IntList = std::list<int>;
-    using IntListMap = std::map<int, IntList>;
+    using IntSet = std::set<int>;
+    using IntSetMap = std::map<int, IntSet>;
         
 private: // Data
-    IntListMap _cache;
+    IntSetMap _cache;
     IntVec _up;
     IntVec _dn;
 
@@ -14,7 +14,7 @@ public:
         for (int i = 0; i < A.size(); i++) {
             auto val = A[i];
             auto& data = _cache[val];
-            data.push_back(i);
+            data.insert(i);
         }
     }
     void printCache(const IntVec& A) const {
