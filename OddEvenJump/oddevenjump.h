@@ -95,135 +95,71 @@ public:
         }
     }
 
-    bool oddEvenJump2(const IntVec& A, int start) {
+    bool oddEvenJump(const IntVec& A, int start) {
         IntPairStack stack;
         int oddCycle{-1};
         int i = start;
         int j = start;
-        while (i >= 0 && i < A.size() - 1) {
+        int res = -1;
+        while (res < 0 && i >= 0 && i < A.size() - 1) {
             if (oddCycle < 0) {
+                res = _preup[i];
                 j = _up[i];
 //                std::cout << "[odd " << " -> (" << i << ", " << j << ")]";
-                int rc = _preup[j];
-                if (rc >= 0) {
-//                    std::cout << " -> {" << rc << "}" << std::endl;
-                    return rc;
-                }
             } else {
+                res = _predn[i];
                 j = _dn[i];
 //                std::cout << "[even" << " -> (" << i << ", " << j << ")]";
-                int rc = _predn[j];
-                if (rc >= 0) {
-//                    std::cout << " -> {" << rc << "}" << std::endl;
-                    return rc;
-                }
             }
-            stack.emplace(IntPair(oddCycle, j));
+            stack.emplace(IntPair(oddCycle, i));
             i = j;
             oddCycle *= -1;
         }
-
-        bool rc = (i == A.size() - 1);
-        while (! stack.empty()) {
-            auto& data = stack.top();
-            if (data.first < 0) {
-                _preup[data.second] = rc;
-            } else {
-                _predn[data.second] = rc;
+        if (res < 0) {
+            res = (i == A.size() - 1);
+            while (! stack.empty()) {
+                auto& data = stack.top();
+                if (data.first < 0) {
+                    _preup[data.second] = res;
+                } else {
+                    _predn[data.second] = res;
+                }
+                stack.pop();
             }
-            stack.pop();
         }
 //        std::cout << " -> {" << rc << "}" << std::endl;
-        return rc;
+        return res;
     }
-    int solve2(const IntVec& A) {
+
+    void printPre(const IntVec& A) {
+        std::cout << "[";
+        for (int i = 0; i < A.size(); i++) {
+            std::cout << _preup[i] << " ";
+        }
+        std::cout << "]" << std::endl;
+        std::cout << "[";
+        for (int i = 0; i < A.size(); i++) {
+            std::cout << _predn[i] << " ";
+        }
+        std::cout << "]" << std::endl;
+    }
+
+    int oddEvenJumps(std::vector<int>& A) {
         buildCache(A);
-        // printCache(A);
+//         printCache(A);
         buildUpDn(A);
-        // printUpDn(A);
+//         printUpDn(A);
 
         _cache.clear();
 
         _preup.resize(A.size(), -1);
         _predn.resize(A.size(), -1);
 
-        int cycles[A.size()];
-        for (int i = 0; i < A.size(); i++) {
-            cycles[i] = oddEvenJump2(A, i);
-        }
-//        std::cout << "[";
-//        for (int i = 0; i < A.size(); i++) {
-//            std::cout << _preup[i] << " ";
-//        }
-//        std::cout << "]" << std::endl;
-//        std::cout << "[";
-//        for (int i = 0; i < A.size(); i++) {
-//            std::cout << _predn[i] << " ";
-//        }
-//        std::cout << "]" << std::endl;
-        int count = 0;
-        for (int i = 0; i < A.size(); i++) {
-            count += cycles[i];
-        }
-        return count;
-
-    }
-
-
-    int findBestOdd(const IntVec& A, int start) const {
-        int best = -1;
-        int i = start + 1;
-        for (; i < A.size(); i++) {
-            if ((A[start] <= A[i]) && (best < 0 || A[best] > A[i])) {
-                best = i;
-            }
-        }
-        return best;
-    }
-    int findBestEven(const IntVec& A, int start) const {
-        int best = -1;
-        int i = start + 1;
-        for (; i < A.size(); i++) {
-            if ((A[start] >= A[i]) && (best < 0 || A[best] < A[i])) {
-                best = i;
-            }
-        }
-        return best;
-    }
-    bool oddEvenJump1(const IntVec& A, int start) const {
-        int oddCycle{-1};
-        int i = start; 
-        while (i >= 0 && i < A.size() - 1) {
-            if (oddCycle < 0) {
-                i = findBestOdd(A, i);
-            } else {
-                i = findBestEven(A, i);
-            }
-            
-            oddCycle *= -1;
-        }
-        return i == A.size() - 1;
-    }
-    int solve1(const IntVec& A) const {
-        int cycles[A.size()];
-        for (int i = 0; i < A.size(); i++) {
-            cycles[i] = oddEvenJump1(A, i);
-        }
-        
-        int count = 0;
-        for (int i = 0; i < A.size(); i++) {
-            count += cycles[i];
-        }
-        return count;
-    }
-    
-    int oddEvenJumps(std::vector<int>& A) {
         int cycles = 0;
-        if (A.size() < 0) {
-            cycles = solve1(A);
-        } else {
-            cycles = solve2(A);
+        for (int start = 0; start < A.size(); start++) {
+            cycles += oddEvenJump(A, start);
         }
+//        printPre();
         return cycles;
     }
 };
