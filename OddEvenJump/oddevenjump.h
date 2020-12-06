@@ -3,11 +3,15 @@ public: // Aliases
     using IntVec = std::vector<int>;
     using IntSet = std::set<int>;
     using IntSetMap = std::map<int, IntSet>;
+    using IntPair = std::pair<int, int>;
+    using IntPairStack = std::stack<IntPair>;
         
 private: // Data
     IntSetMap _cache;
     IntVec _up;
     IntVec _dn;
+    IntVec _preup;
+    IntVec _predn;
 
 public:
     void buildCache(const IntVec& A) {
@@ -90,20 +94,47 @@ public:
                 << std::endl;
         }
     }
-    
-    bool oddEvenJump2(const IntVec& A, int start) const {
+
+    bool oddEvenJump2(const IntVec& A, int start) {
+        IntPairStack stack;
         int oddCycle{-1};
-        int i = start; 
+        int i = start;
+        int j = start;
         while (i >= 0 && i < A.size() - 1) {
             if (oddCycle < 0) {
-                i = _up[i];
+                j = _up[i];
+//                std::cout << "[odd " << " -> (" << i << ", " << j << ")]";
+                int rc = _preup[j];
+                if (rc >= 0) {
+//                    std::cout << " -> {" << rc << "}" << std::endl;
+                    return rc;
+                }
             } else {
-                i = _dn[i];
+                j = _dn[i];
+//                std::cout << "[even" << " -> (" << i << ", " << j << ")]";
+                int rc = _predn[j];
+                if (rc >= 0) {
+//                    std::cout << " -> {" << rc << "}" << std::endl;
+                    return rc;
+                }
             }
-            
+            stack.emplace(IntPair(oddCycle, j));
+            i = j;
             oddCycle *= -1;
         }
-        return i == A.size() - 1;
+
+        bool rc = (i == A.size() - 1);
+        while (! stack.empty()) {
+            auto& data = stack.top();
+            if (data.first < 0) {
+                _preup[data.second] = rc;
+            } else {
+                _predn[data.second] = rc;
+            }
+            stack.pop();
+        }
+//        std::cout << " -> {" << rc << "}" << std::endl;
+        return rc;
     }
     int solve2(const IntVec& A) {
         buildCache(A);
@@ -112,12 +143,24 @@ public:
         // printUpDn(A);
 
         _cache.clear();
-        
+
+        _preup.resize(A.size(), -1);
+        _predn.resize(A.size(), -1);
+
         int cycles[A.size()];
         for (int i = 0; i < A.size(); i++) {
             cycles[i] = oddEvenJump2(A, i);
         }
-        
+//        std::cout << "[";
+//        for (int i = 0; i < A.size(); i++) {
+//            std::cout << _preup[i] << " ";
+//        }
+//        std::cout << "]" << std::endl;
+//        std::cout << "[";
+//        for (int i = 0; i < A.size(); i++) {
+//            std::cout << _predn[i] << " ";
+//        }
+//        std::cout << "]" << std::endl;
         int count = 0;
         for (int i = 0; i < A.size(); i++) {
             count += cycles[i];

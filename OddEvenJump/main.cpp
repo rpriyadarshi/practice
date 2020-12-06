@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <stack>
 
 #include "oddevenjump.h"
 
@@ -19,7 +20,7 @@ void loadInput(int argc, const char** argv, IntTable& table) {
     while (std::getline(ifstr, line)) {
         line.erase(std::remove(line.begin(), line.end(), '['));
         line.erase(std::remove(line.begin(), line.end(), ']'));
-        line.erase(std::remove(line.begin(), line.end(), ' '));
+        //line.erase(std::remove(line.begin(), line.end(), ' '));
 
         std::istringstream sstr(line);
         std::string token;
@@ -48,9 +49,9 @@ int main(int argc, const char** argv) {
     IntVec out;
     loadOutput(argc, argv, out);
 
-    Solution sol;
     for (int i = 0; i < table.size(); i++) {
         auto& prob = table[i];
+        Solution sol;
         int rc = sol.oddEvenJumps(prob);
         std::cout << rc << " -> ";
         std::cout << "[";
