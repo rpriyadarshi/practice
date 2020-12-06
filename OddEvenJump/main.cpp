@@ -6,21 +6,26 @@
 #include <sstream>
 #include <string>
 #include <stack>
+#include <algorithm>
 
 #include "oddevenjump.h"
 
 using IntVec = std::vector<int>;
 using IntTable = std::vector<IntVec>;
 
+// https://www.techiedelight.com/remove-certain-characters-string-cpp/
 void loadInput(int argc, const char** argv, IntTable& table) {
     std::string filename(argv[1]);
+    std::string chars("[ ]");
 
     std::ifstream ifstr(filename);
     std::string line;
     while (std::getline(ifstr, line)) {
-        line.erase(std::remove(line.begin(), line.end(), '['));
-        line.erase(std::remove(line.begin(), line.end(), ']'));
-        //line.erase(std::remove(line.begin(), line.end(), ' '));
+        line.erase(remove_if(line.begin(), line.end(),
+                          [&chars](const char& c) {
+                              return chars.find(c) != std::string::npos;
+                          }),
+                   line.end());
 
         std::istringstream sstr(line);
         std::string token;
