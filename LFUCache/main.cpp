@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <cassert>
+
 class LFUCache {
 private: // Classes
     struct Bucket;
@@ -337,6 +338,9 @@ public:
     }
 
     void put(int key, int value) {
+        if (_capacity <= 0) {
+            return;
+        }
         auto iter = _repo.find(key);
         if (iter == _repo.end()) {
             if (_capacity <= _repo.size()) {
@@ -397,11 +401,28 @@ void runtest1() {
     lfu.print("get(4)=" + std::to_string(res5));
 
     std::cout << "[null, null, null, 1, null, -1, 3, null, -1, 3, 4]" << std::endl;
-    std::cout << "[null, null, null, " << res0 << ", null, " << res1 << ", " << res2 << ", null, " << res3 << ", " << res4 << ", " << res5;
-    std::cout << "]" << std::endl;
+    std::cout << "[null, null, null, " << res0 << ", null, " << res1 << ", " << res2 << ", null, " << res3 << ", " << res4 << ", " << res5 << "]" << std::endl;
 }
 
+//["LFUCache","put","get"]
+//[[0],[0,0],[0]]
+// [null,null,-1]
+void runtest2() {
+    LFUCache lfu(0);
+    lfu.print("lfu(0)");
+    lfu.put(0, 0);
+    lfu.print("put(0, 0)");
+    int res0 = lfu.get(0);      // return 1
+    lfu.print("get(0)=" + std::to_string(res0));
+    std::cout << "[null,null,-1]" << std::endl;
+    std::cout << "[null, null, " << res0 << "]" << std::endl;
+}
+
+void runtest3() {
+
+}
 int main() {
-    runtest1();
+//    runtest1();
+    runtest2();
     return 0;
 }
