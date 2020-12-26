@@ -66,7 +66,7 @@ public:
     void merge(int l1, int l2, int r1, int r2) {
         int len = l2 - l1 + 1 + r2 - r1 + 1;
 //        std::cout << "[(" << l1 << ", " << l2 << "), (" << r1 << ", " << r2 << ")]=" << len << " -- ";
-        if (_nums[l2].first >= _nums[r1].first) { // Already sorted
+        if (_nums[l2].first > _nums[r1].first) { // Already sorted
             for (int l = l1; l <= l2; l++) {
                 _res[_nums[l].second] += (r2 - r1 + 1);
             }
@@ -171,18 +171,14 @@ int main(int argc, const char** argv) {
 //    Solution::print(sol._nums, 0, sol._nums.size() - 1);
 //    std::cout << std::endl;
 
-    bool error = false;
-    for (int i = 0; i < resN2.size() && !error; i++) {
+    for (int i = 0; i < resN2.size(); i++) {
         if (data[i] != sol._nums[i].first) {
-            std::cout << "ERROR! Sorting mismatch found! " << resN2[i] << " != " << resNlg2[i] << std::endl;
-            error = true;
+            std::cout << "ERROR! Sorting mismatch found! [" << sol._nums[i].first << " != " << data[i] << "]" << std::endl;
         }
     }
-    error = false;
-    for (int i = 0; i < resN2.size() && !error; i++) {
+    for (int i = 0; i < resN2.size(); i++) {
         if (resN2[i] != resNlg2[i]) {
-            std::cout << "ERROR! Count mismatch found! " << resN2[i] << " != " << resNlg2[i] << std::endl;
-            error = true;
+            std::cout << "ERROR! Count mismatch found! [" << sol._nums[i].second << ":" << sol._nums[i].first << ":" << resNlg2[i] << " != " << data[i] << ":" << resN2[i]  << "]" << std::endl;
         }
     }
     return 0;
