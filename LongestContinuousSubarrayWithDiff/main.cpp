@@ -8,6 +8,7 @@
 #include <locale>
 #include <sstream>
 #include <cassert>
+#include <queue>
 /*
 [24,12,71,33,5,87,10,11,3,58,2,97,97,36,32,35,15,80,24,45,38,9,22,21,33,68,22,85,35,83,92,38,59,90,42,64,61,15,4,40,50,44,54,25,34,14,33,94,66,27,78,56,3,29,3,51,19,5,93,21,58,91,65,87,55,70,29,81,89,67,58,29,68,84,4,51,87,74,42,85,81,55,8,95,39]
 87
@@ -23,16 +24,58 @@
 
 [10,1,2,4,7,2]
 5
+
+[1,5,6,7,8,10,6,5,6]
+4
 */
 
 class Solution {
 public:
     int longestSubarray(std::vector<int>& nums, int limit) {
+        std::deque<int> minq;
+        std::deque<int> maxq;
+        minq.push_back(0);
+        maxq.push_back(0);
+        int maxSize = 1;
+        int l = 0;
+        for (int r = 1; r < nums.size(); r++) {
+            while (!minq.empty() && nums[minq.back()] >= nums[r]) {
+                minq.pop_back();
+            }
+            minq.push_back(r);
+            while (!maxq.empty() && nums[maxq.back()] <= nums[r]) {
+                maxq.pop_back();
+            }
+            maxq.push_back(r);
+
+            int diff = nums[maxq.front()] - nums[minq.front()];
+            int diff1 = abs(nums[minq.front()] - nums[r]);
+            int diff2 = abs(nums[maxq.front()] - nums[r]);
+            std::cout << r << " [" << nums[r] << " [" << nums[maxq.front()] << ", " << nums[minq.front()] << "]] ";
+            std::cout << diff << "(" << diff1 << "," << diff2 << ")";
+            if (diff > limit) {
+                if (minq.front() < maxq.front()) {
+                    l = minq.front() + 1;
+                    minq.pop_front();
+                } else {
+                    l = maxq.front() + 1;
+                    maxq.pop_front();
+                }
+            }
+            maxSize = std::max(maxSize, r - l + 1);
+            std::cout << "[" << r - l + 1 << "," << maxSize << "]" << std::endl;
+        }
+        return maxSize;
+    }
+
+    int longestSubarrayMine(std::vector<int>& nums, int limit) {
         int maxSize = 0;
 
         int l = 0;
         int minIdx = l;
         int maxIdx = l;
+        int nextMinIdx = l;
+        int nextMaxIdx = l;
         for (int r = 0; r < nums.size(); r++) {
             if (nums[minIdx] >= nums[r]) {
                 minIdx = r;
@@ -44,10 +87,10 @@ public:
             int diff = abs(nums[maxIdx] - nums[minIdx]);
             int diff1 = abs(nums[minIdx] - nums[r]);
             int diff2 = abs(nums[maxIdx] - nums[r]);
-            std::cout << "[" << nums[r] << ", " << nums[maxIdx] << ", " << nums[minIdx] << "] ";
+            std::cout << r << " [" << nums[r] << " [" << nums[maxIdx] << ", " << nums[minIdx] << "]] ";
             std::cout << diff << "(" << diff1 << "," << diff2 << ")";
             if (diff > limit) {
-                l = std::min(r, minIdx + 1);
+                l = std::min(maxIdx, minIdx) + 1;
                 minIdx = l;
                 maxIdx = l;
                 for (int i = l; i <= r; i++) {
@@ -106,6 +149,7 @@ int main(int argc, const char** argv) {
     }
 
     Solution sol;
+    std::cout << sol.longestSubarray1(data, limit) << std::endl;
     std::cout << sol.longestSubarray(data, limit) << std::endl;
 
     return 0;
