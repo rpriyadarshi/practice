@@ -49,10 +49,10 @@ public:
             maxq.push_back(r);
 
             int diff = nums[maxq.front()] - nums[minq.front()];
-            int diff1 = abs(nums[minq.front()] - nums[r]);
-            int diff2 = abs(nums[maxq.front()] - nums[r]);
-            std::cout << r << " [" << nums[r] << " [" << nums[maxq.front()] << ", " << nums[minq.front()] << "]] ";
-            std::cout << diff << "(" << diff1 << "," << diff2 << ")";
+//            int diff1 = abs(nums[minq.front()] - nums[r]);
+//            int diff2 = abs(nums[maxq.front()] - nums[r]);
+//            std::cout << r << " [" << nums[r] << " [" << nums[maxq.front()] << ", " << nums[minq.front()] << "]] ";
+//            std::cout << diff << "(" << diff1 << "," << diff2 << ")";
             if (diff > limit) {
                 if (minq.front() < maxq.front()) {
                     l = minq.front() + 1;
@@ -63,7 +63,7 @@ public:
                 }
             }
             maxSize = std::max(maxSize, r - l + 1);
-            std::cout << "[" << r - l + 1 << "," << maxSize << "]" << std::endl;
+//            std::cout << "[" << r - l + 1 << "," << maxSize << "]" << std::endl;
         }
         return maxSize;
     }
@@ -72,24 +72,43 @@ public:
         int maxSize = 0;
 
         int l = 0;
+        int s = 1;
         int minIdx = l;
         int maxIdx = l;
         int nextMinIdx = l;
         int nextMaxIdx = l;
-        for (int r = 0; r < nums.size(); r++) {
+        for (int r = 0; r < nums.size(); r++, s++) {
+            s = std::min(s, int(nums.size() - 1));
             if (nums[minIdx] >= nums[r]) {
                 minIdx = r;
+                nextMinIdx = s;
             }
             if (nums[maxIdx] <= nums[r]) {
                 maxIdx = r;
+                nextMaxIdx = s;
+            }
+
+            if (nums[nextMinIdx] >= nums[s]) {
+                nextMinIdx = s;
+            }
+            if (nums[nextMaxIdx] <= nums[s]) {
+                nextMaxIdx = s;
             }
 
             int diff = abs(nums[maxIdx] - nums[minIdx]);
-            int diff1 = abs(nums[minIdx] - nums[r]);
-            int diff2 = abs(nums[maxIdx] - nums[r]);
-            std::cout << r << " [" << nums[r] << " [" << nums[maxIdx] << ", " << nums[minIdx] << "]] ";
-            std::cout << diff << "(" << diff1 << "," << diff2 << ")";
+//            int diff1 = abs(nums[minIdx] - nums[r]);
+//            int diff2 = abs(nums[maxIdx] - nums[r]);
+//            std::cout << r << " [" << nums[r] << " [" << nums[maxIdx] << ", " << nums[minIdx] << "]] ";
+//            std::cout << diff << "(" << diff1 << "," << diff2 << ")";
             if (diff > limit) {
+//                if (minIdx < maxIdx) {
+//                    l = minIdx + 1;
+//                    minIdx = nextMinIdx;
+//                } else {
+//                    l = maxIdx + 1;
+//                    maxIdx = nextMaxIdx;
+//                }
+
                 l = std::min(maxIdx, minIdx) + 1;
                 minIdx = l;
                 maxIdx = l;
@@ -104,7 +123,7 @@ public:
             }
 
             maxSize = std::max(maxSize, r - l + 1);
-            std::cout << "[" << r - l + 1 << "," << maxSize << "]" << std::endl;
+//            std::cout << "[" << r - l + 1 << "," << maxSize << "]" << std::endl;
         }
         return maxSize;
     }
@@ -149,7 +168,7 @@ int main(int argc, const char** argv) {
     }
 
     Solution sol;
-    std::cout << sol.longestSubarray1(data, limit) << std::endl;
+    std::cout << sol.longestSubarrayMine(data, limit) << std::endl;
     std::cout << sol.longestSubarray(data, limit) << std::endl;
 
     return 0;
