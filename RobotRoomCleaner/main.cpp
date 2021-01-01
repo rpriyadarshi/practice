@@ -151,60 +151,10 @@ public:
     }
 };
 
-const int cUP{0x1};
-const int cDOWN{0x2};
-const int cLEFT{0x4};
-const int cRIGHT{0x8};
-
-struct Cell {
-public: // Alias
-    using IntPair = std::pair<int, int>;
-
-public: // Constructors/destructors
-    Cell(int r, int c, int dir) : _loc(r, c), _tried(dir) {}
-
-public: // Data
-    IntPair _loc;
-    bool _tried:4;
-
-public: // Helpers
-
-    int turnRight(Robot& robot, int dir) const {
-        robot.turnRight();
-        switch(dir) {
-            case cUP: return cRIGHT;
-            case cRIGHT: return cDOWN;
-            case cDOWN: return cLEFT;
-            case cLEFT: return cUP;
-            default: return dir;
-        }
-    }
-    int turnLeft(Robot& robot, int dir) const {
-        robot.turnLeft();
-        switch(dir) {
-            case cUP: return cLEFT;
-            case cRIGHT: return cUP;
-            case cDOWN: return cRIGHT;
-            case cLEFT: return cDOWN;
-            default: return dir;
-        }
-    }
-    void tried(int dir) {
-        _tried &= dir;
-    }
-};
-
-struct cmp {
-    constexpr bool operator()(const Cell &lhs, const Cell &rhs) const {
-        return lhs._loc < rhs._loc;
-    }
-};
-
 class Solution {
 public: // Aliases
     using Loc = std::pair<int, int>;
     using Locs = std::set<Loc>;
-    using Cells = std::set<Cell, cmp>;
 
 public: // Constants, enums
     const int cDR[4]{-1, 0, 1, 0};
@@ -217,7 +167,6 @@ public: // Constants, enums
     };
 
 public: // Data
-    Cells _cells;
     Locs _locs;
 
 public: // Helpers
@@ -302,7 +251,6 @@ public: // Helpers
 
 public:
     void cleanRoom(Robot& robot) {
-//        _cells.emplace(Cell(0, 0, cUP));
         Loc loc(1, 3);
 
         print(robot, loc, Dir::eUP);
