@@ -5,18 +5,19 @@
 #include <sstream>
 #include <cassert>
 
-const int cDR[]{-1, 0, 1, 0};
-const int cDC[]{0, 1, 0, -1};
-enum class Dir {
-    eUP = 0,
-    eRIGHT = 1,
-    eDOWN = 2,
-    eLEFT = 3
-};
 
 // This is the robot's control interface.
 // You should not implement it, or speculate about its implementation
 class Robot {
+    const int cDR[4]{-1, 0, 1, 0};
+    const int cDC[4]{0, 1, 0, -1};
+    enum class Dir {
+        eUP = 0,
+        eRIGHT = 1,
+        eDOWN = 2,
+        eLEFT = 3
+    };
+
 public: // Alias
     using Loc = std::pair<int, int>;
     using Row = std::vector<int>;
@@ -61,7 +62,18 @@ public: // Helpers
             }
         }
     }
-    void print () {
+    void printDir() const {
+        switch(_dir) {
+            case Dir::eUP:      std::cout << "up   "; break;
+            case Dir::eRIGHT:   std::cout << "right"; break;
+            case Dir::eDOWN:    std::cout << "down "; break;
+            case Dir::eLEFT:    std::cout << "left "; break;
+        }
+    }
+    void printLoc() const {
+        std::cout << "loc (" << _loc.first << ", " << _loc.second << ")";
+    }
+    void printMatrix() const {
         int dirty = 0;
         for (auto& data : _world) {
             for (auto& num : data) {
@@ -70,7 +82,14 @@ public: // Helpers
             }
             std::cout << std::endl;
         }
-        std::cout << "(" << _loc.first << ", " << _loc.second << ") dirty = " << dirty;
+        std::cout << "dirty [" << dirty << "]";
+    }
+    void print() const {
+        printMatrix();
+        std::cout << " ";
+        printLoc();
+        std::cout << " ";
+        printDir();
         std::cout << std::endl;
     }
 
@@ -142,16 +161,16 @@ public: // Alias
     using IntPair = std::pair<int, int>;
 
 public: // Constructors/destructors
-    Cell() : _tried(cUP) {}
+    Cell(int r, int c, int dir) : _loc(r, c), _tried(dir) {}
 
 public: // Data
     IntPair _loc;
-    int _tried:4;
+    bool _tried:4;
 
 public: // Helpers
 
-    int next90Dir(Robot& robot, int dir) const { // clockwise
-        robot.turnRight(); // 90
+    int turnRight(Robot& robot, int dir) const {
+        robot.turnRight();
         switch(dir) {
             case cUP: return cRIGHT;
             case cRIGHT: return cDOWN;
@@ -160,19 +179,8 @@ public: // Helpers
             default: return dir;
         }
     }
-    int next180Dir(Robot& robot, int dir) const { // clockwise
-        robot.turnRight(); // 90
-        robot.turnRight(); // 90
-        switch(dir) {
-            case cUP: return cDOWN;
-            case cRIGHT: return cLEFT;
-            case cDOWN: return cUP;
-            case cLEFT: return cRIGHT;
-            default: return dir;
-        }
-    }
-    int next270Dir(Robot& robot, int dir) const { // clockwise
-        robot.turnLeft(); // -90
+    int turnLeft(Robot& robot, int dir) const {
+        robot.turnLeft();
         switch(dir) {
             case cUP: return cLEFT;
             case cRIGHT: return cUP;
@@ -180,17 +188,6 @@ public: // Helpers
             case cLEFT: return cDOWN;
             default: return dir;
         }
-    }
-    int nextValidDir(Robot& robot, int dir) const {
-        int d = dir;
-        for (int i = 0; i < 4; i++) {
-            if (!(_tried & d)) {
-                return d;
-            }
-            d = next90Dir(robot, dir);
-        }
-        assert(d == dir);
-        return next180Dir(robot, dir);
     }
     void tried(int dir) {
         _tried &= dir;
@@ -205,26 +202,114 @@ struct cmp {
 
 class Solution {
 public: // Aliases
+    using Loc = std::pair<int, int>;
+    using Locs = std::set<Loc>;
     using Cells = std::set<Cell, cmp>;
+
+public: // Constants, enums
+    const int cDR[4]{-1, 0, 1, 0};
+    const int cDC[4]{0, 1, 0, -1};
+    enum class Dir {
+        eUP = 0,
+        eRIGHT = 1,
+        eDOWN = 2,
+        eLEFT = 3
+    };
 
 public: // Data
     Cells _cells;
+    Locs _locs;
 
 public: // Helpers
-    void dfs(Robot& robot, Cell& cell, int dir) {
-        robot.clean();
-        bool moved = false;
-        while (!moved) {
-            moved = robot.move();
-            if (moved) {
-            } else {
-                int d = cell.nextValidDir(robot, dir);
-            }
+    constexpr Dir nextDir(Dir dir) const {
+        switch(dir) {
+            case Dir::eUP:      return Dir::eRIGHT;
+            case Dir::eRIGHT:   return Dir::eDOWN;
+            case Dir::eDOWN:    return Dir::eLEFT;
+            case Dir::eLEFT:    return Dir::eUP;
+        }
+        return dir;
+    }
+    constexpr Dir prevDir(Dir dir) const {
+        switch(dir) {
+            case Dir::eUP:      return Dir::eLEFT;
+            case Dir::eRIGHT:   return Dir::eUP;
+            case Dir::eDOWN:    return Dir::eRIGHT;
+            case Dir::eLEFT:    return Dir::eDOWN;
+        }
+        return dir;
+    }
+    void print(Dir dir) const {
+        switch(dir) {
+            case Dir::eUP:      std::cout << "up   "; break;
+            case Dir::eRIGHT:   std::cout << "right"; break;
+            case Dir::eDOWN:    std::cout << "down "; break;
+            case Dir::eLEFT:    std::cout << "left "; break;
         }
     }
+    void print(const Loc& loc) const {
+        std::cout << "loc (" << loc.first << ", " << loc.second << ")";
+    }
+    void print(Robot& robot, Loc loc, Dir dir) const {
+        robot.printLoc();
+        std::cout << " @";
+        robot.printDir();
+        std::cout << " -> ";
+        print(loc);
+        std::cout << " @";
+        print(dir);
+    }
+
+public: // Helpers
+    void dfs(Robot& robot, Loc loc, Dir dir) {
+        robot.clean();
+
+        Dir newdir = prevDir(dir);
+        robot.turnLeft();
+        for (int i = 0; i < 3; i++) {
+            Loc newloc(loc.first + cDR[int(newdir)], loc.second + cDC[int(newdir)]);
+            auto iter = _locs.find(newloc);
+            if (iter == _locs.end()) {
+                bool moved = robot.move();
+                if (moved) {
+                    print(robot, newloc, newdir);
+                    std::cout << " [moved  ]" << std::endl;
+                    _locs.insert(newloc);
+                    dfs(robot, newloc, newdir);
+                    std::cout << " -- backtrack(a)" << std::endl;
+                } else {
+                    print(robot, newloc, newdir);
+                    std::cout << " [blocked]" << std::endl;
+                }
+            } else {
+                print(robot, newloc, newdir);
+                std::cout << " [visited]" << std::endl;
+            }
+            robot.turnRight();
+            newdir = nextDir(newdir);
+        }
+
+//        robot.turnLeft();
+//        robot.turnLeft();
+        bool moved = robot.move();
+        assert(moved);
+        robot.turnLeft();
+        robot.turnLeft();
+        std::cout << " -- backtrack(b) ";
+        print(robot, loc, newdir);
+        std::cout << std::endl;
+    }
+
 public:
     void cleanRoom(Robot& robot) {
-        _cells.emplace(Cell());
+//        _cells.emplace(Cell(0, 0, cUP));
+        Loc loc(1, 3);
+
+        print(robot, loc, Dir::eUP);
+        std::cout << std::endl;
+
+        _locs.insert(loc);
+        dfs(robot, loc, Dir::eUP);
     }
 };
 
