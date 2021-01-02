@@ -23,7 +23,7 @@ public: // Alias
     using Row = std::vector<int>;
     using Matrix = std::vector<Row>;
 
-private: // Data
+public: // Data
     Matrix _world;
     Loc _loc;
     Dir _dir{Dir::eUP};
@@ -46,20 +46,27 @@ public: // Helpers
             if (line[0] == '[') {
                 data.clear();
                 if (line.size() > 2 && line[1] == '[') { // Table begin
-                    data.push_back(std::stoi(line.substr(2)));
+                    std::string numStr(line.substr(2));
+                    data.push_back(std::stoi(numStr));
                 } else { // Row begin
-                    data.push_back(std::stoi(line.substr(1)));
+                    std::string numStr(line.substr(1));
+                    data.push_back(std::stoi(numStr));
                 }
             } else if (line[line.size() - 1] == ']') {
                 if (line.size() > 2 && line[line.size() - 2] == ']') { // Table end
-                    data.push_back(std::stoi(line.substr(0, line.size() - 2)));
+                    std::string numStr(line.substr(0, line.size() - 2));
+                    data.push_back(std::stoi(numStr));
                 } else { // Row end
-                    data.push_back(std::stoi(line.substr(0, line.size() - 1)));
+                    std::string numStr(line.substr(0, line.size() - 1));
+                    data.push_back(std::stoi(numStr));
                 }
                 _world.emplace_back(data);
             } else {
                 data.push_back(std::stoi(line));
             }
+        }
+        if (!data.empty()) {
+            _world.emplace_back(data);
         }
     }
     void printDir() const {
@@ -151,6 +158,7 @@ public:
     }
 };
 
+#define DEBUG_PRINT
 class Solution {
 public: // Aliases
     using Loc = std::pair<int, int>;
@@ -188,6 +196,7 @@ public: // Helpers
         }
         return dir;
     }
+#ifdef DEBUG_PRINT
     void print(Dir dir) const {
         switch(dir) {
             case Dir::eUP:      std::cout << "up   "; break;
@@ -196,6 +205,7 @@ public: // Helpers
             case Dir::eLEFT:    std::cout << "left "; break;
         }
     }
+
     void print(const Loc& loc) const {
         std::cout << "loc (" << loc.first << ", " << loc.second << ")";
     }
@@ -208,84 +218,112 @@ public: // Helpers
         std::cout << " @";
         print(dir);
     }
+#endif
 
 public: // Helpers
     void dfs(Robot& robot, Loc loc, Dir dir) {
         robot.clean();
-
+        int maxCount = (_locs.size() == 1) ? 4 : 3;
         Dir newdir = prevDir(dir);
         robot.turnLeft();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < maxCount; i++) {
             Loc newloc(loc.first + cDR[int(newdir)], loc.second + cDC[int(newdir)]);
             auto iter = _locs.find(newloc);
             if (iter == _locs.end()) {
                 bool moved = robot.move();
                 if (moved) {
+#ifdef DEBUG_PRINT
                     print(robot, newloc, newdir);
                     std::cout << " [moved  ]" << std::endl;
+#endif
                     _locs.insert(newloc);
                     dfs(robot, newloc, newdir);
+#ifdef DEBUG_PRINT
                     std::cout << " -- backtrack(a)" << std::endl;
+#endif
                 } else {
+#ifdef DEBUG_PRINT
                     print(robot, newloc, newdir);
                     std::cout << " [blocked]" << std::endl;
+#endif
                 }
             } else {
+#ifdef DEBUG_PRINT
                 print(robot, newloc, newdir);
                 std::cout << " [visited]" << std::endl;
+#endif
             }
             robot.turnRight();
             newdir = nextDir(newdir);
         }
 
-//        robot.turnLeft();
-//        robot.turnLeft();
         bool moved = robot.move();
-        assert(moved);
+//        assert(moved);
         robot.turnLeft();
         robot.turnLeft();
+#ifdef DEBUG_PRINT
         std::cout << " -- backtrack(b) ";
         print(robot, loc, newdir);
         std::cout << std::endl;
+#endif
     }
 
 public:
     void cleanRoom(Robot& robot) {
-        Loc loc(1, 3);
+        Loc loc(0, 0);
 
+#ifdef DEBUG_PRINT
         print(robot, loc, Dir::eUP);
         std::cout << std::endl;
-
+#endif
         _locs.insert(loc);
         dfs(robot, loc, Dir::eUP);
     }
 };
 
-void runtest(Robot& robot) {
-    robot.move();
-    robot.clean();
+void runtest0() {
+    Robot robot;
+    Robot::Row row;
+    row.push_back(1);
+    robot._world.emplace_back(row);
+    robot.print();
+    Solution sol;
+    sol.cleanRoom(robot);
+    robot.print();
+}
 
-    robot.move();
-    robot.clean();
+void runtest1() {
+    Robot robot;
+    Robot::Row row;
+    row.push_back(1);
+    row.push_back(1);
+    robot._world.emplace_back(row);
+    robot.print();
+    Solution sol;
+    sol.cleanRoom(robot);
+    robot.print();
+}
 
-    robot.turnRight();
-    robot.move();
-    robot.clean();
+void runtest2() {
+    Robot robot;
+    Robot::Row row1;
+    Robot::Row row2;
+    row1.push_back(1);
+    row2.push_back(1);
+    robot._world.emplace_back(row1);
+    robot._world.emplace_back(row2);
+    robot.print();
+    Solution sol;
+    sol.cleanRoom(robot);
+    robot.print();
+}
 
-    robot.turnRight();
-    robot.move();
-    robot.clean();
-
-    robot.turnRight();
-    robot.move();
-    robot.clean();
-    robot.move();
-    robot.clean();
-    robot.move();
-    robot.clean();
-    robot.move();
-    robot.clean();
-
+void runtest(const std::string& filename) {
+    Robot robot;
+    robot.loadData(filename);
+    robot.print();
+    Solution sol;
+    sol.cleanRoom(robot);
     robot.print();
 }
 
@@ -296,12 +334,9 @@ int main(int argc, const char** argv) {
     }
 
     const std::string filename(argv[1]);
-
-    Robot robot;
-    robot.loadData(filename);
-//    runtest(robot);
-    Solution sol;
-    sol.cleanRoom(robot);
-    robot.print();
+//    runtest0();
+//    runtest1();
+//    runtest2();
+//    runtest(filename);
     return 0;
 }
