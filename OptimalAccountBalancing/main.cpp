@@ -28,13 +28,23 @@ using Row = std::vector<int>;
 using Matrix = std::vector<Row>;
 
 void print(const Matrix& matrix) {
-    int dirty = 0;
-    for (auto& data : matrix) {
-        for (auto& num : data) {
-            std::cout << num << " ";
+    std::cout << "[";
+    for (int i = 0; i < matrix.size() - 1; i++) {
+        std::cout << "[";
+        for (int j = 0; j < matrix[i].size() - 1; j++) {
+            std::cout << matrix[i][j] << ",";
         }
-        std::cout << std::endl;
+        std::cout << matrix[i][matrix[i].size() - 1];
+        std::cout << "],";
     }
+    std::cout << "[";
+    for (int j = 0; j < matrix[matrix.size() - 1].size() - 1; j++) {
+        std::cout << matrix[matrix.size() - 1][j] << ",";
+    }
+    std::cout << matrix[matrix.size() - 1][matrix[matrix.size() - 1].size() - 1];
+    std::cout << "]";
+    std::cout << "]";
+    std::cout << std::endl;
 }
 
 class Solution {
@@ -59,7 +69,7 @@ public:
             bool debtloan = balance[idx] < 0 ^ balance[i] < 0;
             if (debtloan) {
                 balance[i] += balance[idx];
-                print(idx, i, balance[i]);
+//                print(idx, i, balance[i]);
                 res = std::min(res, dfs(balance, idx + 1) + 1);
                 balance[i] -= balance[idx];
             }
@@ -80,25 +90,34 @@ public:
                 balance.push_back(iter.second);
             }
         }
-        for (auto b : balance) {
-            std::cout << b << " ";
-        }
-        std::cout << std::endl;
+//        for (auto b : balance) {
+//            std::cout << b << " ";
+//        }
+//        std::cout << std::endl;
         return dfs(balance, 0);
     }
 };
 
-// [[1,0,18],[2,1,9],[4,3,11],[5,4,10],[5,6,7],[7,6,5],[8,7,3]]
-void runtest1() {
-    Matrix transactions = {{1,0,18},{2,1,9},{4,3,11},{5,4,10},{5,6,7},{7,6,5},{8,7,3}};
-    print(transactions);
-
+void runtest(Matrix transactions, int res) {
     Solution sol;
     int trans = sol.minTransfers(transactions);
-    assert(trans == 6);
+    if (trans == res) {
+        std::cout << "PASS [" << trans << "==" << res << "]: ";
+    } else {
+        std::cout << "FAIL [" << trans << "!=" << res << "]: ";
+    }
+    print(transactions);
 }
 
 int main() {
-    runtest1();
+    runtest({{0,1,10}, {2,0,5}}, 2);
+    runtest({{0,1,10}, {1,0,1}, {1,2,5}, {2,0,5}}, 1);
+    runtest({{0,1,5},{2,3,1},{2,0,1},{4,0,2}}, 4);
+    runtest({{0,1,1},{1,2,1},{2,0,1}}, 0);
+    runtest({{1,5,8},{8,9,8},{2,3,9},{4,3,1}}, 4);
+    runtest({{0,3,2},{1,4,3},{2,3,2},{2,4,2}}, 3);
+    runtest({{0,3,9},{1,4,2},{2,5,5},{3,4,6},{4,5,2}}, 4);
+    runtest({{0,1,2},{1,2,1},{1,3,1}}, 2);
+    runtest({{1,0,18},{2,1,9},{4,3,11},{5,4,10},{5,6,7},{7,6,5},{8,7,3}}, 6);
     return 0;
 }
