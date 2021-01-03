@@ -47,6 +47,13 @@ void print(const Matrix& matrix) {
     std::cout << std::endl;
 }
 
+void print(const Row& balance) {
+    for (auto b : balance) {
+        std::cout << b << " ";
+    }
+    std::cout << std::endl;
+}
+
 class Solution {
 private:// Aliases
     using IntMap = std::unordered_map<int, int>;
@@ -54,6 +61,7 @@ private:// Aliases
 
 public:
     int dfs(IntVec& balance, int idx) {
+//        print(balance);
         // print(idx);
         while (idx < balance.size() && balance[idx] == 0) {
             idx++;
@@ -90,10 +98,7 @@ public:
                 balance.push_back(iter.second);
             }
         }
-//        for (auto b : balance) {
-//            std::cout << b << " ";
-//        }
-//        std::cout << std::endl;
+//        print(balance);
         return dfs(balance, 0);
     }
 };
