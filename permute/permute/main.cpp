@@ -36,7 +36,7 @@ public: // Helpers
         if (l == r) {
             m_perm.insert(m_data);
         } else {
-            for (int i = 0; i <= r; i++) {
+            for (int i = l; i <= r; i++) {
                 swap(l, i);
                 permute(l + 1, r);
                 swap(l, i);
@@ -53,7 +53,7 @@ public: // Helpers
 };
 
 int main(int argc, const char * argv[]) {
-    Permute perm("ABCD");
+    Permute perm("ABCDEFG");
     perm();
     perm.dump(std::cout);
     
