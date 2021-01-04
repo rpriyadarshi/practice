@@ -11,6 +11,14 @@
 #include <set>
 
 class Permute {
+private: // Aliases
+    using StrSet = std::unordered_set<std::string>;
+
+private: // Data
+    std::string m_data;
+    StrSet m_perm;
+    StrSet m_seen;
+
 public:
     Permute(const std::string& data) : m_data(data) {}
     ~Permute() {}
@@ -42,11 +50,6 @@ public: // Helpers
         }
         o << m_perm.size() << std::endl;
     }
-    
-private:
-    std::string m_data;
-    std::set<std::string> m_perm;
-    std::unordered_set<std::string> m_seen;
 };
 
 int main(int argc, const char * argv[]) {
