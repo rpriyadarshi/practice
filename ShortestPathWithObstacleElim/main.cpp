@@ -75,10 +75,7 @@ public: // Constants, enums
     const int cDC[4]{0, 1, 0, -1};
 
 public: // Data
-    Matrix _visited;
-    Matrix _len;
     Matrix _cost;
-    Result _res;
 
 public:
     void print(const Blob& b) const {
@@ -118,15 +115,10 @@ public:
     int shortestPath(std::vector<std::vector<int>>& grid, int k) {
         int maxRows = grid.size();
         int maxCols = grid[0].size();
-        _visited.resize(maxRows);
-        _len.resize(maxRows);
         _cost.resize(maxRows);
         for (int r = 0; r < maxRows; r++) {
-            _visited[r].resize(maxCols);
-            _len[r].resize(maxCols);
             _cost[r].resize(maxCols);
             for (int c = 0; c < maxCols; c++) {
-                _len[r][c] = maxRows * maxCols;
                 _cost[r][c] = maxRows * maxCols;
             }
         }
@@ -151,25 +143,13 @@ public:
 
             // End of search
             if (cr == maxRows - 1 && cc == maxCols - 1) {
-                _res.push_back(b);
-                break;
+                return clen;
             }
 
-//            if (_visited[cr][cc] > 0) {
-//                continue;
-//            }
             if (_cost[cr][cc] <= ccost) {
                 continue;
             }
-//            if (_len[cr][cc] < clen) {
-//                continue;
-//            }
-//            if (_visited[cr][cc] > maxRows*maxCols) {
-//                continue;
-//            }
 
-            _visited[cr][cc]++;
-            _len[cr][cc] = clen;
             _cost[cr][cc] = ccost;
 
             for (int i = 0; i < 4; i++) {
@@ -187,18 +167,8 @@ public:
             }
         }
 //        print("grid", grid);
-//        print("visited", _visited);
 //        print("cost", _cost);
-//        print("length", _len);
-        if (_res.empty()) {
-            return -1;
-        }
-        int minLen = std::numeric_limits<int>::max();
-        for (auto& b : _res) {
-            minLen = std::min(minLen, std::get<4>(b));
-//            print(b);
-        }
-        return minLen;
+        return -1;
     }
 };
 
