@@ -125,44 +125,47 @@ public:
 
         Queue q;
         q.emplace(Blob(0, 0, 0, 0, 0, 0));
+        _cost[0][0] = 0;
 
         while (! q.empty()) {
             Blob b = q.front();
             q.pop();
 //            print(b);
-            int pr = std::get<0>(b);
-            int pc = std::get<1>(b);
+//            int pr = std::get<0>(b);
+//            int pc = std::get<1>(b);
             int cr = std::get<2>(b);
             int cc = std::get<3>(b);
             int clen = std::get<4>(b);
             int ccost = std::get<5>(b);
-
-            if (ccost > k) {
-                continue;
-            }
 
             // End of search
             if (cr == maxRows - 1 && cc == maxCols - 1) {
                 return clen;
             }
 
-            if (_cost[cr][cc] <= ccost) {
-                continue;
-            }
-
-            _cost[cr][cc] = ccost;
-
             for (int i = 0; i < 4; i++) {
                 int nr = cr + cDR[i];
                 int nc = cc + cDC[i];
                 if (nr < 0 || nr >= maxRows ||
-                    nc < 0 || nc >= maxCols ||
-                    (nr == pr && nc == pc)) {
+                    nc < 0 || nc >= maxCols/* ||
+                    (nr == pr && nc == pc)*/) {
                     continue;
                 }
 
                 int nlen = clen + 1;
                 int ncost = ccost + grid[nr][nc];
+
+//                // End of search
+//                if (nr == maxRows - 1 && nc == maxCols - 1) {
+//                    return nlen;
+//                }
+
+                if (_cost[nr][nc] <= ncost || ncost > k) {
+                    continue;
+                }
+
+                _cost[nr][nc] = ncost;
+
                 q.emplace(Blob(cr, cc, nr, nc, nlen, ncost));
             }
         }
@@ -184,6 +187,7 @@ void runtest(Matrix grid, int k, int res) {
 }
 
 int main() {
+    runtest({{0}}, 1, 0);
     runtest({{0,0,0},{1,1,0},{0,0,0},{0,1,1},{0,0,0}}, 1, 6);
     runtest({{0,0,0},{1,1,0},{0,0,0},{0,1,1},{0,0,0}}, 0, 10);
     runtest({{0,0,0,0,0,0,0,0,0,0},{0,1,1,1,1,1,1,1,1,0},{0,1,0,0,0,0,0,0,0,0},{0,1,0,1,1,1,1,1,1,1},{0,1,0,0,0,0,0,0,0,0},{0,1,1,1,1,1,1,1,1,0},{0,1,0,0,0,0,0,0,0,0},{0,1,0,1,1,1,1,1,1,1},{0,1,0,1,1,1,1,0,0,0},{0,1,0,0,0,0,0,0,1,0},{0,1,1,1,1,1,1,0,1,0},{0,0,0,0,0,0,0,0,1,0}}, 1, 20);
