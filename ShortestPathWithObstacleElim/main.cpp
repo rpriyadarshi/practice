@@ -66,7 +66,7 @@ public:// Aliases
     using Row = std::vector<int>;
     using Matrix = std::vector<Row>;
     // row, col, path-length, cost
-    using Blob = std::tuple<int, int, int, int, int, int>;
+    using Blob = std::tuple<int, int, int, int>;
     using Result = std::vector<Blob>;
     using Queue = std::queue<Blob>;
 
@@ -74,19 +74,14 @@ public: // Constants, enums
     const int cDR[4]{-1, 0, 1, 0};
     const int cDC[4]{0, 1, 0, -1};
 
-public: // Data
-    Matrix _cost;
-
 public:
     void print(const Blob& b) const {
-        int pr = std::get<0>(b);
-        int pc = std::get<1>(b);
-        int cr = std::get<2>(b);
-        int cc = std::get<3>(b);
-        int len = std::get<4>(b);
-        int cost = std::get<5>(b);
+        int cr = std::get<0>(b);
+        int cc = std::get<1>(b);
+        int len = std::get<2>(b);
+        int cost = std::get<3>(b);
 
-        std::cout << "[(" << pr << ", " << pc << ") -> (" << cr << ", " << cc << "), " << len << ", " << cost << "]" << std::endl;
+        std::cout << "[(" << cr << ", " << cc << "), " << len << ", " << cost << "]" << std::endl;
     }
 
     void print(const std::string& msg, int r, int c, int val, const Matrix& matrix) const {
@@ -115,6 +110,7 @@ public:
     int shortestPath(std::vector<std::vector<int>>& grid, int k) {
         int maxRows = grid.size();
         int maxCols = grid[0].size();
+        Matrix _cost;
         _cost.resize(maxRows);
         for (int r = 0; r < maxRows; r++) {
             _cost[r].resize(maxCols);
@@ -124,19 +120,17 @@ public:
         }
 
         Queue q;
-        q.emplace(Blob(0, 0, 0, 0, 0, 0));
+        q.emplace(Blob(0, 0, 0, 0));
         _cost[0][0] = 0;
 
         while (! q.empty()) {
             Blob b = q.front();
             q.pop();
 //            print(b);
-//            int pr = std::get<0>(b);
-//            int pc = std::get<1>(b);
-            int cr = std::get<2>(b);
-            int cc = std::get<3>(b);
-            int clen = std::get<4>(b);
-            int ccost = std::get<5>(b);
+            int cr = std::get<0>(b);
+            int cc = std::get<1>(b);
+            int clen = std::get<2>(b);
+            int ccost = std::get<3>(b);
 
             // End of search
             if (cr == maxRows - 1 && cc == maxCols - 1) {
@@ -147,18 +141,12 @@ public:
                 int nr = cr + cDR[i];
                 int nc = cc + cDC[i];
                 if (nr < 0 || nr >= maxRows ||
-                    nc < 0 || nc >= maxCols/* ||
-                    (nr == pr && nc == pc)*/) {
+                    nc < 0 || nc >= maxCols) {
                     continue;
                 }
 
                 int nlen = clen + 1;
                 int ncost = ccost + grid[nr][nc];
-
-//                // End of search
-//                if (nr == maxRows - 1 && nc == maxCols - 1) {
-//                    return nlen;
-//                }
 
                 if (_cost[nr][nc] <= ncost || ncost > k) {
                     continue;
@@ -166,7 +154,7 @@ public:
 
                 _cost[nr][nc] = ncost;
 
-                q.emplace(Blob(cr, cc, nr, nc, nlen, ncost));
+                q.emplace(Blob(nr, nc, nlen, ncost));
             }
         }
 //        print("grid", grid);
