@@ -67,7 +67,6 @@ public:// Aliases
     using Matrix = std::vector<Row>;
     // row, col, path-length, cost
     using Blob = std::tuple<int, int, int, int>;
-    using Result = std::vector<Blob>;
     using Queue = std::queue<Blob>;
 
 public: // Constants, enums
@@ -110,18 +109,11 @@ public:
     int shortestPath(std::vector<std::vector<int>>& grid, int k) {
         int maxRows = grid.size();
         int maxCols = grid[0].size();
-        Matrix _cost;
-        _cost.resize(maxRows);
-        for (int r = 0; r < maxRows; r++) {
-            _cost[r].resize(maxCols);
-            for (int c = 0; c < maxCols; c++) {
-                _cost[r][c] = maxRows * maxCols;
-            }
-        }
+        Matrix costGrid(maxRows, Row(maxCols, k + 1));
 
         Queue q;
         q.emplace(Blob(0, 0, 0, 0));
-        _cost[0][0] = 0;
+        costGrid[0][0] = 0;
 
         while (! q.empty()) {
             Blob b = q.front();
@@ -148,17 +140,17 @@ public:
                 int nlen = clen + 1;
                 int ncost = ccost + grid[nr][nc];
 
-                if (_cost[nr][nc] <= ncost || ncost > k) {
+                if (costGrid[nr][nc] <= ncost || ncost > k) {
                     continue;
                 }
 
-                _cost[nr][nc] = ncost;
+                costGrid[nr][nc] = ncost;
 
                 q.emplace(Blob(nr, nc, nlen, ncost));
             }
         }
 //        print("grid", grid);
-//        print("cost", _cost);
+//        print("cost", costGrid);
         return -1;
     }
 };
