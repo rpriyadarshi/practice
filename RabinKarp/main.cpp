@@ -14,9 +14,10 @@
 class RabinKarp {
 public: // Aliases
     using HashData = std::tuple<long, int>;
-    using IntVec = std::vector<int>;
-    using HashVec = std::vector<HashData>;
-    using HashIdxes = std::map<long, IntVec>;
+    using Matches = std::vector<int>;
+    using Hashes = std::vector<HashData>;
+    using Groups = std::map<long, Matches>;
+    using Idxes = std::vector<size_t>;
 
 private: // Data
     long _phash;                    // Pattern hash value
@@ -27,9 +28,9 @@ private: // Data
     const std::string_view& _pat;   // Needed for Las Vages verification
 
 public: // Data
-    mutable IntVec _matches;        // Store all matches
-    mutable HashVec _hashes;        // Hashes at each end index
-    mutable HashIdxes _hashIdxes;
+    mutable Matches _matches;        // Store all matches
+    mutable Hashes _hashes;        // Hashes at each end index
+    mutable Groups _groups;
 
 public: // Constructors/destructors
     RabinKarp(const std::string_view& pat) : _pat(pat) {
@@ -67,14 +68,14 @@ public: // Core
         int n = txt.size();
         long thash = hash(txt); // first m characters
         _hashes.emplace_back(thash, (0));
-        _hashIdxes[thash].emplace_back(0);
+        _groups[thash].emplace_back(0);
         for (int i = _m; i < n; i++) {
             // Remove leading digit
             thash = (thash + _prime - (_coeff * txt[i - _m]) % _prime) % _prime;
             // Add trailing digit
             thash = (thash * _base + txt[i]) % _prime;
             _hashes.emplace_back(thash, i - _m + 1);
-            _hashIdxes[thash].emplace_back(i - _m + 1);;
+            _groups[thash].emplace_back(i - _m + 1);;
         }
     }
     void search(const std::string& txt) const {
@@ -96,22 +97,51 @@ public: // Core
             }
         }
     }
+    bool validate(const std::string& txt, const Idxes& idxes) const {
+        for (int i = 0; i < idxes.size(); i++) {
+            if (idxes[i] != _matches[i + 1]) {
+                return false;
+            }
+        }
+        int estSize = _pat.size() + idxes[idxes.size() - 1];
+        return txt.size() == estSize;
+    }
 
     void print() const {
-        std::cout << "  key [" << _pat << "] hits [";
+        std::cout << "  key [" << _pat << "]" << std::endl;
+        printMatches();
+        printHashes();
+        printGroups();
+    }
+    void printMatches() const {
+        if (_matches.empty()) {
+            return;
+        }
+        std::cout << "    matches [";
         for (int i = 0; i < _matches.size() - 1; i++) {
             std::cout << _matches[i] << " ";
         }
         std::cout << _matches[_matches.size() - 1];
         std::cout << "]" << std::endl;
-        std::cout << "    hashes [";
+    }
+    void printHashes() const {
+        if (_hashes.empty()) {
+            return;
+        }
+        std::cout << "    hashes  [";
         for (int i = 0; i < _hashes.size() - 1; i++) {
             std::cout << std::get<0>(_hashes[i]) << " [" << std::get<1>(_hashes[i]) << "] ";
         }
-        std::cout << std::get<0>(_hashes[_hashes.size() - 1]) << " [" << std::get<1>(_hashes[_hashes.size() - 1]) << "] ";
+        std::cout << std::get<0>(_hashes[_hashes.size() - 1]) << " [" << std::get<1>(_hashes[_hashes.size() - 1])
+                  << "] ";
         std::cout << "]" << std::endl;
-        std::cout << "    sets   [";
-        for (auto hf : _hashIdxes) {
+    }
+    void printGroups() const {
+        if (_groups.empty()) {
+            return;
+        }
+        std::cout << "    groups  [";
+        for (auto hf : _groups) {
             std::cout << hf.first << " " << hf.second.size() << " [";
             for (int i = 0; i < hf.second.size() - 1; i++) {
                 std::cout << hf.second[i] << " ";
@@ -124,7 +154,11 @@ public: // Core
 };
 
 class Solution {
+public: // Aliases
+    using Idxes = std::vector<size_t>;
 public:
+    // 471. Encode String with Shortest Length
+    // https://leetcode.com/problems/encode-string-with-shortest-length/
     std::string encode(std::string s) {
         for (size_t i = 4; i < s.size() / 2 + 1; i++) {
             std::string_view sv{s.data() + 0, i};
@@ -136,20 +170,59 @@ public:
 
         return s;
     }
+    // 459. Repeated Substring Pattern
+    // https://leetcode.com/problems/repeated-substring-pattern/
+    bool repeatedSubstringPattern(std::string s) {
+        // Repeat of first char
+        Idxes idxes;
+        for (int i = 1; i < s.size(); i++) {
+            if (s[i] == s[0]) {
+                idxes.push_back(i);
+            }
+        }
+        bool found = false;
+        for (int i = 0; i < idxes.size() && !found; i++) {
+            std::string_view sv{s.data() + 0, idxes[i]};
+            RabinKarp rk(sv);
+            rk.search(s);
+            found = rk.validate(s, idxes);
+//            rk.hashes(s);
+            rk.print();
+        }
+        return found;
+    }
+
 };
 
-void runtest(const std::string& s) {
+void runtest471(const std::string& s) {
     std::cout << "Solving \"" << s << "\" ..." << std::endl;
     Solution sol;
     sol.encode(s);
 }
 
+void runtest459(const std::string& s, bool status) {
+    std::cout << "Solving \"" << s << "\" ..." << std::endl;
+    Solution sol;
+    bool error = (status != sol.repeatedSubstringPattern(s));
+
+    if (error) {
+        std::cout << "FAIL: ";
+    } else {
+        std::cout << "PASS: ";
+    }
+    std::cout << std::endl;
+}
+
 int main() {
-    runtest("aaa");
-    runtest("aaaaa");
-    runtest("aaaaaaaaaa");
-    runtest("aabcaabcd");
-    runtest("abbbabbbcabbbabbbc");
+//    runtest471("aaa");
+//    runtest471("aaaaa");
+//    runtest471("aaaaaaaaaa");
+//    runtest471("aabcaabcd");
+//    runtest471("abbbabbbcabbbabbbc");
+
+//    runtest459("abab", 1);
+    runtest459("aba", 0);
+//    runtest459("abcabcabcabc", 1);
 
     return 0;
 }
