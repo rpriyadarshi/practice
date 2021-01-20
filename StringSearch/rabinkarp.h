@@ -34,8 +34,7 @@ public: // Data
     mutable Groups _groups;
 
 public: // Constructors/destructors
-    RabinKarp(const std::string_view& pat) : _pat(pat) {
-        _m = _pat.size();
+    RabinKarp(const std::string_view& pat) : _pat(pat), _m(pat.size()) {
         for (int i = 1; i <= _m - 1; i++) {
             _coeff = (_base * _coeff) % _prime;
         }
