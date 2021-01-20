@@ -156,45 +156,14 @@ public: // Core
     }
 };
 
-class SolutionRK {
-public: // Aliases
-    using Idxes = std::vector<size_t>;
-
-private: // Data
-    Idxes _idxes;
-
+class SolutionRK : public Solution {
 public:
-    bool search(const std::string_view& pat, const std::string& txt) {
+    bool multisearch(const std::string_view& pat, const std::string& txt) {
         RabinKarp rk(pat);
         rk.search(txt);
         bool found = rk.validate(txt, _idxes);
 //        rk.hashes(txt);
 //        rk.print();
-        return found;
-    }
-
-    bool search(const std::string& s) {
-        if (s.size() <= 1) {
-            return false;
-        }
-        bool same = true;
-        // Repeat of first char
-        for (int i = 1; i < s.size(); i++) {
-            if (s[i] == s[0]) {
-                _idxes.push_back(i);
-            }
-            if (s[i] != s[i - 1]) {
-                same = false;
-            }
-        }
-        if (same) {
-            return same;
-        }
-        bool found = false;
-        for (int i = 0; i < std::min(_idxes.size() / 2 + 1, _idxes.size()) && !found; i++) {
-            std::string_view pat{s.data() + 0, _idxes[i]};
-            found = search(pat, s);
-        }
         return found;
     }
 };

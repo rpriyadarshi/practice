@@ -4,7 +4,7 @@
 
 #pragma once
 
-class BruteForce {
+class BruteForceBackup {
 public: // Aliases
     using Matches = std::vector<int>;
     using Idxes = std::vector<size_t>;
@@ -17,22 +17,23 @@ public: // Data
     mutable Matches _matches;        // Store all matches
 
 public: // Constructors/destructors
-    BruteForce(const std::string_view& pat) : _pat(pat), _m(pat.size()) {
+    BruteForceBackup(const std::string_view& pat) : _pat(pat), _m(pat.size()) {
     }
 
 public: // Core
     int search(const std::string& txt, int start) const {
         int n = txt.size();
-        for (int i = start; i <= n - _m; i++) {
-            int j;
-            for (j = 0; j < _m; j++) {
-                if (txt[i + j] != _pat[j]) {
-                    break;
-                }
+        int i, j;
+        for (i = start, j = 0; i < n && j < _m; i++) {
+            if (txt[i] == _pat[j]) {
+                j++;
+            } else {
+                i -= j;
+                j = 0;
             }
-            if (j == _m) {
-                return i;
-            }
+        }
+        if (j == _m) {
+            return i - _m;
         }
         return -1;
     }
@@ -74,10 +75,10 @@ public: // Core
     }
 };
 
-class SolutionBF : public Solution {
+class SolutionBFBK : public Solution {
 public:
     bool multisearch(const std::string_view& pat, const std::string& txt) {
-        BruteForce bf(pat);
+        BruteForceBackup bf(pat);
         bf.search(txt);
         bool found = bf.validate(txt, _idxes);
 //        bf.print();

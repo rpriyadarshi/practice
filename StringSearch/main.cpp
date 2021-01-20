@@ -5,8 +5,10 @@
 #include <string>
 #include <chrono>
 
+#include "solution.h"
 #include "rabinkarp.h"
 #include "bruteforce.h"
+#include "bruteforcebackup.h"
 
 std::vector<std::tuple<std::string, int>> testcache = {
         {"a", 0},
@@ -34,24 +36,8 @@ std::vector<std::tuple<std::string, int>> testcache = {
         0}
 };
 
-void runtestrk(const std::string& s, bool status) {
-//    std::cout << "RK Solver \"" << s << "\" ..." << std::endl;
-    SolutionRK sol;
+void runtest(Solution& sol, const std::string& s, bool status) {
     bool error = (status != sol.search(s));
-
-    if (error) {
-        std::cout << "FAIL: ";
-    } else {
-        std::cout << "PASS: ";
-    }
-    std::cout << s << std::endl;
-}
-
-void runtestbf(const std::string& s, bool status) {
-//    std::cout << "BF Solver \"" << s << "\" ..." << std::endl;
-    SolutionBF sol;
-    bool error = (status != sol.search(s));
-
     if (error) {
         std::cout << "FAIL: ";
     } else {
@@ -68,15 +54,25 @@ int main() {
 //    std::vector<int> testlist = {13};
     for (auto i : testlist) {
         auto& test = testcache[i];
-        auto t0 = std::chrono::steady_clock::now();
-        runtestrk(std::get<0>(test), std::get<1>(test));
-        auto t1 = std::chrono::steady_clock::now();
-        runtestbf(std::get<0>(test), std::get<1>(test));
-        auto t2 = std::chrono::steady_clock::now();
 
-        std::cout << "Elapsed time in milliseconds : " << std::endl;
-        std::cout << "    RK: " << std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count() << " ms" << std::endl;
-        std::cout << "    BF: " << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << " ms" << std::endl;
+        auto t0 = std::chrono::steady_clock::now();
+        SolutionRK rk;
+        runtest(rk, std::get<0>(test), std::get<1>(test));
+
+        auto t1 = std::chrono::steady_clock::now();
+        SolutionBF bf;
+        runtest(bf, std::get<0>(test), std::get<1>(test));
+
+        auto t2 = std::chrono::steady_clock::now();
+        SolutionBFBK bfbk;
+        runtest(bfbk, std::get<0>(test), std::get<1>(test));
+        auto t3 = std::chrono::steady_clock::now();
+
+        std::cout << "    Elapsed time in milliseconds: ";
+        std::cout << "RK (" << std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count() << " ms) ";
+        std::cout << "BF (" << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << " ms) ";
+        std::cout << "BFBK (" << std::chrono::duration_cast<std::chrono::milliseconds>(t3 - t2).count() << " ms) ";
+        std::cout << std::endl;
     }
     return 0;
 }
