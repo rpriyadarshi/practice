@@ -95,7 +95,7 @@ void runtest() {
         std::cout << "RK (" << std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count() << " ms) ";
         std::cout << "BF (" << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << " ms) ";
         std::cout << "BFBK (" << std::chrono::duration_cast<std::chrono::milliseconds>(t3 - t2).count() << " ms) ";
-        std::cout << "KMP (" << std::chrono::duration_cast<std::chrono::milliseconds>(t3 - t2).count() << " ms) ";
+        std::cout << "KMP (" << std::chrono::duration_cast<std::chrono::milliseconds>(t4 - t3).count() << " ms) ";
         std::cout << std::endl;
     }
 }

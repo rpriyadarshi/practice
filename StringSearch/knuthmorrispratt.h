@@ -9,7 +9,7 @@ public: // Aliases
     using Dfa = std::vector<std::vector<int>>;
 
 private: // Data
-    int _base{256};                 // Base you are operating on
+    int _base{128};                 // Base you are operating on
     Dfa _dfa;                       // DFA built from pattern
 
 public: // Constructors/destructors

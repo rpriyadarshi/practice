@@ -22,7 +22,7 @@ public: // Aliases
 private: // Data
     long _phash;                    // Pattern hash value
     long _prime{2210774273};        // Your choice of a prime number (e.g. 997)
-    int _base{256};                 // Base you are operating on
+    int _base{128};                 // Base you are operating on
     long _coeff{1};                 // Coefficient, base^(m - 1) % prime to remove leading digit
 
 public: // Data
