@@ -85,7 +85,8 @@ public:
         factorize(grps);
 
         // Work with all multiples
-        for (auto m : _mults) {
+        for (int i = _mults.size() - 1; i >= 0; i--) {
+            int m = _mults[i];
             int patsize = s.size() / m;
 //            std::cout << "mults [" << m << "] patsize [" << patsize << "]" << std::endl;
 
