@@ -8,6 +8,7 @@
 #include <set>
 #include <math.h>
 
+#include "search.h"
 #include "solution.h"
 #include "rabinkarp.h"
 #include "bruteforce.h"

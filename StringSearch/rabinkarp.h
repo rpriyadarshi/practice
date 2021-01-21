@@ -12,29 +12,25 @@
 //  16 bit: 61051
 //  32 bit: 2210774273
 //  64 bit: 5467909550323529693
-class RabinKarp {
+class RabinKarp : public Search {
 public: // Aliases
     using HashData = std::tuple<long, int>;
     using Matches = std::vector<int>;
     using Hashes = std::vector<HashData>;
     using Groups = std::map<long, Matches>;
-    using Idxes = std::vector<size_t>;
 
 private: // Data
     long _phash;                    // Pattern hash value
-    int _m;                         // Pattern length
     long _prime{2210774273};        // Your choice of a prime number (e.g. 997)
     int _base{256};                 // Base you are operating on
     long _coeff{1};                 // Coefficient, base^(m - 1) % prime to remove leading digit
-    const std::string_view& _pat;   // Needed for Las Vages verification
 
 public: // Data
-    mutable Matches _matches;        // Store all matches
     mutable Hashes _hashes;          // Hashes at each end index
     mutable Groups _groups;
 
 public: // Constructors/destructors
-    RabinKarp(const std::string_view& pat) : _pat(pat), _m(pat.size()) {
+    RabinKarp(const std::string_view& pat) : Search(pat) {
         for (int i = 1; i <= _m - 1; i++) {
             _coeff = (_base * _coeff) % _prime;
         }
@@ -78,6 +74,7 @@ public: // Core
             _groups[thash].emplace_back(i - _m + 1);;
         }
     }
+    int multisearch(const std::string& txt, int start) const { return -1; };
     void search(const std::string& txt) const {
         int n = txt.size();
         long thash = hash(txt); // first m characters
@@ -97,35 +94,11 @@ public: // Core
             }
         }
     }
-    bool validate(const std::string& txt, const Idxes& idxes) const {
-        if (_matches.empty()) {
-            return false;
-        }
-        for (int i = 1; i < _matches.size(); i++) {
-            if (_matches[i - 1] + _pat.size() != _matches[i]) {
-                return false;
-            }
-        }
-        int estSize = _pat.size() + _matches[_matches.size() - 1];
-        return txt.size() == estSize;
-    }
 
     void print() const {
-        std::cout << "  key [" << _pat << "]" << std::endl;
-        printMatches();
+        Search::print();
         printHashes();
         printGroups();
-    }
-    void printMatches() const {
-        if (_matches.empty()) {
-            return;
-        }
-        std::cout << "    matches [";
-        for (int i = 0; i < _matches.size() - 1; i++) {
-            std::cout << _matches[i] << " ";
-        }
-        std::cout << _matches[_matches.size() - 1];
-        std::cout << "]" << std::endl;
     }
     void printHashes() const {
         if (_hashes.empty()) {
