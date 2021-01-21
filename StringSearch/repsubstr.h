@@ -6,48 +6,37 @@ class Solution459 {
 public: // Aliases
     using Freq = std::array<int, 26>;
     using UsedFreq = std::vector<int>;
-    using Factors = std::vector<int>;
-    using Groups = std::set<int>;
+    using Multiples = std::vector<int>;
 
 protected: // Data
     Freq _freq;
     UsedFreq _usedFreq;
-    mutable Factors _facts;
-    mutable Groups _grps;
+    mutable Multiples _mults;
 
 public:
-    int gcd1(int a, int b) const {
-        if (b == 0) {
-            return a;
-        }
-        return gcd1(b, a % b);
-    }
-    int gcd2(int a, int b) const {
-        if (a == 0 || b == 0) {
-            return 0;
-        } else if (a == b) {
-            return a;
-        } else if (a > b) {
-            return gcd2(a - b, b);
-        } else {
-            return gcd2(a, b - a);
-        }
-    }
+    // This factorize function actually builds multiples instead of factors
     void factorize(int n) const {
+        _mults.push_back(n);
         while (n % 2 == 0) {
-            _facts.push_back(2);
+            if (_mults.front() != n) {
+                _mults.push_back(n);
+            }
             n = n/2;
         }
 
         for (int i = 3; i <= std::sqrt(n); i = i + 2) {
             while (n % i == 0) {
-                _facts.push_back(i);
-                n = n/i;
+                if (_mults.front() != n) {
+                    _mults.push_back(n);
+                }
+                n = n / i;
             }
         }
 
         if (n > 2) {
-            _facts.push_back(n);
+            if (_mults.front() != n) {
+                _mults.push_back(n);
+            }
         }
     }
 
@@ -91,28 +80,14 @@ public:
             return false;
         }
 
-        // Check if all used alphabets are multiples of same frequency
-        for (auto f : _usedFreq) {
-            if (f % grps != 0) {
-                return false;
-            }
-        }
-
         // We factorize to get all multiples that can divide all frequencies
-        _grps.insert(grps);
+        // But we gather products instead of factors
         factorize(grps);
-        for (int i = 0; i < _facts.size(); i++) {
-            for (int j = i; j < _facts.size(); j++) {
-                int mul = _facts[i] * _facts[j];
-                if (grps % mul == 0) {
-                    _grps.insert(mul);
-                }
-            }
-        }
 
-        for (auto g : _grps) {
-            int patsize = s.size() / g;
-//            std::cout << "groups [" << g << "] patsize [" << patsize << "]" << std::endl;
+        // Work with all multiples
+        for (auto m : _mults) {
+            int patsize = s.size() / m;
+//            std::cout << "mults [" << m << "] patsize [" << patsize << "]" << std::endl;
 
             // Extract pattern
             std::string_view pat(s.data(), patsize);
