@@ -21,14 +21,6 @@ int main(int argc, char** argv) {
     if (argc == 1) {
         return -1;
     }
-    UrlLoader ul;
-    ul.load(argv[1]);
-
-    UrlQuery uq1(ul, 40);
-    uq1.runmtnomutex();
-    uq1.print();
-
-    UrlQuery uq(ul, 40);
-    uq.runst();
-    uq1.print();
+    UrlQueryManager uql(40, 4);
+    uql.run(argv[1]);
 }

@@ -4,7 +4,7 @@
 
 #pragma once
 
-// URL file loader
+// URL file loader. The file contains a list of urls
 class UrlLoader{
 public: // Aliases
     using StrVec = std::vector<std::string>;
@@ -40,8 +40,72 @@ public: // Utility
     }
 };
 
-// URL query status finder
-class UrlQuery {
+// URL query status finder base class. Contains overall infrastructure
+class UrlQueryBase {
+public: // Alias
+    using IntMap = std::map<int, int>;
+
+protected: // Data
+    const UrlLoader& _ul;
+    size_t _count;
+    int _maxthreads;
+    IntMap _map;
+
+public: // Constructors/Destructors
+    UrlQueryBase(const UrlLoader& ul, int count, int maxthreads) : _ul(ul), _count(count), _maxthreads(maxthreads) {}
+    ~UrlQueryBase() {}
+
+public: // Helpers
+    void run() {
+        auto t1 = std::chrono::high_resolution_clock::now();
+        queries();
+        auto t2 = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>( t2 - t1 ).count();
+        std::cout << "INFO: Time taken to run the queries is " << duration << " ms" << std::endl;
+    }
+
+public: // Utility
+    virtual void queries()  = 0;
+    void print() const {
+//        _ul.print(_count);
+        for (auto& m : _map) {
+            std::cout << m.first << ": " << m.second << std::endl;
+        }
+    }
+};
+
+// Single-threaded URL query status finder
+class UrlQuerySt : public UrlQueryBase {
+public: // Alias
+    using StrVec = std::vector<std::string>;
+
+private: // Data
+
+public: // Constructors/Destructors
+    UrlQuerySt(const UrlLoader& ul, int count, int maxthreads) : UrlQueryBase(ul, count, maxthreads) {}
+    ~UrlQuerySt() {}
+
+public: // Helpers
+    void query(const std::string& url) {
+        cpr::Response r = cpr::Get(cpr::Url{url.c_str()});
+        _map[r.status_code]++;
+    }
+    void querygroup(const StrVec& urls) {
+        for (int i = 0; i < urls.size() && i < _count; i++) {
+            query(urls[i]);
+        }
+    }
+
+public: // Core
+    void queries() {
+        querygroup(_ul.urls());
+    }
+
+public: // Utility
+};
+
+// Multi-threaded URL query status finder
+class UrlQueryMt : public UrlQueryBase {
 public: // Alias
     using StrVec = std::vector<std::string>;
     using IntMap = std::map<int, int>;
@@ -49,62 +113,36 @@ public: // Alias
     using Threads = std::vector<std::thread>;
 
 private: // Data
-    const UrlLoader& _ul;
-    size_t _count;
-    int _maxthreads{4};
-    IntMap _map;
     ThreadIdIntMap _tmap;
 
 public: // Constructors/Destructors
-    UrlQuery(const UrlLoader& ul) : _ul(ul), _count(_ul.urls().size()) {}
-    UrlQuery(const UrlLoader& ul, int count) : _ul(ul), _count(count) {}
-    ~UrlQuery() {}
+    UrlQueryMt(const UrlLoader& ul, int count, int maxthreads) : UrlQueryBase(ul, count, maxthreads) {}
+    ~UrlQueryMt() {}
 
 public: // Helpers
-    void stquery(const std::string& url) {
-        cpr::Response r = cpr::Get(cpr::Url{url.c_str()});
-        _map[r.status_code]++;
-    }
-    void mtquery(const std::string& url, std::thread::id tid) {
+    void query(const std::string& url, std::thread::id tid) {
         cpr::Response r = cpr::Get(cpr::Url{url.c_str()});
         _tmap[tid][r.status_code]++;
     }
-    void stqueries(const StrVec& urls) {
-        for (int i = 0; i < urls.size() && i < _count; i++) {
-            stquery(urls[i]);
-        }
-    }
-    void mtqueries(const StrVec& urls) {
+    void querygroup(const StrVec& urls) {
         std::thread::id tid = std::this_thread::get_id();
         for (int i = 0; i < urls.size() && i < _count; i++) {
-            mtquery(urls[i], tid);
+            query(urls[i], tid);
         }
     }
 
-public: // Utility
-    void runst() {
-        auto t1 = std::chrono::high_resolution_clock::now();
-
-        stqueries(_ul.urls());
-
-        auto t2 = std::chrono::high_resolution_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>( t2 - t1 ).count();
-        std::cout << "INFO: Time taken to run the queries is " << duration << " ms" << std::endl;
-    }
-    void runmtmutex() {
-    }
-    void runmtnomutex() {
-        auto t1 = std::chrono::high_resolution_clock::now();
-
-        StrVec urls;
+public: // Core
+    void queries() {
+        StrVec urlgrp;
         int cluster = std::min(_ul.urls().size(), _count) / _maxthreads;
         Threads threads;
         for (int i = 0; i < _ul.urls().size() && i <= _count; i++) {
             if (i % cluster == 0) {
-                threads.emplace_back(std::thread(&UrlQuery::mtqueries, this, urls));
-                urls.clear();
+                const StrVec& sv = _ul.urls();
+                threads.emplace_back(std::thread(&UrlQueryMt::querygroup, this, urlgrp));
+                urlgrp.clear();
             }
-            urls.emplace_back(std::move(_ul.urls()[i]));
+            urlgrp.emplace_back(std::move(_ul.urls()[i]));
         }
         for (auto& th : threads) {
             if (th.joinable()) {
@@ -116,15 +154,33 @@ public: // Utility
                 _map[m.first] += m.second;
             }
         }
-
-        auto t2 = std::chrono::high_resolution_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>( t2 - t1 ).count();
-        std::cout << "INFO: Time taken to run the queries is " << duration << " ms" << std::endl;
     }
-    void print() const {
-//        _ul.print(_count);
-        for (auto& m : _map) {
-            std::cout << m.first << ": " << m.second << std::endl;
-        }
+
+public: // Utility
+};
+
+// URL query Manager
+class UrlQueryManager {
+public: // Alias
+private: // Data
+    size_t _count;
+    int _maxthreads;
+    UrlLoader _ul;
+
+public: // Constructors/Destructors
+    UrlQueryManager(int count, int maxthreads) : _count(count), _maxthreads(maxthreads) {}
+    ~UrlQueryManager() {}
+
+public: // Utility
+    void run(const std::string& filename) {
+        _ul.load(filename);
+
+        UrlQueryMt uqmt(_ul, _count, _maxthreads);
+        uqmt.run();
+        uqmt.print();
+
+        UrlQuerySt uqst(_ul, _count, _maxthreads);
+        uqst.run();
+        uqst.print();
     }
 };
