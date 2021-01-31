@@ -161,6 +161,54 @@ public: // Core
 public: // Utility
 };
 
+// Multi-threaded with locking URL query status finder
+class UrlQueryLckMt : public UrlQueryBase {
+public: // Alias
+    using StrVec = std::vector<std::string>;
+    using IntMap = std::map<int, int>;
+    using Threads = std::vector<std::thread>;
+
+private: // Data
+    static std::mutex _mutex;
+
+public: // Constructors/Destructors
+    UrlQueryLckMt(const UrlLoader& ul, int count, int maxthreads) : UrlQueryBase(ul, count, maxthreads) {}
+    ~UrlQueryLckMt() {}
+
+public: // Helpers
+    void query(const std::string& url) {
+        cpr::Response r = cpr::Get(cpr::Url{url.c_str()});
+        std::lock_guard<std::mutex> guard(_mutex);
+        _map[r.status_code]++;
+    }
+    void querygroup(const StrVec& urls) {
+        for (int i = 0; i < urls.size() && i < _count; i++) {
+            query(urls[i]);
+        }
+    }
+
+public: // Core
+    void queries() {
+        StrVec urlgrp;
+        int cluster = std::min(_ul.urls().size(), _count) / _maxthreads;
+        Threads threads;
+        for (int i = 0; i < _ul.urls().size() && i <= _count; i++) {
+            if (i % cluster == 0) {
+                threads.emplace_back(std::thread(&UrlQueryLckMt::querygroup, this, urlgrp));
+                urlgrp.clear();
+            }
+            urlgrp.emplace_back(std::move(_ul.urls()[i]));
+        }
+        for (auto& th : threads) {
+            if (th.joinable()) {
+                th.join();
+            }
+        }
+    }
+
+public: // Utility
+};
+
 // URL query Manager
 class UrlQueryManager {
 public: // Alias
@@ -180,6 +228,10 @@ public: // Utility
         UrlQueryMt uqmt(_ul, _count, _maxthreads);
         uqmt.run();
         uqmt.print();
+
+        UrlQueryLckMt uqlmt(_ul, _count, _maxthreads);
+        uqlmt.run();
+        uqlmt.print();
 
         UrlQuerySt uqst(_ul, _count, _maxthreads);
         uqst.run();
