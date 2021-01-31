@@ -40,6 +40,49 @@ public: // Utility
     }
 };
 
+// https://stackoverflow.com/questions/51794793/get-stdthreads-threadid-before-it-runs
+// Delayed thread
+class lazythread {
+public: // Alias
+    using BoolAtomic = std::atomic<bool>;
+    using VoidPromise = std::promise<void>;
+    using VoidFuture = std::future<void>;
+
+private: // Data
+    std::thread::id _id;
+    BoolAtomic _active{false};
+    std::thread _thread;
+    VoidPromise _promise;
+    VoidFuture _future{_promise.get_future()};
+
+public: // Constructors/Destructors
+    lazythread(std::function<void(void)> task) {
+        _thread = std::thread([=, this]() {
+            _id = std::this_thread::get_id();
+            // wait here till activated
+            _future.get();
+            if(_active) {
+                task();
+            }
+        });
+    }
+    ~lazythread() {
+        if(!_active) {
+            _promise.set_value();
+        }
+        _thread.join();
+    }
+
+public: // Accessors
+    std::thread::id id() const { return _id; }
+
+public: // Utility
+    void activate() {
+        _promise.set_value();
+        _active = true;
+    }
+};
+
 // URL query status finder base class. Contains overall infrastructure
 class UrlQueryBase {
 public: // Alias
@@ -52,7 +95,7 @@ protected: // Data
     IntMap _map;
 
 public: // Constructors/Destructors
-    UrlQueryBase(const UrlLoader& ul, int count, int maxthreads) : _ul(ul), _count(count), _maxthreads(maxthreads) {}
+    UrlQueryBase(const UrlLoader& ul, int count, int maxthreads) : _ul(ul), _count(count), _maxthreads(std::min(count, maxthreads)) {}
     ~UrlQueryBase() {}
 
 public: // Accessors
@@ -165,7 +208,6 @@ public: // Utility
 class UrlQueryLckMt : public UrlQueryBase {
 public: // Alias
     using StrVec = std::vector<std::string>;
-    using IntMap = std::map<int, int>;
     using Threads = std::vector<std::thread>;
 
 private: // Data

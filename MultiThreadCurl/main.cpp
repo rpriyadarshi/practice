@@ -23,6 +23,6 @@ int main(int argc, char** argv) {
     if (argc == 1) {
         return -1;
     }
-    UrlQueryManager uql(40, 4);
+    UrlQueryManager uql(40, 41);
     uql.run(argv[1]);
 }
