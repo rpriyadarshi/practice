@@ -55,6 +55,9 @@ public: // Constructors/Destructors
     UrlQueryBase(const UrlLoader& ul, int count, int maxthreads) : _ul(ul), _count(count), _maxthreads(maxthreads) {}
     ~UrlQueryBase() {}
 
+public: // Accessors
+    const IntMap& map() const { return _map; }
+
 public: // Helpers
     void run() {
         auto t1 = std::chrono::high_resolution_clock::now();
@@ -138,7 +141,6 @@ public: // Core
         Threads threads;
         for (int i = 0; i < _ul.urls().size() && i <= _count; i++) {
             if (i % cluster == 0) {
-                const StrVec& sv = _ul.urls();
                 threads.emplace_back(std::thread(&UrlQueryMt::querygroup, this, urlgrp));
                 urlgrp.clear();
             }
