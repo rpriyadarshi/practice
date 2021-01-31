@@ -84,17 +84,18 @@ public: // Helpers
 public: // Utility
     void runst() {
         auto t1 = std::chrono::high_resolution_clock::now();
+
         stqueries(_ul.urls());
+
         auto t2 = std::chrono::high_resolution_clock::now();
-
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>( t2 - t1 ).count();
-
-        std::cout << "INFO: Time taken to run the queries is \"" << duration << "\" ms" << std::endl;
+        std::cout << "INFO: Time taken to run the queries is " << duration << " ms" << std::endl;
     }
     void runmtmutex() {
     }
     void runmtnomutex() {
         auto t1 = std::chrono::high_resolution_clock::now();
+
         StrVec urls;
         int cluster = std::min(_ul.urls().size(), _count) / _maxthreads;
         Threads threads;
@@ -103,23 +104,25 @@ public: // Utility
                 threads.emplace_back(std::thread(&UrlQuery::mtqueries, this, urls));
                 urls.clear();
             }
-            urls.emplace_back(_ul.urls()[i]);
+            urls.emplace_back(std::move(_ul.urls()[i]));
         }
         for (auto& th : threads) {
-            th.join();
+            if (th.joinable()) {
+                th.join();
+            }
         }
         for (auto& tm : _tmap) {
             for (auto& m : tm.second) {
                 _map[m.first] += m.second;
             }
         }
+
         auto t2 = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>( t2 - t1 ).count();
-
-        std::cout << "INFO: Time taken to run the queries is \"" << duration << "\" ms" << std::endl;
+        std::cout << "INFO: Time taken to run the queries is " << duration << " ms" << std::endl;
     }
     void print() const {
-        _ul.print(_count);
+//        _ul.print(_count);
         for (auto& m : _map) {
             std::cout << m.first << ": " << m.second << std::endl;
         }
