@@ -24,7 +24,11 @@ int main(int argc, char** argv) {
     UrlLoader ul;
     ul.load(argv[1]);
 
-    UrlQuery uq(ul, 10);
+    UrlQuery uq1(ul, 40);
+    uq1.runmtnomutex();
+    uq1.print();
+
+    UrlQuery uq(ul, 40);
     uq.runst();
-    uq.print();
+    uq1.print();
 }

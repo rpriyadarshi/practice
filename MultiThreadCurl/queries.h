@@ -45,11 +45,15 @@ class UrlQuery {
 public: // Alias
     using StrVec = std::vector<std::string>;
     using IntMap = std::map<int, int>;
+    using ThreadIdIntMap = std::map<std::thread::id, IntMap>;
+    using Threads = std::vector<std::thread>;
 
 private: // Data
-    int _count;
-    IntMap _map;
     const UrlLoader& _ul;
+    size_t _count;
+    int _maxthreads{4};
+    IntMap _map;
+    ThreadIdIntMap _tmap;
 
 public: // Constructors/Destructors
     UrlQuery(const UrlLoader& ul) : _ul(ul), _count(_ul.urls().size()) {}
@@ -57,27 +61,62 @@ public: // Constructors/Destructors
     ~UrlQuery() {}
 
 public: // Helpers
-    void query(const std::string& url) {
+    void stquery(const std::string& url) {
         cpr::Response r = cpr::Get(cpr::Url{url.c_str()});
         _map[r.status_code]++;
     }
-    void queries(const StrVec& urls) {
+    void mtquery(const std::string& url, std::thread::id tid) {
+        cpr::Response r = cpr::Get(cpr::Url{url.c_str()});
+        _tmap[tid][r.status_code]++;
+    }
+    void stqueries(const StrVec& urls) {
         for (int i = 0; i < urls.size() && i < _count; i++) {
-            query(urls[i]);
+            stquery(urls[i]);
+        }
+    }
+    void mtqueries(const StrVec& urls) {
+        std::thread::id tid = std::this_thread::get_id();
+        for (int i = 0; i < urls.size() && i < _count; i++) {
+            mtquery(urls[i], tid);
         }
     }
 
 public: // Utility
     void runst() {
         auto t1 = std::chrono::high_resolution_clock::now();
-        queries(_ul.urls());
+        stqueries(_ul.urls());
         auto t2 = std::chrono::high_resolution_clock::now();
 
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>( t2 - t1 ).count();
 
         std::cout << "INFO: Time taken to run the queries is \"" << duration << "\" ms" << std::endl;
     }
-    void runmt() {
+    void runmtmutex() {
+    }
+    void runmtnomutex() {
+        auto t1 = std::chrono::high_resolution_clock::now();
+        StrVec urls;
+        int cluster = std::min(_ul.urls().size(), _count) / _maxthreads;
+        Threads threads;
+        for (int i = 0; i < _ul.urls().size() && i <= _count; i++) {
+            if (i % cluster == 0) {
+                threads.emplace_back(std::thread(&UrlQuery::mtqueries, this, urls));
+                urls.clear();
+            }
+            urls.emplace_back(_ul.urls()[i]);
+        }
+        for (auto& th : threads) {
+            th.join();
+        }
+        for (auto& tm : _tmap) {
+            for (auto& m : tm.second) {
+                _map[m.first] += m.second;
+            }
+        }
+        auto t2 = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>( t2 - t1 ).count();
+
+        std::cout << "INFO: Time taken to run the queries is \"" << duration << "\" ms" << std::endl;
     }
     void print() const {
         _ul.print(_count);
