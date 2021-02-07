@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.17)
+project(simple_sat)
+
+set(CMAKE_CXX_STANDARD 20)
+
+add_executable(simple_sat src/test_driver.cpp src/satinstance.h)
