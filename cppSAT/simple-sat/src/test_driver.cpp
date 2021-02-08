@@ -4,8 +4,10 @@
 #include <sstream>
 #include <vector>
 #include <unordered_map>
+#include <deque>
 
 #include "satinstance.h"
+#include "solvers/watchlist.h"
 
 int main(int argc, const char** argv) {
     SATInstance si;

@@ -14,6 +14,7 @@
  *
  * Ref: https://sahandsaba.com/understanding-sat-by-implementing-a-simple-sat-solver-in-python.html
  * C++ Author: Rohit Priyadarshi
+ * Date: 02/07/2021
  */
 
 #pragma once
@@ -24,6 +25,7 @@ public: // Aliases
     using VariableTable = std::unordered_map<std::string, int>;
     using Clause = std::vector<int>;
     using Clauses = std::vector<Clause>;
+    using Assignment = std::vector<int>;
 
 private: // Data
     Variables _variables;
@@ -33,6 +35,11 @@ private: // Data
 public: // Constructors/destructors
     SATInstance() {}
     ~SATInstance() {}
+
+public: // Accessors
+    const Variables& variables() const { return _variables; }
+    const VariableTable& variable_table() const { return _variable_table; }
+    const Clauses& clauses() const { return _clauses; }
 
 public: // Core
     void parse_and_add_clause(const std::string& line) {
@@ -79,7 +86,10 @@ public: // Core
         }
         return ret;
     }
-//    void assignment_to_string(self, assignment, brief=False, starting_with='') {}
+    std::string assignment_to_string(const Assignment& assignment, bool brief = false, const std::string& starting_with = "") const {
+
+        return "";
+    }
     void print() const {
         std::cout << "Variables -" << std::endl;
         for (auto& var : _variables) {
