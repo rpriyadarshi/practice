@@ -13,7 +13,7 @@ private: // Data
     int _items{0};
 
 public: // Constructors/destructors
-    Rackoner(const int width, const int items);
+    Rackoner(int width, int items);
     ~Rackoner();
 
 public: // Accessors
@@ -21,4 +21,5 @@ public: // Helpers
     void print() const;
 public: // Core
     bool moveOnce();
+    bool moveOnce(int idx);
 };
