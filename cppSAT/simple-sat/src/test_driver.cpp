@@ -8,6 +8,9 @@
 
 #include "satinstance.h"
 #include "solvers/watchlist.h"
+#include "solvers/sat_base.h"
+#include "solvers/recursive_sat.h"
+#include "sat.h"
 
 int main(int argc, const char** argv) {
     SATInstance si;
