@@ -23,18 +23,17 @@ void Generator::print() const {
 
 void Generator::solve(int prefix, int width, int suffix) {
     Rackoner r(suffix, width);
-//    Schema s0(prefix, _width, suffix, r.getSpan());
-//    r.print();
-//    s0.print();
     while (r.next()) {
         Schema s(prefix, width, suffix, r.getSpan());
-//        r.print();
         s.print();
         _count++;
     }
 }
 
 void Generator::solve() {
+    Rackoner r(_items, 0);
+    Schema s(_items, 0, 0, r.getSpan());
+    s.print();
     for (int i = 1; i < _items; i++) {
         int prefix = _items - i;
         int suffix = i;

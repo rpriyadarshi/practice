@@ -9,7 +9,9 @@
 #include "rackoner.h"
 
 Rackoner::Rackoner(int items, int width): _items(items), _span(width) {
-    _span[0] = _items;
+    if (width > 0) {
+        _span[0] = _items;
+    }
 }
 
 Rackoner::~Rackoner() {
