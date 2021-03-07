@@ -15,13 +15,15 @@ Schema::~Schema() {
 
 }
 
-void Schema::print() const {
-    std::cout << "SCHEMA {";
-    std::cout << "width(" <<  _width << "), ";
-    std::cout << "prefix(" << _prefix << "), ";
-    std::cout << "suffix(" <<  _suffix << "), ";
+void Schema::printHeader() {
+    std::cout << "SCHEMA {prefix, width, suffix, branches[...]}" << std::endl;
+}
 
-    std::cout << "branches[";
+void Schema::print() const {
+    std::cout << "{";
+    std::cout << _prefix << ", ";
+    std::cout <<  _width << ", ";
+    std::cout <<  _suffix << ", [";
     for (int i = 0; i < _branches.size(); i++) {
         if (i) {
             std::cout << " ";

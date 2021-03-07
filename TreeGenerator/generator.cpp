@@ -33,6 +33,7 @@ void Generator::solve(int prefix, int width, int suffix) {
 void Generator::solve() {
     Rackoner r(_items, 0);
     Schema s(_items, 0, 0, r.getSpan());
+    s.printHeader();
     s.print();
     for (int i = 1; i < _items; i++) {
         int prefix = _items - i;

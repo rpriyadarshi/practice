@@ -33,6 +33,7 @@ private: // Accessors
     void setSuffix(int suffix) { _suffix = suffix; }
 
 public: // Helpers
+    static void printHeader();
     void print() const;
 
 public: // Core

@@ -7,6 +7,7 @@
 
 void runTestSingle(int items, int width, int expected) {
     Generator g(items, width);
+    Schema::printHeader();
     g.solve(0, width, items);
     int moves = g.getCount();
     std::cout << "Items(" << items << ") Width(" << width << ") Moves (+1): " << moves << std::endl;
