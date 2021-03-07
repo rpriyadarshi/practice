@@ -11,7 +11,6 @@ public: // Aliases
 private: // Data
     IntVec _span;
     int _items{0};
-    int _j{0};
 
 public: // Constructors/destructors
     Rackoner(int items, int width);

@@ -53,25 +53,24 @@ bool Rackoner::next() {
     return moved;
 }
 
-bool Rackoner::next(int idx) {
-    _j = idx;
+bool Rackoner::next(int j) {
     bool moved = false;
-    int i = _j - 1;
-    if (_span[_j] == 0) { // New column
-        _span[0] = _items - _j;
-        for (int k = 1; k <= _j; k++) {
+    int i = j - 1;
+    if (_span[j] == 0) { // New column
+        _span[0] = _items - j;
+        for (int k = 1; k <= j; k++) {
             _span[k] = 1;
         }
         moved = true;
-    } else if (_span[i] - _span[_j] > 1) {// previous borrow
+    } else if (_span[i] - _span[j] > 1) {// previous borrow
         _span[i]--;
-        _span[_j]++;
+        _span[j]++;
         moved = true;
     } else { // More borrow
         while (i >= 0) {
-            if (_span[i] - _span[_j] > 1) {
+            if (_span[i] - _span[j] > 1) {
                 _span[i]--;
-                _span[_j]++;
+                _span[j]++;
                 moved = true;
             }
             i--;
