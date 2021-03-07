@@ -17,6 +17,12 @@ public: // Constructors/destructors
     ~Rackoner();
 
 public: // Accessors
+    [[nodiscard]] const IntVec& getSpan() const { return _span; }
+    [[nodiscard]] int getItems() const { return _items; }
+
+private: // Accessors
+    void setItems(int items) { _items = items; }
+
 public: // Helpers
     void print() const;
 

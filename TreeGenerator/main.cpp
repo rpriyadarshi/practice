@@ -1,14 +1,20 @@
 #include <iostream>
 #include <vector>
+
 #include "rackoner.h"
+#include "schema.h"
 
 void runTest(int items, int width, int expected) {
     Rackoner r(items, width);
-    r.print();
+    Schema s0(0, width, items, r.getSpan());
+//    r.print();
+    s0.print();
     int moves = 1;
     while (r.next()) {
+        Schema s(0, width, items, r.getSpan());
+//        r.print();
+        s.print();
         moves++;
-        r.print();
     }
     std::cout << "Items(" << items << ") Width(" << width << ") Moves (+1): " << moves << std::endl;
     if (moves != expected) {
