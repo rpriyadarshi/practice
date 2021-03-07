@@ -32,5 +32,6 @@ public: // Helpers
 
 public: // Core
     void solve(int prefix, int width, int suffix);
+    void solve();
 };
 

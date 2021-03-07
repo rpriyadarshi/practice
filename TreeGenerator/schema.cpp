@@ -17,8 +17,8 @@ Schema::~Schema() {
 
 void Schema::print() const {
     std::cout << "SCHEMA {";
-    std::cout << "prefix(" << _prefix << "), ";
     std::cout << "width(" <<  _width << "), ";
+    std::cout << "prefix(" << _prefix << "), ";
     std::cout << "suffix(" <<  _suffix << "), ";
 
     std::cout << "branches[";

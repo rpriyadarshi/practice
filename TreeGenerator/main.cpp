@@ -5,7 +5,7 @@
 #include "schema.h"
 #include "generator.h"
 
-void runTest(int items, int width, int expected) {
+void runTestSingle(int items, int width, int expected) {
     Generator g(items, width);
     g.solve(0, width, items);
     int moves = g.getCount();
@@ -16,14 +16,31 @@ void runTest(int items, int width, int expected) {
     std::cout << "----------" << std::endl;
 }
 
+void runTestFull(int items, int width, int expected) {
+    Generator g(items, width);
+    g.solve();
+    int moves = g.getCount();
+    std::cout << "Items(" << items << ") Width(" << width << ") Moves (+1): " << moves << std::endl;
+    if (moves != expected) {
+        std::cout << "ERROR: Move mismatch occured! (" << moves << " != " << expected << ")" << std::endl;
+    }
+    std::cout << "----------" << std::endl;
+}
+
 int main() {
-    runTest(1, 1, 1);
-    runTest(2, 2, 2);
-    runTest(3, 3, 3);
-    runTest(4, 4, 5);
-    runTest(5, 5, 7);
-    runTest(6, 6, 11);
-    runTest(7, 7, 15);
-    runTest(10, 4, 20);
+    runTestSingle(1, 1, 1);
+    runTestSingle(2, 2, 2);
+    runTestSingle(3, 3, 3);
+    runTestSingle(4, 4, 5);
+    runTestSingle(5, 5, 7);
+    runTestSingle(6, 6, 11);
+    runTestSingle(7, 7, 15);
+    runTestSingle(10, 4, 20);
+
+    runTestSingle(2, 2, 1);
+    runTestSingle(3, 3, 2);
+
+    runTestFull(4, 3, 4);
+    runTestFull(7, 2, 10);
     return 0;
 }
