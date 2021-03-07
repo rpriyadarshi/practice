@@ -3,19 +3,12 @@
 
 #include "rackoner.h"
 #include "schema.h"
+#include "generator.h"
 
 void runTest(int items, int width, int expected) {
-    Rackoner r(items, width);
-    Schema s0(0, width, items, r.getSpan());
-//    r.print();
-    s0.print();
-    int moves = 1;
-    while (r.next()) {
-        Schema s(0, width, items, r.getSpan());
-//        r.print();
-        s.print();
-        moves++;
-    }
+    Generator g(items, width);
+    g.solve(0, width, items);
+    int moves = g.getCount();
     std::cout << "Items(" << items << ") Width(" << width << ") Moves (+1): " << moves << std::endl;
     if (moves != expected) {
         std::cout << "ERROR: Move mismatch occured! (" << moves << " != " << expected << ")" << std::endl;
