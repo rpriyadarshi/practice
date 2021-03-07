@@ -8,7 +8,7 @@
 
 #include "rackoner.h"
 
-Rackoner::Rackoner(int width, int items): _span(width), _items(items) {
+Rackoner::Rackoner(int items, int width): _items(items), _span(width) {
     _span[0] = _items;
 }
 
@@ -17,7 +17,6 @@ Rackoner::~Rackoner() {
 }
 
 bool Rackoner::moveOnce() {
-#if 0
     bool moved = false;
     int i = 0;
     for (int j = 1; j < _span.size() && !moved; j++) {
@@ -44,33 +43,35 @@ bool Rackoner::moveOnce() {
         i = j;
     }
     return moved;
-#else
-    bool moved = false;
-    for (int j = 1; j < _span.size() && !moved; j++) {
-        moved |= moveOnce(j);
-    }
-    return moved;
-#endif
 }
 
-bool Rackoner::moveOnce(int j) {
+bool Rackoner::next() {
     bool moved = false;
-    int i = j - 1;
-    if (_span[j] == 0) { // New column
-        _span[0] = _items - j;
-        for (int k = 1; k <= j; k++) {
+    for (int j = 1; j < _span.size() && !moved; j++) {
+        moved |= next(j);
+    }
+    return moved;
+}
+
+bool Rackoner::next(int idx) {
+    _j = idx;
+    bool moved = false;
+    int i = _j - 1;
+    if (_span[_j] == 0) { // New column
+        _span[0] = _items - _j;
+        for (int k = 1; k <= _j; k++) {
             _span[k] = 1;
         }
         moved = true;
-    } else if (_span[i] - _span[j] > 1) {// previous borrow
+    } else if (_span[i] - _span[_j] > 1) {// previous borrow
         _span[i]--;
-        _span[j]++;
+        _span[_j]++;
         moved = true;
     } else { // More borrow
         while (i >= 0) {
-            if (_span[i] - _span[j] > 1) {
+            if (_span[i] - _span[_j] > 1) {
                 _span[i]--;
-                _span[j]++;
+                _span[_j]++;
                 moved = true;
             }
             i--;

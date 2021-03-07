@@ -11,15 +11,18 @@ public: // Aliases
 private: // Data
     IntVec _span;
     int _items{0};
+    int _j{0};
 
 public: // Constructors/destructors
-    Rackoner(int width, int items);
+    Rackoner(int items, int width);
     ~Rackoner();
 
 public: // Accessors
 public: // Helpers
     void print() const;
+
 public: // Core
     bool moveOnce();
-    bool moveOnce(int idx);
+    bool next();
+    bool next(int idx);
 };
