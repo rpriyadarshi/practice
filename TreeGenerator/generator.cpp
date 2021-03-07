@@ -35,7 +35,6 @@ void Generator::solve(int prefix, int width, int suffix) {
 }
 
 void Generator::solve() {
-    _count++; // For the first chain
     for (int i = 1; i < _items; i++) {
         int prefix = _items - i;
         int suffix = i;

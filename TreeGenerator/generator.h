@@ -11,7 +11,7 @@ public: // Aliases
 private: // Data
     int _items{0};
     int _width{0};
-    int _count{0};
+    int _count{1};
 
 public: // Constructors/destructors
     Generator(int items, int width);
