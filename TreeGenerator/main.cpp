@@ -43,6 +43,6 @@ int main() {
     runTestFull(4, 3, 4);
     runTestFull(7, 2, 10);
     runTestFull(8, 5, 35);
-//    runTestFull(30, 3, 10);
+    runTestFull(30, 3, 563);
     return 0;
 }
