@@ -9,7 +9,7 @@ class tree
 public: // Using, typedefs etc.
 
 private: // Class data
-    node<_D> m_root;
+    node_ptr<_D> m_root;
 
 public: // Constructors, destructors
     tree() {}

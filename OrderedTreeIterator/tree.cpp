@@ -4,6 +4,22 @@ namespace nonstd
 {
 
 template <typename _D>
+template <typename _T>
+iterator<_T, _D> tree<_D>::begin()
+{
+    iterator<_T, _D> iter(m_root);
+    return iter;
+}
+
+template <typename _D>
+template <typename _T>
+iterator<_T, _D> tree<_D>::end()
+{
+    iterator<_T, _D> iter;
+    return iter;
+}
+
+template <typename _D>
 node_wptr<_D> tree<_D>::create_root()
 {
     if (!m_root.use_count())
