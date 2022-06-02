@@ -61,12 +61,12 @@ ptrdiff_t iterator_trait<_T, _D>::compare(const iterator_trait& iter) const
         }
         else
         {
-            return data1 - data2;
+            return data1 < data2;
         }
     }
     else
     {
-        return node1 - node2;
+        return node1 < node2;
     }
 }
 

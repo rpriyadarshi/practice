@@ -23,9 +23,9 @@ public: // Helpers
     bool operator==(const iterator& iter) const { return m_trait.compare(iter.m_trait) == 0; }
     bool operator!=(const iterator& iter) const { return m_trait.compare(iter.m_trait) != 0; }
     iterator& operator++() { m_trait.forward(); return *this; }
-    iterator& operator--() { m_trait.backeard(); return *this; }
+    iterator& operator--() { m_trait.backward(); return *this; }
     iterator& operator++(int) { m_trait.forward(); return *this; }
-    iterator& operator--(int) { m_trait.backeard(); return *this; }
+    iterator& operator--(int) { m_trait.backward(); return *this; }
     reference operator*() const { return m_trait.get_value(); }
 
 public: // Dump data

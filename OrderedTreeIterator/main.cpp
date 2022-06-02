@@ -7,32 +7,32 @@
 #include <queue>
 #include <string>
 #include <cassert>
+// #include <format>
+#include <gtest/gtest.h>
 
 #include "nonstd.h"
 
-template <typename _D>
-void testType()
-{
-    nonstd::node<_D> n;
-    nonstd::tree<_D> t;
-    nonstd::iterator_trait_dfs<_D> d;
-    nonstd::iterator_trait_bfs<_D> b;
+TEST(NonStd, BasicClasses) {
+    using type = int;
 
-    // auto idb = t.begin<nonstd::iterator_trait_dfs<_D>>();
-    // auto ibb = t.begin<nonstd::iterator_trait_bfs<_D>>();
-    // auto ide = t.end<nonstd::iterator_trait_dfs<_D>>();
-    // auto ibe = t.end<nonstd::iterator_trait_bfs<_D>>();
+    nonstd::node<type> n;
+    nonstd::tree<type> t;
+    nonstd::iterator_trait_dfs<type> d;
+    nonstd::iterator_trait_bfs<type> b;
 }
 
-int main(int, char**) {
-    testType<void*>();
-    testType<std::string>();
-    
+TEST(NonStd, BasicIterators) {
     using type = std::string;
+    // using type = int;
+
     nonstd::tree<type> t;
     
     auto idb = t.begin<nonstd::iterator_trait_dfs<type>>();
-    auto ibb = t.begin<nonstd::iterator_trait_bfs<type>>();
     auto ide = t.end<nonstd::iterator_trait_dfs<type>>();
+    EXPECT_TRUE(idb == ide);
+
+    auto ibb = t.begin<nonstd::iterator_trait_bfs<type>>();
     auto ibe = t.end<nonstd::iterator_trait_bfs<type>>();
+    EXPECT_TRUE(ibb == ibe);
 }
+
