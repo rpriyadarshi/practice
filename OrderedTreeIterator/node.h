@@ -18,6 +18,7 @@ private: // Class data
 
 public: // Constructors, destructors
     node() {}
+    node(_D data) : m_data(data) {}
     node(node_wptr parent, _D data) : m_parent(parent), m_data(data) {}
     ~node() {}
 

@@ -4,3 +4,4 @@
 #include "iterator_trait.h"
 #include "iterator.h"
 #include "tree.h"
+#include "samples.h"

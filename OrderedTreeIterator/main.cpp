@@ -3,36 +3,39 @@
 #include <memory>
 #include <list>
 #include <unordered_set>
+#include <vector>
 #include <stack>
 #include <queue>
 #include <string>
 #include <cassert>
-// #include <format>
-#include <gtest/gtest.h>
 
 #include "nonstd.h"
 
-TEST(NonStd, BasicClasses) {
-    using type = int;
+int main(int argc, const char* argv[])
+{
+    nonstd::sample_builder<int> sample_builder;
+    sample_builder.build();
+    sample_builder.print("dump");
 
-    nonstd::node<type> n;
-    nonstd::tree<type> t;
-    nonstd::iterator_trait_dfs<type> d;
-    nonstd::iterator_trait_bfs<type> b;
+    for (auto iter = sample_builder.get_tree().begin<nonstd::iterator_trait_dfs<int>>();
+        iter != sample_builder.get_tree().end<nonstd::iterator_trait_dfs<int>>();
+        iter++)
+    {
+        auto wptr = *iter;
+        auto ptr = wptr.lock();
+        auto node = ptr.get();
+        node->print("dfs", 0, true);        
+    }
+
+    for (auto iter = sample_builder.get_tree().begin<nonstd::iterator_trait_bfs<int>>();
+        iter != sample_builder.get_tree().end<nonstd::iterator_trait_bfs<int>>();
+        iter++)
+    {
+        auto wptr = *iter;
+        auto ptr = wptr.lock();
+        auto node = ptr.get();
+        node->print("bfs", 0, true);        
+    }
+
+    return 0;
 }
-
-TEST(NonStd, BasicIterators) {
-    using type = std::string;
-    // using type = int;
-
-    nonstd::tree<type> t;
-    
-    auto idb = t.begin<nonstd::iterator_trait_dfs<type>>();
-    auto ide = t.end<nonstd::iterator_trait_dfs<type>>();
-    EXPECT_TRUE(idb == ide);
-
-    auto ibb = t.begin<nonstd::iterator_trait_bfs<type>>();
-    auto ibe = t.end<nonstd::iterator_trait_bfs<type>>();
-    EXPECT_TRUE(ibb == ibe);
-}
-

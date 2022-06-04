@@ -42,6 +42,12 @@ public: // Algorithms
     void forward();
     void backward();
 
+private: // Helpers
+    ptrdiff_t compare(const _D& data1, const _D& data2) const;
+    ptrdiff_t compare(const node<_D>* node1, const node<_D>* node2) const;
+    ptrdiff_t compare(const node_ptr<_D>& ptr1, const node_ptr<_D>& ptr2) const;
+    ptrdiff_t compare(const node_wptr<_D>& wptr1, const node_wptr<_D>& wptr2) const;
+    
 public: // Dump data
 };
 

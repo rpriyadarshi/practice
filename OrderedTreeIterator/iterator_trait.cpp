@@ -3,6 +3,16 @@
 namespace nonstd
 {
 
+ptrdiff_t compare_(int data1, int data2)
+{
+    return data1 - data2;
+}
+
+ptrdiff_t compare_(const std::string& data1, const std::string& data2)
+{
+    return data1.compare(data2);
+}
+
 template <typename _T, typename _D>
 node_ptr<_D> iterator_trait<_T, _D>::m_end_node;
 
@@ -41,6 +51,37 @@ void iterator_trait<_T, _D>::set_end()
 }
 
 template <typename _T, typename _D>
+ptrdiff_t iterator_trait<_T, _D>::compare(const _D& data1, const _D& data2) const
+{
+    return compare_(data1, data2);
+}
+
+template <typename _T, typename _D>
+ptrdiff_t iterator_trait<_T, _D>::compare(const node<_D>* node1, const node<_D>* node2) const
+{
+    if (node1 != nullptr && node2 != nullptr)
+    {
+        return compare(node1->get_data(), node2->get_data());
+    }
+    else 
+    {
+        return node1 - node2;
+    }
+}
+
+template <typename _T, typename _D>
+ptrdiff_t iterator_trait<_T, _D>::compare(const node_ptr<_D>& ptr1, const node_ptr<_D>& ptr2) const
+{
+    return compare(ptr1.get(), ptr2.get());
+}
+
+template <typename _T, typename _D>
+ptrdiff_t iterator_trait<_T, _D>::compare(const node_wptr<_D>& wptr1, const node_wptr<_D>& wptr2) const
+{
+    return compare(wptr1.lock(), wptr2.lock());
+}
+
+template <typename _T, typename _D>
 ptrdiff_t iterator_trait<_T, _D>::compare(const iterator_trait& iter) const
 {
     auto ptr1 = m_curr_node.lock();
@@ -61,12 +102,12 @@ ptrdiff_t iterator_trait<_T, _D>::compare(const iterator_trait& iter) const
         }
         else
         {
-            return data1 < data2;
+            return compare(data1, data2);
         }
     }
     else
     {
-        return node1 < node2;
+        return compare(node1, node2);
     }
 }
 

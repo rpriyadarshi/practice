@@ -20,13 +20,19 @@ add_executable(
     OrderedTreeIterator
     main.cpp
 )
+
+add_executable(
+    unittest
+    unittest.cpp
+)
+
 target_link_libraries(
-    OrderedTreeIterator
+    unittest
     gtest_main
 )
 
 include(GoogleTest)
-gtest_discover_tests(OrderedTreeIterator)
+gtest_discover_tests(unittest)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
