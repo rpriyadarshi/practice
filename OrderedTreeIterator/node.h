@@ -9,7 +9,7 @@ class node
 public: // Using, typedefs etc.
     using node_ptr = std::shared_ptr<node>;
     using node_wptr = std::weak_ptr<node>;
-    using node_coll = std::list<node_ptr>;
+    using node_coll = std::vector<node_ptr>;
 
 private: // Class data
     node_wptr m_parent;

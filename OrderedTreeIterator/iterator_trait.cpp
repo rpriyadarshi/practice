@@ -141,11 +141,29 @@ void iterator_trait<_T, _D>::forward()
         return;
     }
 
-    for (auto node : node->get_children()) 
+    // stack reverses the order to pop first element, since the last element needs to be inserted first
+    // queue stays in order
+    if constexpr(std::is_same<_T, node_stack<_D>>::value)
     {
-        cache_add(node);
+        for (int i = node->get_children().size() - 1; i >= 0; i--) 
+        {
+            auto n = node->get_children()[i];
+            cache_add(n);
+        }
     }
-
+    else if constexpr(std::is_same<_T, node_queue<_D>>::value)
+    {
+        for (int i = 0; i < node->get_children().size(); i++) 
+        {
+            auto n = node->get_children()[i];
+            cache_add(n);
+        }
+    } 
+    else
+    {
+        assert(0);
+    }
+    
     if (cache_empty()) 
     {
         set_end();
