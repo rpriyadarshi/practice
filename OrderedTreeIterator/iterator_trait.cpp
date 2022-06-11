@@ -123,10 +123,7 @@ void iterator_trait<_T, _D>::forward()
     cache_pop();
 
     auto ptr = wptr.lock();
-    if (!ptr)
-    {
-        return;
-    }
+    assert (ptr);
 
     auto iter = m_visited.find(ptr);
     if (iter != m_visited.end()) 
@@ -136,10 +133,7 @@ void iterator_trait<_T, _D>::forward()
     m_visited.insert(ptr);
 
     auto node = ptr.get();
-    if (!node) 
-    {
-        return;
-    }
+    assert (node);
 
     // stack reverses the order to pop first element, since the last element needs to be inserted first
     // queue stays in order
@@ -164,6 +158,7 @@ void iterator_trait<_T, _D>::forward()
         assert(0);
     }
     
+    // Next node
     if (cache_empty()) 
     {
         set_end();

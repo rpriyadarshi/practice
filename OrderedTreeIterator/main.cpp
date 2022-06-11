@@ -37,5 +37,14 @@ int main(int argc, const char* argv[])
         node->print("bfs", 0, true);        
     }
 
+    for (auto iter = sample_builder.get_tree().begin<nonstd::iterator_trait_po<int>>();
+        iter != sample_builder.get_tree().end<nonstd::iterator_trait_po<int>>();
+        iter++)
+    {
+        auto wptr = *iter;
+        auto ptr = wptr.lock();
+        auto node = ptr.get();
+        node->print("postorder", 0, true);        
+    }
     return 0;
 }

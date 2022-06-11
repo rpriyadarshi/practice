@@ -102,6 +102,23 @@ TEST_F(intTreeTest, bfs)
     EXPECT_EQ(i, get_sample_builder().get_nodes().size());
 }
 
+TEST_F(intTreeTest, postorder)
+{
+    int i = 0;
+    for (auto iter = get_sample_builder().get_tree().begin<nonstd::iterator_trait_po<int>>();
+        iter != get_sample_builder().get_tree().end<nonstd::iterator_trait_po<int>>();
+        iter++)
+    {
+        auto wptr = *iter;
+        auto ptr = wptr.lock();
+        auto node = ptr.get();
+        auto val = node->get_data();
+        node->print("postorder", 0, true);        
+        EXPECT_EQ(val, get_sample_builder().get_postorder()[i++]);
+    }
+    EXPECT_EQ(i, get_sample_builder().get_nodes().size());
+}
+
 TEST(NonStd, BasicClasses) {
     using type = int;
 

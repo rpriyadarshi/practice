@@ -10,7 +10,7 @@ public: // Using, typedefs etc.
     using node_set = std::unordered_set<node_ptr<_D>>;
     using reference = node_wptr<_D>;
 
-private: // Class data
+protected: // Class data
     _T m_cache;
     node_set m_visited;
     node_wptr<_D> m_curr_node;
