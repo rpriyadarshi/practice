@@ -113,7 +113,6 @@ TEST_F(intTreeTest, postorder)
         auto ptr = wptr.lock();
         auto node = ptr.get();
         auto val = node->get_data();
-        node->print("postorder", 0, true);        
         EXPECT_EQ(val, get_sample_builder().get_postorder()[i++]);
     }
     EXPECT_EQ(i, get_sample_builder().get_nodes().size());
