@@ -8,6 +8,8 @@
 #include <queue>
 #include <string>
 #include <cassert>
+#include <numeric>
+
 #include <gtest/gtest.h>
 
 #include "nonstd.h"
@@ -116,6 +118,60 @@ TEST_F(intTreeTest, postorder)
         EXPECT_EQ(val, get_sample_builder().get_postorder()[i++]);
     }
     EXPECT_EQ(i, get_sample_builder().get_nodes().size());
+}
+
+TEST_F(intTreeTest, dfs_accum)
+{
+    int i = 0;
+    auto a1 = std::accumulate(
+        get_sample_builder().get_tree().begin<nonstd::iterator_trait_dfs<int>>(),
+        get_sample_builder().get_tree().end<nonstd::iterator_trait_dfs<int>>(),
+        nonstd::tree<int>::create_node(0), // start with first element
+        [&i](nonstd::node_wptr<int> a, nonstd::node_wptr<int> b) 
+            {
+                auto node_a = a.lock().get();
+                auto node_b = b.lock().get();
+                auto val = node_a->get_data() + node_b->get_data();
+                EXPECT_EQ(val, nonstd::sample_builder<int>::get_dfs_accum()[i++]);
+                return nonstd::tree<int>::create_node(val);
+            }
+    );
+}
+
+TEST_F(intTreeTest, bfs_accum)
+{
+    int i = 0;
+    auto a1 = std::accumulate(
+        get_sample_builder().get_tree().begin<nonstd::iterator_trait_bfs<int>>(),
+        get_sample_builder().get_tree().end<nonstd::iterator_trait_bfs<int>>(),
+        nonstd::tree<int>::create_node(0), // start with first element
+        [&i](nonstd::node_wptr<int> a, nonstd::node_wptr<int> b) 
+            {
+                auto node_a = a.lock().get();
+                auto node_b = b.lock().get();
+                auto val = node_a->get_data() + node_b->get_data();
+                EXPECT_EQ(val, nonstd::sample_builder<int>::get_bfs_accum()[i++]);
+                return nonstd::tree<int>::create_node(val);
+            }
+    );
+}
+
+TEST_F(intTreeTest, postorder_accum)
+{
+    int i = 0;
+    auto a1 = std::accumulate(
+        get_sample_builder().get_tree().begin<nonstd::iterator_trait_po<int>>(),
+        get_sample_builder().get_tree().end<nonstd::iterator_trait_po<int>>(),
+        nonstd::tree<int>::create_node(0), // start with first element
+        [&i](nonstd::node_wptr<int> a, nonstd::node_wptr<int> b) 
+            {
+                auto node_a = a.lock().get();
+                auto node_b = b.lock().get();
+                auto val = node_a->get_data() + node_b->get_data();
+                EXPECT_EQ(val, nonstd::sample_builder<int>::get_postorder_accum()[i++]);
+                return nonstd::tree<int>::create_node(val);
+            }
+    );
 }
 
 TEST(NonStd, BasicClasses) {
